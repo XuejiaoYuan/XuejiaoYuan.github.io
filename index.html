@@ -141,6 +141,158 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-001-Hexo使用笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/23/001-Hexo使用笔记/">001 Hexo使用笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/23/001-Hexo使用笔记/" class="archive-article-date">
+  	<time datetime="2017-10-23T14:43:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><p>记录一下Hexo使用期间的一些问题以及补充的一些方法。</p>
+<h3 id="1-404问题"><a href="#1-404问题" class="headerlink" title="1. 404问题"></a>1. 404问题</h3><p>在使用<strong>hexo deploy</strong>发布博客之后，会发现404网页找不到的情况。一开始设置respository的时候，应将名字设置为<strong>ur_name.github.io</strong>，以此作为博客的域名。</p>
+<h3 id="2-hexo-deploy无法找到git"><a href="#2-hexo-deploy无法找到git" class="headerlink" title="2. hexo deploy无法找到git"></a>2. hexo deploy无法找到git</h3><p>在这里需要在博客所在文件夹下执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
+<h3 id="3-代码高亮"><a href="#3-代码高亮" class="headerlink" title="3. 代码高亮"></a>3. 代码高亮</h3><p>使用代码高亮的格式是：<br>在```后加语言名，如java，cpp。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/23/001-Hexo使用笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-001-JDK-9-0-11配置笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/23/001-JDK-9-0-11配置笔记/">001 JDK-9.0.11配置笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/23/001-JDK-9-0-11配置笔记/" class="archive-article-date">
+  	<time datetime="2017-10-23T14:21:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><p>使用Java，需要先在官网上下载Java开发工具包JDK，并配置环境变量。JDK9和JDK8的版本较为明显的区别在于jdk下不再包含jre文件夹，所以一开始按照网上教程配置的时候会出现javac无法使用的情况。</p>
+<p>配置环境可以为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME = ur_jdk_path</div><div class="line">JRE_HOME = ur_jre_path</div><div class="line">PATH = .;%JAVA_HOME%\bin;%JRE_HOME%\bin;</div><div class="line">CLASSPATH = .;%JAVA_HOME%\lib;%JRE_HOME%\lib;</div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/23/001-JDK-9-0-11配置笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hello-World-0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -306,6 +458,14 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">闲聊</a>
