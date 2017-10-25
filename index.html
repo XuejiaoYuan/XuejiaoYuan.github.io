@@ -141,19 +141,117 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-003-Java与C-“" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-003-Java-对象与类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/003-Java与C-“/">003 Java与C++</a>
+      <a class="article-title" href="/2017/10/25/003-Java-对象与类/">003 JJava 对象与类</a>
     </h1>
   
 
         
-        <a href="/2017/10/24/003-Java与C-“/" class="archive-article-date">
+        <a href="/2017/10/25/003-Java-对象与类/" class="archive-article-date">
+  	<time datetime="2017-10-25T10:47:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Java类之间的关系"><a href="#Java类之间的关系" class="headerlink" title="Java类之间的关系"></a>Java类之间的关系</h2><p><img src="../../assets/Note_img/1.png" alt="UML符号"></p>
+<ol>
+<li>依赖（“use-a”）<br> 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。</li>
+<li>聚合（“has-a”）<br> 一个类的对象包含另一个类的对象；</li>
+<li>继承（“is-a”）</li>
+</ol>
+<h2 id="对象与对象变量"><a href="#对象与对象变量" class="headerlink" title="对象与对象变量"></a>对象与对象变量</h2><p>在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。</p>
+<h2 id="访问器和更改器"><a href="#访问器和更改器" class="headerlink" title="访问器和更改器"></a>访问器和更改器</h2><p>只访问对象而不修改对象的方法称为访问器方法。在Java中，访问器方法与更改器方法在语法上没有明显区别；在C++中，带有const后缀的方法是访问器方法，默认为更改器方法。</p>
+<h2 id="final实例域"><a href="#final实例域" class="headerlink" title="final实例域"></a>final实例域</h2><p>可以将实例域定义为final，构建对象时必须初始化这样的域。final关键字只是表示存储在变量中的对象引用不会再指示其他的对象，但是该对象可以修改。</p>
+<ul>
+<li>final变量：final变量是只读的；</li>
+<li>final方法：该方法不能被子类的方法重写，在编译时静态绑定，不需要在运行时动态绑定；</li>
+<li>final类：不能被继承的类；</li>
+</ul>
+<h2 id="静态域与静态方法"><a href="#静态域与静态方法" class="headerlink" title="静态域与静态方法"></a>静态域与静态方法</h2><ul>
+<li>静态域：每个类只有一个静态域，但每个对象对所有实例域有自己的一份拷贝；</li>
+<li>静态常量：使用static final定义；</li>
+<li>静态方法：不能向对象实施操作的方法，故静态方法不能访问类的实例域，但是可以访问自身类中的静态域；建议使用类名调用静态方法。</li>
+</ul>
+<h2 id="main方法"><a href="#main方法" class="headerlink" title="main方法"></a>main方法</h2><p>每一个类可以有一个main方法，用于对类进行单元测试。执行类中的main方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java className</div></pre></td></tr></table></figure></p>
+<h2 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h2><p>Java对对象采用的是按值传递，故对两种类型的方法参数修改时，根据类型不同有所差异：</p>
+<ul>
+<li>基本数据类型：方法不能修改基本数据类型的参数；</li>
+<li>对象引用：由于方法得到的是对象引用的拷贝，对象引用及其他的拷贝同时引用同一个对象，因此可以修改对象引用的参数；但是方法不能让对象参数引用一个新的对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleValue</span><span class="params">(<span class="keyword">double</span> x)</span>	<span class="comment">//不可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x = x*<span class="number">3</span>;	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleSalary</span><span class="params">(Employee x)</span>	<span class="comment">//可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x.raiseSalary(<span class="number">200</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Employee x, Employee y)</span><span class="comment">//不可用</span></span></div><div class="line"><span class="function"> </span>&#123;</div><div class="line"> 	Employee temp = x;</div><div class="line"> 	x = y;</div><div class="line"> 	y = temp;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/25/003-Java-对象与类/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-003-Java与C++" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/24/003-Java与C++/">003 Java与C++</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/24/003-Java与C++/" class="archive-article-date">
   	<time datetime="2017-10-24T10:46:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
 </a>
         
@@ -218,7 +316,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/003-Java与C-“/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/10/24/003-Java与C++/">展开全文 >></a>
         </p>
       
 
@@ -671,15 +769,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">闲聊</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">闲聊</a>
               </li>
             
             <div class="clearfix"></div>
