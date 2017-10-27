@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>002 Java基础笔记 | Polaris&#39;s blog</title>
+  <title>004 Java 继承 | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="java基础数据类型在Java中，整型的范围与运行Java代码的机器无关：  int：4字节，带符号整型； short：2字节，带符号整型； long：8字节，带符号整型； byte：1字节，带符号整型，-128~127； float：4字节，带符号单精度浮点数； double：8字节，带符号双精度浮点数； char：强烈建议不使用char类型，除非确实需要处理UTF-16代码单元；  常量关键字">
+  <meta name="description" content="类 、超类和子类定义子类关键字extends表示正在构造的新类派生于一个已存在的类，在通过扩展超类定义子类的时候，仅需要指出子类与超类的不同之处。 覆盖方法子类可以定义新的方法来覆盖超类中的这个方法，由于子类不能直接访问超类的私有域，因此可以借助特定的关键字super来调用超类中公有接口。 子类构造器在超类中可以通过super对超类构造器进行调用，从而实现对超类私有域的初始化，使用super调用构">
 <meta name="keywords" content="Java 读书笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="002 Java基础笔记">
-<meta property="og:url" content="http://yoursite.com/2017/10/24/002-Java基础笔记/index.html">
+<meta property="og:title" content="004 Java 继承">
+<meta property="og:url" content="http://yoursite.com/2017/10/27/004-Java-继承/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="java基础数据类型在Java中，整型的范围与运行Java代码的机器无关：  int：4字节，带符号整型； short：2字节，带符号整型； long：8字节，带符号整型； byte：1字节，带符号整型，-128~127； float：4字节，带符号单精度浮点数； double：8字节，带符号双精度浮点数； char：强烈建议不使用char类型，除非确实需要处理UTF-16代码单元；  常量关键字">
+<meta property="og:description" content="类 、超类和子类定义子类关键字extends表示正在构造的新类派生于一个已存在的类，在通过扩展超类定义子类的时候，仅需要指出子类与超类的不同之处。 覆盖方法子类可以定义新的方法来覆盖超类中的这个方法，由于子类不能直接访问超类的私有域，因此可以借助特定的关键字super来调用超类中公有接口。 子类构造器在超类中可以通过super对超类构造器进行调用，从而实现对超类私有域的初始化，使用super调用构">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-27T01:16:20.812Z">
+<meta property="og:updated_time" content="2017-10-27T12:14:17.547Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="002 Java基础笔记">
-<meta name="twitter:description" content="java基础数据类型在Java中，整型的范围与运行Java代码的机器无关：  int：4字节，带符号整型； short：2字节，带符号整型； long：8字节，带符号整型； byte：1字节，带符号整型，-128~127； float：4字节，带符号单精度浮点数； double：8字节，带符号双精度浮点数； char：强烈建议不使用char类型，除非确实需要处理UTF-16代码单元；  常量关键字">
+<meta name="twitter:title" content="004 Java 继承">
+<meta name="twitter:description" content="类 、超类和子类定义子类关键字extends表示正在构造的新类派生于一个已存在的类，在通过扩展超类定义子类的时候，仅需要指出子类与超类的不同之处。 覆盖方法子类可以定义新的方法来覆盖超类中的这个方法，由于子类不能直接访问超类的私有域，因此可以借助特定的关键字super来调用超类中公有接口。 子类构造器在超类中可以通过super对超类构造器进行调用，从而实现对超类私有域的初始化，使用super调用构">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -141,57 +141,50 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-002-Java基础笔记" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-004-Java-继承" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      002 Java基础笔记
+      004 Java 继承
     </h1>
   
 
         
-        <a href="/2017/10/24/002-Java基础笔记/" class="archive-article-date">
-  	<time datetime="2017-10-24T10:45:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
+        <a href="/2017/10/27/004-Java-继承/" class="archive-article-date">
+  	<time datetime="2017-10-27T01:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="java基础"><a href="#java基础" class="headerlink" title="java基础"></a>java基础</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>在Java中，整型的范围与运行Java代码的机器无关：</p>
+        <h2 id="类-、超类和子类"><a href="#类-、超类和子类" class="headerlink" title="类 、超类和子类"></a>类 、超类和子类</h2><h3 id="定义子类"><a href="#定义子类" class="headerlink" title="定义子类"></a>定义子类</h3><p>关键字extends表示正在构造的新类派生于一个已存在的类，在通过扩展超类定义子类的时候，仅需要指出子类与超类的不同之处。</p>
+<h3 id="覆盖方法"><a href="#覆盖方法" class="headerlink" title="覆盖方法"></a>覆盖方法</h3><p>子类可以定义新的方法来覆盖超类中的这个方法，由于子类不能直接访问超类的私有域，因此可以借助特定的关键字super来调用超类中公有接口。</p>
+<h3 id="子类构造器"><a href="#子类构造器" class="headerlink" title="子类构造器"></a>子类构造器</h3><p>在超类中可以通过super对超类构造器进行调用，从而实现对超类私有域的初始化，使用super调用构造器的语句必须是子类构造器的第一条语句。<br>如果子类的构造器没有显式调用超类的构造器，则将自动调用超类默认（没有参数）的构造器。如果超类没有默认构造器，并且在子类的构造器中没有显式地调用超类的其他构造器，则Java编译器将报告错误。<br>关键字this用途：1.引用隐式参数；2.调用该类其他的构造器；关键字super用途：1.调用超类的方法；2.调用超类的构造器；</p>
 <ul>
-<li><strong>int：</strong>4字节，带符号整型；</li>
-<li><strong>short：</strong>2字节，带符号整型；</li>
-<li><strong>long：</strong>8字节，带符号整型；</li>
-<li><strong>byte：</strong>1字节，带符号整型，-128~127；</li>
-<li><strong>float：</strong>4字节，带符号单精度浮点数；</li>
-<li><strong>double：</strong>8字节，带符号双精度浮点数；</li>
-<li><strong>char：</strong>强烈建议不使用char类型，除非确实需要处理UTF-16代码单元；</li>
+<li><strong>多态：</strong>一个对象变量可以指示多种实际类型的现象；</li>
+<li><strong>动态绑定：</strong>在运行时能够自动选择调用哪个方法的现象；</li>
 </ul>
-<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>关键字<strong>final</strong>指示常量；<strong>static final</strong>设置类常量，提供一个类中的多个方法使用；<br>如果将一个类标记为<strong>strictfp</strong>，这个类中的所有方法都要使用严格的浮点计算。</p>
-<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>如果想对浮点数进行四舍五入，需要使用<strong>Math.round()</strong>，round方法返回结果为long类型，可能还需要显示的强制类型转换以防止信息丢失。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> x = <span class="number">9.97</span>;</div><div class="line"><span class="keyword">int</span> nx = (<span class="keyword">int</span>)Math.round(x);</div></pre></td></tr></table></figure></p>
-<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><p><strong>&gt;&gt;&gt;</strong>运算符会用0填充高位，<strong>&gt;&gt;</strong>运算符用符号位填充高位；不存在<strong>&lt;&lt;&lt;</strong>运算符。</p>
-<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h4 id="1-子串"><a href="#1-子串" class="headerlink" title="1. 子串"></a>1. 子串</h4><p>String类的substring方法从较大的字符串中提取出子串：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//substring(pos, pos+len)</span></div><div class="line">String greeting = <span class="string">"Hello"</span>;</div><div class="line">String s = greeting.substring(<span class="number">0</span>, <span class="number">3</span>);</div></pre></td></tr></table></figure></p>
-<h4 id="2-拼接"><a href="#2-拼接" class="headerlink" title="2. 拼接"></a>2. 拼接</h4><p>Java允许使用+号连接两个字符串，当一个字符串与一个非字符串的值进行拼接时，后者被转换成字符串（任何一个Java对象都可以转换成字符串）。<br>如果需要把多个字符串放在一起，用一个定界符分隔，可以使用静态join方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String all = String.join(<span class="string">"/"</span>, <span class="string">"S"</span>, <span class="string">"M"</span>, <span class="string">"L"</span>, <span class="string">"XL"</span>);</div><div class="line"><span class="comment">//all表示为“S/M/L/XL”</span></div></pre></td></tr></table></figure></p>
-<h4 id="3-不可变字符串"><a href="#3-不可变字符串" class="headerlink" title="3. 不可变字符串"></a>3. 不可变字符串</h4><p>String类没有提供修改字符串的方法，当修改字符串时，首先提取需要的字符，再拼接替换的字符串：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">greeting = greeting.substring(<span class="number">0</span>, <span class="number">3</span>) +<span class="string">"p!"</span>;</div><div class="line"><span class="comment">//greeting表示为“Help!”</span></div></pre></td></tr></table></figure></p>
-<p>Java编译器让字符串共享，类似字符串变量指向公共存储池中相应的位置，如果复制一个字符串变量，原始字符串与复制的字符串共享相同的字符。</p>
-<h4 id="4-检测字符串是否相等"><a href="#4-检测字符串是否相等" class="headerlink" title="4. 检测字符串是否相等"></a>4. 检测字符串是否相等</h4><p>使用equals方法检测两个字符串是否相等：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s.equals(t);</div><div class="line"><span class="string">"Hello"</span>.equals(greeting);</div><div class="line"><span class="string">"Hello"</span>.equalsIgnoreCase(<span class="string">"hello"</span>);	<span class="comment">//不区分大小写检测字符串是否相等</span></div></pre></td></tr></table></figure></p>
-<p><strong>不要使用==运算符检测两个字符串是否相等，这个运算符只能够确定两个字符串是否放在同一个位置上。</strong></p>
-<h4 id="5-构建字符串"><a href="#5-构建字符串" class="headerlink" title="5. 构建字符串"></a>5. 构建字符串</h4><p>将较短的字符串构建字符串，若使用字符串连接的方式达到此目的效率较低，可以使用StringBuilder类实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line"><span class="comment">//每次需要添加一部分时，就调用append方法</span></div><div class="line">builder.append(ch);</div><div class="line">builder.append(str);</div><div class="line"><span class="comment">//需要构建字符串时就调用toString方法，获得String对象</span></div><div class="line">String compelteString = builder.toString();</div></pre></td></tr></table></figure></p>
-<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>通过控制台进行输入，需要构造一个Scanner对象，并与“标准输入流”System.in关联。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Scanner in = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">String name = in.nextLin();</div></pre></td></tr></table></figure></p>
-<h3 id="大数值"><a href="#大数值" class="headerlink" title="大数值"></a>大数值</h3><p>使用java.math包中的类BigInteger和BigDecimal来处理包含任意长度数字序列的数值：BigInteger类实现了任意精度的整数运算，BigDecimal实现了任意精度的浮点数运算。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//将普通数值转换为大数值</span></div><div class="line">BigInteger a = BigInteger.valueOf(<span class="number">100</span>);</div><div class="line">BigInteger c = a.add(b);</div><div class="line">BigInteger d = c.multiply(b.add(BigInteger.valueOf(<span class="number">2</span>)));</div></pre></td></tr></table></figure></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>创建一个数字数组时，所有元素都初始化为0,；boolean数组的元素会初始化为false；对象数组的元素则初始化为null，表示这些元素（还）未存放任何对象。在Java中，允许数组长度为0。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一个包含10个字符串的数组，所有字符串都为null</span></div><div class="line">String[] names = <span class="keyword">new</span> String[<span class="number">10</span>];</div><div class="line"><span class="comment">//使数组包含空串</span></div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)</div><div class="line">	names[i] = <span class="string">""</span>;</div></pre></td></tr></table></figure></p>
-<h4 id="1-数组拷贝"><a href="#1-数组拷贝" class="headerlink" title="1. 数组拷贝"></a>1. 数组拷贝</h4><p>Java允许将一个数组变量拷贝给另一个数组变量，这时两个变量将引用同一个数组。如果希望将一个数组的所有值拷贝到另一个新的数组中去，就要使用Arrays类的copyOf方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[] nums1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</div><div class="line"><span class="keyword">int</span>[] nums2 = Arrays.copyOf(nums1, nums1.length);</div></pre></td></tr></table></figure></p>
-<h4 id="2-命令行参数"><a href="#2-命令行参数" class="headerlink" title="2. 命令行参数"></a>2. 命令行参数</h4><p>在Java应用程序的main方法中，程序名并没有存储在args数组中。</p>
-<h4 id="3-数组排序"><a href="#3-数组排序" class="headerlink" title="3. 数组排序"></a>3. 数组排序</h4><p>可以是使用Arrays类中的sort方法。</p>
-<h4 id="4-不规则数组"><a href="#4-不规则数组" class="headerlink" title="4. 不规则数组"></a>4. 不规则数组</h4><p>Java实际没有多维数组，只有一维数组，类似于C++中包含指针的数组，因此可以构造不规则数组：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[][] v = <span class="keyword">new</span> <span class="keyword">int</span>[MAX+<span class="number">1</span>][];</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=Max; i++)</div><div class="line">	v[i] = <span class="keyword">new</span> <span class="keyword">int</span>[i+<span class="number">1</span>];</div></pre></td></tr></table></figure></p>
-<h2 id="java安装"><a href="#java安装" class="headerlink" title="java安装"></a>java安装</h2><ul>
-<li>javac程序是一个Java编译器，将.java文件编译为.class文件；</li>
-<li>java程序启动Java虚拟机，虚拟机执行编译器放在class文件中的字节；</li>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>“is-a”规则表明程序中出现超类对象的任何地方都可以用子类对象置换，不能将一个超类的引用赋予子类变量。</p>
+<h3 id="理解方法调用"><a href="#理解方法调用" class="headerlink" title="理解方法调用"></a>理解方法调用</h3><ul>
+<li>静态绑定：对于private方法、static方法、final方法或者构造器，编译器可以准确知道应该调用哪个方法，这种调用方式称为静态绑定；</li>
+<li>动态绑定：依赖于隐式参数的实际类型，并且在运行时实现动态绑定。<br>每次调用方法都要进行搜索，时间消耗大，因此虚拟机预先为每个类创建了一个方法表，其中列出所有方法的签名和实际调用的方法。</li>
 </ul>
+<h3 id="组织继承：final类和方法"><a href="#组织继承：final类和方法" class="headerlink" title="组织继承：final类和方法"></a>组织继承：final类和方法</h3><ul>
+<li>final类：表示类不允许扩展，其中方法自动成为final，而不包括域；</li>
+<li>final方法：表示子类不能覆盖这个方法；</li>
+<li>final域：构造对象之后就不允许改变它们的值；<br>虚拟机中的即时编译器可以准确知道类之间的继承关系，并能够检测出类中是否真正地存在覆盖给定的方法。如果方法很简短，被频繁调用且没有真正地覆盖，那么即时编译器就会将这个方法进行内联处理。如果虚拟机加载了另外一个子类，而这个子类中包含了对内联方法的覆盖，则优化器将取消对覆盖方法的内联。</li>
+</ul>
+<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>将一个子类的引用赋给一个超类变量，编译器是允许的；将一个超类的引用赋给一个子类变量，必须进行类型转换，这样才能通过运行时的检查。</p>
+<ul>
+<li>只能在继承层次内进行类型转换；</li>
+<li>在将超类转换成子类之前，应该使用instanceof进行检查；</li>
+</ul>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>使用abstract关键字课声明抽象方法，包含一个或多个抽象方法的类本身必须被声明为抽象的。除了抽象方法外，抽象类还可以包含具体数据和具体方法。<br>类即时不含抽象方法，也可以将类声明为抽象类。抽象类不能被实例化，即不能创建这个类的对象。可以创建一个抽象类的对象变量，但是它只能引用非抽象子类的对象。</p>
+<h3 id="受保护访问"><a href="#受保护访问" class="headerlink" title="受保护访问"></a>受保护访问</h3><p>Java中的受保护部分对所有子类及同一个包中的所有其他类都可见，比C++的保护机制安全性差。</p>
 
       
 
@@ -282,7 +275,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/24/002-Java基础笔记/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/27/004-Java-继承/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -296,18 +289,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/10/24/003-Java与C++/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          003 Java与C++
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/10/23/001-Hexo使用笔记/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">001 Hexo使用笔记</div>
+    <a href="/2017/10/26/001-论文笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
   

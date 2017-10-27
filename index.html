@@ -141,6 +141,169 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-004-Java-继承" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/27/004-Java-继承/">004 Java 继承</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/27/004-Java-继承/" class="archive-article-date">
+  	<time datetime="2017-10-27T01:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="类-、超类和子类"><a href="#类-、超类和子类" class="headerlink" title="类 、超类和子类"></a>类 、超类和子类</h2><h3 id="定义子类"><a href="#定义子类" class="headerlink" title="定义子类"></a>定义子类</h3><p>关键字extends表示正在构造的新类派生于一个已存在的类，在通过扩展超类定义子类的时候，仅需要指出子类与超类的不同之处。</p>
+<h3 id="覆盖方法"><a href="#覆盖方法" class="headerlink" title="覆盖方法"></a>覆盖方法</h3><p>子类可以定义新的方法来覆盖超类中的这个方法，由于子类不能直接访问超类的私有域，因此可以借助特定的关键字super来调用超类中公有接口。</p>
+<h3 id="子类构造器"><a href="#子类构造器" class="headerlink" title="子类构造器"></a>子类构造器</h3><p>在超类中可以通过super对超类构造器进行调用，从而实现对超类私有域的初始化，使用super调用构造器的语句必须是子类构造器的第一条语句。<br>如果子类的构造器没有显式调用超类的构造器，则将自动调用超类默认（没有参数）的构造器。如果超类没有默认构造器，并且在子类的构造器中没有显式地调用超类的其他构造器，则Java编译器将报告错误。<br>关键字this用途：1.引用隐式参数；2.调用该类其他的构造器；关键字super用途：1.调用超类的方法；2.调用超类的构造器；</p>
+<ul>
+<li><strong>多态：</strong>一个对象变量可以指示多种实际类型的现象；</li>
+<li><strong>动态绑定：</strong>在运行时能够自动选择调用哪个方法的现象；</li>
+</ul>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>“is-a”规则表明程序中出现超类对象的任何地方都可以用子类对象置换，不能将一个超类的引用赋予子类变量。</p>
+<h3 id="理解方法调用"><a href="#理解方法调用" class="headerlink" title="理解方法调用"></a>理解方法调用</h3><ul>
+<li>静态绑定：对于private方法、static方法、final方法或者构造器，编译器可以准确知道应该调用哪个方法，这种调用方式称为静态绑定；</li>
+<li>动态绑定：依赖于隐式参数的实际类型，并且在运行时实现动态绑定。<br>每次调用方法都要进行搜索，时间消耗大，因此虚拟机预先为每个类创建了一个方法表，其中列出所有方法的签名和实际调用的方法。</li>
+</ul>
+<h3 id="组织继承：final类和方法"><a href="#组织继承：final类和方法" class="headerlink" title="组织继承：final类和方法"></a>组织继承：final类和方法</h3><ul>
+<li>final类：表示类不允许扩展，其中方法自动成为final，而不包括域；</li>
+<li>final方法：表示子类不能覆盖这个方法；</li>
+<li>final域：构造对象之后就不允许改变它们的值；<br>虚拟机中的即时编译器可以准确知道类之间的继承关系，并能够检测出类中是否真正地存在覆盖给定的方法。如果方法很简短，被频繁调用且没有真正地覆盖，那么即时编译器就会将这个方法进行内联处理。如果虚拟机加载了另外一个子类，而这个子类中包含了对内联方法的覆盖，则优化器将取消对覆盖方法的内联。</li>
+</ul>
+<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>将一个子类的引用赋给一个超类变量，编译器是允许的；将一个超类的引用赋给一个子类变量，必须进行类型转换，这样才能通过运行时的检查。</p>
+<ul>
+<li>只能在继承层次内进行类型转换；</li>
+<li>在将超类转换成子类之前，应该使用instanceof进行检查；</li>
+</ul>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>使用abstract关键字课声明抽象方法，包含一个或多个抽象方法的类本身必须被声明为抽象的。除了抽象方法外，抽象类还可以包含具体数据和具体方法。<br>类即时不含抽象方法，也可以将类声明为抽象类。抽象类不能被实例化，即不能创建这个类的对象。可以创建一个抽象类的对象变量，但是它只能引用非抽象子类的对象。</p>
+<h3 id="受保护访问"><a href="#受保护访问" class="headerlink" title="受保护访问"></a>受保护访问</h3><p>Java中的受保护部分对所有子类及同一个包中的所有其他类都可见，比C++的保护机制安全性差。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/27/004-Java-继承/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-001-论文笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Latent Factor Guided Convolution Neural Networks for Age-Invariant Face Recognition</p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>age-invariant face recognition: AIFR<br>第一次在AIFR中使用deep CNNs进行处理。</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>AIFR主要处理在显著年龄变化下的人脸匹配问题。原先的处理方法分为两类：</p>
+<ul>
+<li>generative approaches：首先合成对应目标年龄的面部图像，再和实际图像进行匹配；</li>
+<li><ul>
+<li>该类方法需要大量的参数估计，且aging处理的建模较为复杂，使得计算量较大且结果并不稳定。</li>
+</ul>
+</li>
+<li>discriminative approaches：存在多种方法；<br>本文提出了一种latent factor guided CNN(LF-CNN)框架学习age-invariant deep face features。通过设计一个fully connected layer（称为latent factor fully connected（LF-FC） layer）从convolutional features中提取age-invariant deep features。通过设计一个称为latent identity analysis（LIA）的latent variable model，将aging process造成的variations与convolutional features中identity-related的部分分离。并利用LIA模型中的参数对LF-FC层的参数进行更新。并且，利用LIA模型和CNNs的损失函数构成age-invariant identity loss，从而对LF-CNNs的学习进行指导。<br>本文contributions：</li>
+<li>第一个提出了在AIFR中使用deep CNNs的方法；</li>
+<li>提出了LF-CNN模型处理AIFR问题；</li>
+<li>实验结果好；</li>
+</ul>
+<h1 id="The-Proposed-Method"><a href="#The-Proposed-Method" class="headerlink" title="The Proposed Method"></a>The Proposed Method</h1><h2 id="The-LF-CNNs-Model"><a href="#The-LF-CNNs-Model" class="headerlink" title="The LF-CNNs Model"></a>The LF-CNNs Model</h2><p>LF-CNN由两个关键部分组成：用于convolution features learning的convolution unit，用于age-invariant deep feature learning的LF-FC layer。</p>
+<ul>
+<li>convolution features：与传统CNNs构造相同，或者堆叠convolution layer，nonlinearity layer，optional pooling layer。本文中使用5层convolution layers，convolution kernel size设为3x3， stride设为1。在第4层和第5层，卷积的权重是局部共享的，以学习不同区域的不同中级和高级特征。使用Parametric Rectified Linear Unit作为nonlinear function以提高模型拟合度，并使用max pooling来强化potential translation和subsampling的鲁棒性。</li>
+<li>LF-FC layer：将FC layer用一个矩阵乘法公式表示：$\textbf{F}<em>{fc}=\textbf{W}\textbf{F}</em>{conv}+textbf{b}$，其中$\textbf{F}<em>{fc}$表示FC层的输出，$\textbf{F}</em>{conv}$表示convolutional feature，$\textbf{W},\textbf{b}$表示FC层的参数。利用上述公式设计可以从$\textbf{F}_{conv}$中提取age-invariant feature的一组$\textbf{W},\textbf{b}$参数。通过设计了一个Latent Identity Analysis（LIA）方法从LF-CNN模型中学习$\textbf{W},\textbf{b}$参数。而对于convolution unit，我们固定$\textbf{W},\textbf{b}$参数并通过标准SGD对它们进行更新。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/26/001-论文笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-003-Java-对象与类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -148,7 +311,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/25/003-Java-对象与类/">003 JJava 对象与类</a>
+      <a class="article-title" href="/2017/10/25/003-Java-对象与类/">003 Java 对象与类</a>
     </h1>
   
 
@@ -184,8 +347,80 @@
 <h2 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h2><p>Java对对象采用的是按值传递，故对两种类型的方法参数修改时，根据类型不同有所差异：</p>
 <ul>
 <li>基本数据类型：方法不能修改基本数据类型的参数；</li>
-<li>对象引用：由于方法得到的是对象引用的拷贝，对象引用及其他的拷贝同时引用同一个对象，因此可以修改对象引用的参数；但是方法不能让对象参数引用一个新的对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleValue</span><span class="params">(<span class="keyword">double</span> x)</span>	<span class="comment">//不可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x = x*<span class="number">3</span>;	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleSalary</span><span class="params">(Employee x)</span>	<span class="comment">//可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x.raiseSalary(<span class="number">200</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Employee x, Employee y)</span><span class="comment">//不可用</span></span></div><div class="line"><span class="function"> </span>&#123;</div><div class="line"> 	Employee temp = x;</div><div class="line"> 	x = y;</div><div class="line"> 	y = temp;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></li>
+<li>对象引用：由于方法得到的是对象引用的拷贝，对象引用及其他的拷贝同时引用同一个对象，因此可以修改对象引用的参数；但是方法不能让对象参数引用一个新的对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleValue</span><span class="params">(<span class="keyword">double</span> x)</span>	<span class="comment">//不可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x = x*<span class="number">3</span>;	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleSalary</span><span class="params">(Employee x)</span>	<span class="comment">//可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x.raiseSalary(<span class="number">200</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Employee x, Employee y)</span><span class="comment">//不可用</span></span></div><div class="line"><span class="function"> </span>&#123;</div><div class="line"> 	Employee temp = x;</div><div class="line"> 	x = y;</div><div class="line"> 	y = temp;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+</li>
 </ul>
+<h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><p>Java允许使用包将类组织起来，使用包确保类名的唯一性。从编译器的角度来看，嵌套的包之间没有任何关系，如java.util包与java.util.jar包无关。每一个都拥有独立的类集合。</p>
+<ul>
+<li>一个类可以使用所属包中的所有类，以及其他包中的共有类。</li>
+<li>使用import static静态导入，可以在使用类的静态方法和静态域时不加类名前缀：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.*;</div><div class="line">out.println(<span class="string">"Hello World"</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="将类放入包中"><a href="#将类放入包中" class="headerlink" title="将类放入包中"></a>将类放入包中</h3><p>若要将类放入包中，则必须将包的名字放在源文件开头，包中定义类的代码之前，并将包中的文件放到与完整的包匹配的子目录中。若没有在源文件中放置package语句，这个源文件中的类就被放置在一个默认包中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> classdir;</div></pre></td></tr></table></figure></p>
+<h3 id="包作用域"><a href="#包作用域" class="headerlink" title="包作用域"></a>包作用域</h3><p>如果没有指定public或private，这个部分（类、方法或变量）可以被同一个包中的所有方法访问。</p>
+<h2 id="类路径"><a href="#类路径" class="headerlink" title="类路径"></a>类路径</h2><p>类文件可以存储在JAR(Java归档)文件中，一个JAR文件中，可以包含多个压缩形式的类文件和子目录，JAR文件使用ZIP格式组织文件和子目录。<br>为了使类能够被多个程序共享，需要设置：</p>
+<ul>
+<li>将类放在一个目录下，该目录是包树状结构的基目录；</li>
+<li>将JAR文件放在一个目录下；</li>
+<li>设置类路径，类路径包括基目录、当前目录(.)、JAR文件。<br>例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/home/user/classdir:.:/home/user/archieves/archieve.jar <span class="comment">//UNIX环境</span></div><div class="line">c:\classdir;.;c:\archieves\archieve.jar <span class="comment">//Windows环境</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>javac编辑器总是在当前目录中查找文件，但Java虚拟机仅在类路径中有“.”目录时才查看当前目录<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">javac classdir\MyProg.java</div><div class="line">java classdir.MyProg</div></pre></td></tr></table></figure></p>
+<p>建议采用-classpath选项指定类路径：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -classpath c:\classdir;.;c:\archieves\archieve.jar MyProg</div></pre></td></tr></table></figure></p>
+<h2 id="文档注释"><a href="#文档注释" class="headerlink" title="文档注释"></a>文档注释</h2><p>JDK包含javadoc，可以由源文件生成一个HTML文件。</p>
+<h3 id="注释的插入"><a href="#注释的插入" class="headerlink" title="注释的插入"></a>注释的插入</h3><p>javadoc实用程序从以下特性中抽取信息：</p>
+<ul>
+<li>包；</li>
+<li>共有类与接口；</li>
+<li>共有的和受保护的构造器及方法；</li>
+<li><p>共有的和受保护的域；<br>注释以/**开始，以*/结束，每个/**…*/文档注释在标记之后紧跟着自由格式文本，标记由@开头；自由格式文本的第一句应为一个概要性的句子，javadoc实用程序自动将这些句子抽出来形成概要页。</p>
+</li>
+<li><p><strong>类注释：</strong>类注释必须放在import语句之后，类定义之前；</p>
+</li>
+<li><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</li>
+<li><ul>
+<li>@param变量描述：将对当前方法的“param”（参数）部分添加一个条目；</li>
+</ul>
+</li>
+<li><ul>
+<li>@return描述：将对当前方法添加“return”（返回）部分；</li>
+</ul>
+</li>
+<li><ul>
+<li>@throws类描述：将添加一个注释，用于表示这个方法有可能抛出异常；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Raise the salary of an employee.</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> byPercent the percentage by which to raise the salary (e.g. 10 means 10%)</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> the amount of the raise</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">raiseSalary</span><span class="params">(<span class="keyword">double</span> byPercent)</span></span>&#123;</div><div class="line">	<span class="keyword">double</span> raise = salary * byPercent / <span class="number">100</span>;</div><div class="line">	salary += raise;</div><div class="line">	<span class="keyword">return</span> raise;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>域注释：</strong>只需对公有域（通常指静态常量）建立文档；</p>
+</li>
+<li><strong>通用注释：</strong></li>
+<li><ul>
+<li>@author姓名；</li>
+</ul>
+</li>
+<li><ul>
+<li>@version文本；</li>
+</ul>
+</li>
+<li><ul>
+<li>@since文本：这里的text可以是对引入特性的版本描述；</li>
+</ul>
+</li>
+<li><ul>
+<li>@deprecated文本；</li>
+</ul>
+</li>
+<li><ul>
+<li>@see引用；</li>
+</ul>
+</li>
+</ul>
+<h2 id="类设计技巧"><a href="#类设计技巧" class="headerlink" title="类设计技巧"></a>类设计技巧</h2><ol>
+<li>一定要保证数据私有；</li>
+<li>一定要对数据初始化；</li>
+<li>不要在类中使用过多的基本类型；</li>
+<li>不是所有的域都需要独立的域访问器和域更改器；</li>
+</ol>
 
       
 
@@ -199,7 +434,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
         		</li>
       		
 		</ul>
@@ -293,6 +528,14 @@
 <p>C++string对象也自动进行内存的分配和回收，内存管理器通过构造器、赋值操作和析构函数显式执行，然而C++字符串可以修改。在C++string中，==运算符比较两个字符串是否相等。</p>
 <h2 id="控制流程"><a href="#控制流程" class="headerlink" title="控制流程"></a>控制流程</h2><p>Java的控制流程和C与C++的控制流程结构一样。但是Java中不允许在嵌套的块中重定义一个变量，而C++允许这种重定义使内层定义的变量覆盖外层定义的变量。</p>
 <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>Java数组与C++数组在堆栈上很大不同，但是基本上与分配在堆（heap）上的数组指针一样。下面两种情况相同：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">100</span>];	<span class="comment">//Java</span></div><div class="line"><span class="keyword">int</span>*  a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">100</span>];	<span class="comment">//C++</span></div></pre></td></tr></table></figure></p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>在Java中，对象变量可以设为null，表明这个对象变量目前没有引用任何对象；在C++中没有空引用，并且引用不能被赋值。<strong>可以将Java的对象变量看做C++的对象指针</strong>。<br>所有Java对象都存储在堆中，Java中没有C++的错误指针或内存溢出问题，若使用一个未初始化的指针，运行系统将产生运行时错误；同时垃圾收集器将处理内存管理问题。</p>
+<p>##类</p>
+<h3 id="类的定义方法"><a href="#类的定义方法" class="headerlink" title="类的定义方法"></a>类的定义方法</h3><p>在Java中，所有方法都必须在类的内部定义，但并不表示是内联方法，是否将某个方法设置为内联方法是Java虚拟机的任务，即时编译器会监视调用那些简洁、经常被调用、没有被重载以及可优化的方法。<br>C++中，通常在类的外面定义方法，在类的内部定义方法，则该方法自动成为内联方法。</p>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>在Java中，可以在类的定义中，直接将一个值赋给任何域；在C++中，不能直接初始化类的实例域，所有域必须在构造器中设置，可利用初始化列表进行设置。<br>在Java中，如果构造器的第一个语句形如this(…)，这个构造器将调用同一类的另一个构造器；在C++中，一个构造器不能调用另一个构造器，必须将抽取出的公共初始化代码编写成一个独立的方法。</p>
+<h3 id="析构器"><a href="#析构器" class="headerlink" title="析构器"></a>析构器</h3><p>在C++中有显式的析构器方法，当对象不再使用时执行清理代码，回收分配给对象的存储空间；在Java中有自动的垃圾回收器，不需要人工回收内存，故Java不支持析构器，但可以为类添加finalize方法，在垃圾回收器清楚对象之前调用。</p>
+<h2 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h2><p>在C++中，由于编译器除了正在编译的文件以及在头文件中明确包含的文件，无法查看任何文件的内部，因此必须使用#include将外部特性的声明加载进来。Java编译器可以查看其他文件的内部，只要给出位置指示。<br>C++的namespace和using指令和Java的package与import语句类似。</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>Java用关键字extends代替C++中的冒号，在Java中，所有的继承都是公有继承，而没有C++中的私有继承和保护继承。在Java中使用关键字super调用超类的方法，而在C++中采用超类名加上::操作符的形式。<br>在Java中，不需要将方法声明为虚拟方法，动态绑定是默认的处理方法。如果不希望让一个方法具有虚拟特征，可以将它标记为final。</p>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>在Java中需要将instanceof运算符和类型转换组合起来使用；在C++中，可以在dynamic_cast操作中完成类型测试和转换。</p>
 
       
 
@@ -306,7 +549,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
         		</li>
       		
 		</ul>
@@ -410,7 +653,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
         		</li>
       		
 		</ul>
@@ -769,7 +1012,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java 读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -778,6 +1021,10 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">闲聊</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
             
             <div class="clearfix"></div>
