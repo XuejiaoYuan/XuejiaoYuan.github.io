@@ -141,6 +141,178 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-005-Java-接口、lambda表达式与内部类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/31/005-Java-接口、lambda表达式与内部类/">005 Java 接口、lambda表达式与内部类</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/31/005-Java-接口、lambda表达式与内部类/" class="archive-article-date">
+  	<time datetime="2017-10-31T05:06:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口（interface）技术，主要用来描述类具有什么功能，而并不给出每个功能的具体实现。一个类可以实现（implement）一个或多个接口，并在需要接口的地方，随时使用实现了相应接口的对象。<br>接口可以定义常量，但决不能含有实例域，提供实例域和方法实现的任务应该由实现接口的那个类来完成。在接口中的所有方法都自动地是public，在实现接口时，必须把方法声明为public。为了让类实现一个接口，通常需要下面两个步骤：</p>
+<ul>
+<li>将类声明为实现给定的接口，使用关键字implements；</li>
+<li><p>对接口中的所有方法进行定义；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//接口</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object other)</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//实现</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">Comparable</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object otherObject)</span></span>&#123;</div><div class="line">		Employee other = (Employee) otherObject;</div><div class="line">		<span class="keyword">return</span> Double.compare(salary, other.salary);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  java.util.Arrays;<br>  static void sort(Object[] a)<br>  使用mergesort算法对数组a中的元素进行排序，要求数组中的元素必须实现Comparable接口的类，并且元素之间必须是可比较的。</p>
+</li>
+</ul>
+<h3 id="接口的特性"><a href="#接口的特性" class="headerlink" title="接口的特性"></a>接口的特性</h3><p>接口不是类，不能使用new运算符实例化一个接口，但可以声明接口的变量。接口变量必须引用实现了接口的类对象。可以使用instanceof检查一个对象是否实现某个特定的接口。<br>接口也可以被扩展，从而从通用接口变为专用接口。接口中的方法自动被设置为public，接口中的域被自动设为public static final。<br>类实现多个接口时，使用逗号将实现的各个接口分隔开。</p>
+<h3 id="接口与抽象类"><a href="#接口与抽象类" class="headerlink" title="接口与抽象类"></a>接口与抽象类</h3><p>由于Java不支持多重继承，因此每个类只能扩展于一个类，但是可以实现多个接口。</p>
+<h3 id="默认方法"><a href="#默认方法" class="headerlink" title="默认方法"></a>默认方法</h3><p>可以为接口提供一个默认实现，必须用default修饰符标记这样一个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(T other)</span> </span>&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="解决默认方法冲突"><a href="#解决默认方法冲突" class="headerlink" title="解决默认方法冲突"></a>解决默认方法冲突</h3><p>若在接口中定义默认方法，并在超类或另一接口中定义同样的方法，处理方法如下：</p>
+<ul>
+<li>超类优先：若超类提供一个具体方法，同名且参数类型相同的默认方法会被忽略；</li>
+<li>接口冲突：若超接口提供了一个默认方法，另一个接口提供同名且参数类型相同的方法，子类必须覆盖这个方法来解决冲突；</li>
+</ul>
+<h3 id="对象克隆"><a href="#对象克隆" class="headerlink" title="对象克隆"></a>对象克隆</h3><p>Cloneable接口是Java提供的一组标记接口之一，不包含任何方法，唯一作用就是允许在类型查询中使用instanceof。不同于Comparable等接口通常用于确保一个类实现一个或一组特定的方法。<br>即使clone的默认（浅拷贝）实现能够满足要求，还是需要实现Cloneable接口，将clone重新定义为public，再调用super.clone()。若要建立深拷贝，需要克隆对象中可变的实例域。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/31/005-Java-接口、lambda表达式与内部类/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-001-Android-探究活动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/27/001-Android-探究活动/">001 Android 探究活动</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/27/001-Android-探究活动/" class="archive-article-date">
+  	<time datetime="2017-10-27T12:25:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="活动定义及基本用法"><a href="#活动定义及基本用法" class="headerlink" title="活动定义及基本用法"></a>活动定义及基本用法</h2><p>活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/27/001-Android-探究活动/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-004-Java-继承" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -183,9 +355,53 @@
 <li>只能在继承层次内进行类型转换；</li>
 <li>在将超类转换成子类之前，应该使用instanceof进行检查；</li>
 </ul>
-<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>使用abstract关键字课声明抽象方法，包含一个或多个抽象方法的类本身必须被声明为抽象的。除了抽象方法外，抽象类还可以包含具体数据和具体方法。<br>类即时不含抽象方法，也可以将类声明为抽象类。抽象类不能被实例化，即不能创建这个类的对象。可以创建一个抽象类的对象变量，但是它只能引用非抽象子类的对象。</p>
+<h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><p>使用abstract关键字可声明抽象方法，包含一个或多个抽象方法的类本身必须被声明为抽象的。除了抽象方法外，抽象类还可以包含具体数据和具体方法。<br>类即使不含抽象方法，也可以将类声明为抽象类。抽象类不能被实例化，即不能创建这个类的对象。可以创建一个抽象类的对象变量，但是它只能引用非抽象子类的对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getDescription</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h3 id="受保护访问"><a href="#受保护访问" class="headerlink" title="受保护访问"></a>受保护访问</h3><p>Java中的受保护部分对所有子类及同一个包中的所有其他类都可见，比C++的保护机制安全性差。</p>
-
+<h2 id="Object：所有类的超类"><a href="#Object：所有类的超类" class="headerlink" title="Object：所有类的超类"></a>Object：所有类的超类</h2><p>在Java中，只有基本类型不是对象。所有的数组类型，不管是对象数组还是基本类型的数组都扩展了Object类。</p>
+<h3 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h3><p>Object类中的equals方法用于检测一个对象是否等于另一个对象。在Object类中，这个方法将判断两个对象是否具有相同的引用。<br>在子类中定义equals方法时，首先调用超类的equals。如果检测失败，对象就不可能相等。如果超类中的域都相等，就需要比较子类中的实例域。</p>
+<h3 id="相等测试与继承"><a href="#相等测试与继承" class="headerlink" title="相等测试与继承"></a>相等测试与继承</h3><p>编写equals方法的建议：</p>
+<ol>
+<li>显式参数名为otherObject，需要将它转换为另一个变量other；</li>
+<li><p>检测this与otherObject是否引用同一个对象；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">this</span> == otherObject) <span class="keyword">return</span> ture;</div></pre></td></tr></table></figure>
+</li>
+<li><p>检测otherObject是否为null，如果为null，返回false；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(otherObject == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>比较this与otherObject是否属于同一类，如果equals的语义在每个子类中有所改变，就使用getClass检测，如果所有子类都属于统一的语义，就使用instanceof检测；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(getClass() != otherObject.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>将otherObject转换为相应的类类型变量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ClassName other = (ClassName) otherObjectl;</div></pre></td></tr></table></figure>
+</li>
+<li><p>对所有需要比较的于进行比较，使用==比较基本类型域，使用equals比较对象域，如果所有的域都匹配，就返回true，否则返回false。如果在子类中重新定义equals，就要在其中包含调用super.equals(other)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> field == other.field1</div><div class="line">	&amp;&amp; Object.equals(field2, other.field2)</div><div class="line">	&amp;&amp; ...;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="hashCode方法"><a href="#hashCode方法" class="headerlink" title="hashCode方法"></a>hashCode方法</h3><p>散列表是由对象导出的一个整型值。由于hashCode方法定义在Object类中，因此每个对象都有一个默认的散列码，其值为对象的存储地址。<br>如果重新定义equals方法，就必须重新定义hashCode方法，以便用户可以将对象插入到散列表中，equals与hashCode的定义必须一致。需要组合多个散列值时，可以调用Object.hash并提供多个参数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> Objects.hashCode(name, salary, hireDay);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>若用相同的参数构造不同对象，则对象的散列码相同，若后续对对象进行修改，则对象散列码随之发生改变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Manager carl = <span class="keyword">new</span> Manager(<span class="string">"Carl"</span>, <span class="number">80000</span>, <span class="number">1987</span>, <span class="number">12</span>, <span class="number">15</span>);</div><div class="line">Manager boss = <span class="keyword">new</span> Manager(<span class="string">"Carl"</span>, <span class="number">80000</span>, <span class="number">1987</span>, <span class="number">12</span>, <span class="number">15</span>);</div><div class="line">boss.setBonus(<span class="number">5000</span>);</div><div class="line">System.out.println(<span class="string">"carl.hashCode(): "</span> + carl.hashCode());</div><div class="line">System.out.println(<span class="string">"boss.hashCode(): "</span> + boss.hashCode());</div><div class="line"><span class="comment">//输出结果</span></div><div class="line"><span class="comment">//carl.hashCode(): 1436354726</span></div><div class="line"><span class="comment">//boss.hashCode(): -1584852826</span></div><div class="line"><span class="comment">//若将第三行注释掉，则有</span></div><div class="line"><span class="comment">//carl.hashCode(): 1436354726</span></div><div class="line"><span class="comment">///boss.hashCode(): 1436354726</span></div></pre></td></tr></table></figure></p>
+<h3 id="toString方法"><a href="#toString方法" class="headerlink" title="toString方法"></a>toString方法</h3><p>用于返回表示对象值的字符串。建议通过调用getClass().getName()获得类名的字符串。<br>随处可见toString方法的主要原因是：只要对象与一个字符串通过操作符“+x”相连，Java编译就会自动调用toString方法，以便获得这个对象的字符串描述；如果x为任意对象，并调用System.out.println(x)，println方法就会直接调用x.toString()，并打印输出得到的字符串。<br>Object类定义了toString方法，用来打印输出对象所属的类名和散列码。数组继承了Object类的toString方法，若要输出数组内容，需要调用静态方法Arrays.toString.</p>
+<h2 id="泛型数组列表"><a href="#泛型数组列表" class="headerlink" title="泛型数组列表"></a>泛型数组列表</h2><p>ArrayList是一个采用类型参数的泛型类，类型参数不允许是基本类型。</p>
+<ul>
+<li><strong>add：</strong>使用add方法可以将元素添加到数组列表中，如果调用add且数组已经满了，数组列表就将自动创建一个更大的数组，并将所有的对象从较小的数组中拷贝到较大的数组中；</li>
+<li><strong>ensureCapacity：</strong>如果已经清楚或能够估计出数组可能存储的元素数量，就可以在填充数组之前调用，也可以把初始容量传递给ArrayList构造器；</li>
+<li><strong>size：</strong>返回数组列表中包含的实际元素数目；</li>
+<li><strong>trimToSize：</strong>当确定数组列表大小不再发生变化时，调用函数，将存储区域的大小调整为当前元素数量所需的存储空间数目，垃圾回收器将回收多余的存储空间；<br>C++的vector向量是值拷贝，即赋值操作会构建一个新向量；Java的ArrayList的赋值语句，将两个向量引用同一个数组列表。</li>
+</ul>
+<h3 id="访问数组列表元素"><a href="#访问数组列表元素" class="headerlink" title="访问数组列表元素"></a>访问数组列表元素</h3><p>使用get和set方法实现访问或改变数组元素的操作，只有i小于或等于数组列表的大小时，才能调用set函数，如下代码错误：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;<span class="keyword">int</span>&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">100</span>);	<span class="comment">//capacity 100, size 0</span></div><div class="line">list.set(<span class="number">0</span>, x);	<span class="comment">//no element 0 yet</span></div></pre></td></tr></table></figure></p>
+<h2 id="对象包装器与自动装箱"><a href="#对象包装器与自动装箱" class="headerlink" title="对象包装器与自动装箱"></a>对象包装器与自动装箱</h2><p>包装器（wrapper）用于将基本类型如int转换为对象Integer。对象包装器类是不可变的，即一旦构造了包装器，就不允许更改包装在其中的值，且对象包装器类是final， 因此不能定义它们的子类。<br>装箱和拆箱是编译其认可的，而不是虚拟机，编译器在生成类的字节码时，插入必要的方法调用，虚拟机知识执行字节码。</p>
+<h2 id="参数数量可变的方法"><a href="#参数数量可变的方法" class="headerlink" title="参数数量可变的方法"></a>参数数量可变的方法</h2><p>…表示这个方法可以接受任意数量的对象，Object…参数类型相当于Objec[]。</p>
+<h2 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h2><p>在比较两个枚举类型的值时，永远不需要调用equals，而直接使用“==”。</p>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>能够分析类能力的程序称为反射，反射机制可以用来：</p>
+<ul>
+<li>在运行时分析类；</li>
+<li>在运行时查看对象；</li>
+<li>实现通用的数组操作代码；</li>
+<li>利用Method对象，这个对象类似C++中的函数指针；</li>
+</ul>
+<h3 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h3><p>在程序运行期间，Java运行时系统始终为所有对象维护一个运行时的类型标志，这个信息跟踪每个对象所属的类，虚拟机利用运行时类型信息选择相应的方法执行。保存这些信息的类称为Class。</p>
+<h3 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h3><p>将可能抛出已检查异常的一个或多个方法调用代码放在try块中，然后在catch子句中提供处理器代码。</p>
+<h3 id="在运行时使用反射分析对象"><a href="#在运行时使用反射分析对象" class="headerlink" title="在运行时使用反射分析对象"></a>在运行时使用反射分析对象</h3>
       
 
       
@@ -198,7 +414,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -434,7 +654,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -533,8 +757,8 @@
 <h3 id="类的定义方法"><a href="#类的定义方法" class="headerlink" title="类的定义方法"></a>类的定义方法</h3><p>在Java中，所有方法都必须在类的内部定义，但并不表示是内联方法，是否将某个方法设置为内联方法是Java虚拟机的任务，即时编译器会监视调用那些简洁、经常被调用、没有被重载以及可优化的方法。<br>C++中，通常在类的外面定义方法，在类的内部定义方法，则该方法自动成为内联方法。</p>
 <h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>在Java中，可以在类的定义中，直接将一个值赋给任何域；在C++中，不能直接初始化类的实例域，所有域必须在构造器中设置，可利用初始化列表进行设置。<br>在Java中，如果构造器的第一个语句形如this(…)，这个构造器将调用同一类的另一个构造器；在C++中，一个构造器不能调用另一个构造器，必须将抽取出的公共初始化代码编写成一个独立的方法。</p>
 <h3 id="析构器"><a href="#析构器" class="headerlink" title="析构器"></a>析构器</h3><p>在C++中有显式的析构器方法，当对象不再使用时执行清理代码，回收分配给对象的存储空间；在Java中有自动的垃圾回收器，不需要人工回收内存，故Java不支持析构器，但可以为类添加finalize方法，在垃圾回收器清楚对象之前调用。</p>
-<h2 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h2><p>在C++中，由于编译器除了正在编译的文件以及在头文件中明确包含的文件，无法查看任何文件的内部，因此必须使用#include将外部特性的声明加载进来。Java编译器可以查看其他文件的内部，只要给出位置指示。<br>C++的namespace和using指令和Java的package与import语句类似。</p>
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>Java用关键字extends代替C++中的冒号，在Java中，所有的继承都是公有继承，而没有C++中的私有继承和保护继承。在Java中使用关键字super调用超类的方法，而在C++中采用超类名加上::操作符的形式。<br>在Java中，不需要将方法声明为虚拟方法，动态绑定是默认的处理方法。如果不希望让一个方法具有虚拟特征，可以将它标记为final。</p>
+<h3 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h3><p>在C++中，由于编译器除了正在编译的文件以及在头文件中明确包含的文件，无法查看任何文件的内部，因此必须使用#include将外部特性的声明加载进来。Java编译器可以查看其他文件的内部，只要给出位置指示。<br>C++的namespace和using指令和Java的package与import语句类似。</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>Java用关键字extends代替C++中的冒号，在Java中，所有的继承都是公有继承，而没有C++中的私有继承和保护继承。在Java中使用关键字super调用超类的方法，而在C++中采用超类名加上::操作符的形式。<br>在Java中，不需要将方法声明为虚拟方法，动态绑定是默认的处理方法。如果不希望让一个方法具有虚拟特征，可以将它标记为final。</p>
 <h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>在Java中需要将instanceof运算符和类型转换组合起来使用；在C++中，可以在dynamic_cast操作中完成类型测试和转换。</p>
 
       
@@ -549,7 +773,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -653,7 +881,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -1012,11 +1244,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java 读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1024,7 +1264,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
             
             <div class="clearfix"></div>

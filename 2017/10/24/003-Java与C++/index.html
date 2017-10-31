@@ -9,14 +9,14 @@
   <title>003 Java与C++ | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="类的概念 Java中的所有函数都属于某个类的方法，故main方法必须有一个外壳类，且必须是静态的。类似C++中的静态成员函数，这些函数定义在类的内部，并且不对对象进行操作。 C++中不需要将所有函数封装在类中。  数据类型Java Java中的整型范围与运行Java代码的机器无关，解决了软件从一个平台移植到另一个平台，或者同一平台的不同操作系统之间进行移植带来的问题； Java没有无符号数； 整型">
-<meta name="keywords" content="Java 读书笔记">
+<meta name="keywords" content="Java,读书笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="003 Java与C++">
 <meta property="og:url" content="http://yoursite.com/2017/10/24/003-Java与C++/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
 <meta property="og:description" content="类的概念 Java中的所有函数都属于某个类的方法，故main方法必须有一个外壳类，且必须是静态的。类似C++中的静态成员函数，这些函数定义在类的内部，并且不对对象进行操作。 C++中不需要将所有函数封装在类中。  数据类型Java Java中的整型范围与运行Java代码的机器无关，解决了软件从一个平台移植到另一个平台，或者同一平台的不同操作系统之间进行移植带来的问题； Java没有无符号数； 整型">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-27T12:14:21.197Z">
+<meta property="og:updated_time" content="2017-10-30T09:04:49.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="003 Java与C++">
 <meta name="twitter:description" content="类的概念 Java中的所有函数都属于某个类的方法，故main方法必须有一个外壳类，且必须是静态的。类似C++中的静态成员函数，这些函数定义在类的内部，并且不对对象进行操作。 C++中不需要将所有函数封装在类中。  数据类型Java Java中的整型范围与运行Java代码的机器无关，解决了软件从一个平台移植到另一个平台，或者同一平台的不同操作系统之间进行移植带来的问题； Java没有无符号数； 整型">
@@ -200,8 +200,8 @@
 <h3 id="类的定义方法"><a href="#类的定义方法" class="headerlink" title="类的定义方法"></a>类的定义方法</h3><p>在Java中，所有方法都必须在类的内部定义，但并不表示是内联方法，是否将某个方法设置为内联方法是Java虚拟机的任务，即时编译器会监视调用那些简洁、经常被调用、没有被重载以及可优化的方法。<br>C++中，通常在类的外面定义方法，在类的内部定义方法，则该方法自动成为内联方法。</p>
 <h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>在Java中，可以在类的定义中，直接将一个值赋给任何域；在C++中，不能直接初始化类的实例域，所有域必须在构造器中设置，可利用初始化列表进行设置。<br>在Java中，如果构造器的第一个语句形如this(…)，这个构造器将调用同一类的另一个构造器；在C++中，一个构造器不能调用另一个构造器，必须将抽取出的公共初始化代码编写成一个独立的方法。</p>
 <h3 id="析构器"><a href="#析构器" class="headerlink" title="析构器"></a>析构器</h3><p>在C++中有显式的析构器方法，当对象不再使用时执行清理代码，回收分配给对象的存储空间；在Java中有自动的垃圾回收器，不需要人工回收内存，故Java不支持析构器，但可以为类添加finalize方法，在垃圾回收器清楚对象之前调用。</p>
-<h2 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h2><p>在C++中，由于编译器除了正在编译的文件以及在头文件中明确包含的文件，无法查看任何文件的内部，因此必须使用#include将外部特性的声明加载进来。Java编译器可以查看其他文件的内部，只要给出位置指示。<br>C++的namespace和using指令和Java的package与import语句类似。</p>
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>Java用关键字extends代替C++中的冒号，在Java中，所有的继承都是公有继承，而没有C++中的私有继承和保护继承。在Java中使用关键字super调用超类的方法，而在C++中采用超类名加上::操作符的形式。<br>在Java中，不需要将方法声明为虚拟方法，动态绑定是默认的处理方法。如果不希望让一个方法具有虚拟特征，可以将它标记为final。</p>
+<h3 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h3><p>在C++中，由于编译器除了正在编译的文件以及在头文件中明确包含的文件，无法查看任何文件的内部，因此必须使用#include将外部特性的声明加载进来。Java编译器可以查看其他文件的内部，只要给出位置指示。<br>C++的namespace和using指令和Java的package与import语句类似。</p>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>Java用关键字extends代替C++中的冒号，在Java中，所有的继承都是公有继承，而没有C++中的私有继承和保护继承。在Java中使用关键字super调用超类的方法，而在C++中采用超类名加上::操作符的形式。<br>在Java中，不需要将方法声明为虚拟方法，动态绑定是默认的处理方法。如果不希望让一个方法具有虚拟特征，可以将它标记为final。</p>
 <h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>在Java中需要将instanceof运算符和类型转换组合起来使用；在C++中，可以在dynamic_cast操作中完成类型测试和转换。</p>
 
       
@@ -237,7 +237,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java 读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -440,11 +444,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java 读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -452,7 +464,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
             
             <div class="clearfix"></div>
