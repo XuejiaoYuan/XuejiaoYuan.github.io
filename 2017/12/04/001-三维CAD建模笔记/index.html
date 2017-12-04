@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: Android | Polaris&#39;s blog</title>
+  <title>001  三维CAD建模笔记 | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="�㽭��ѧCS2017���ڶ��о�ɭ��">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Polaris&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/Android/index.html">
+  <meta name="description" content="前言念叨三维CAD建模是秋学期上的课，课程作业是实现边界表示Brep中的半边数据结构，并且实现欧拉操作完成物体的扫成。实现的过程中遇到了许多琐碎的问题，这里就记录一下算法以及一些遇到的小问题。半边数据结构是C++编写的，不需要用到其他的库，但是显示图形需要借助OpenGL，我又希望添加一些功能所以是在Qt的基础上写的，但是出现了一些奇怪的bug暂时没有解决，希望之后熟练了OpenGL之后可以解决这">
+<meta name="keywords" content="算法笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="001  三维CAD建模笔记">
+<meta property="og:url" content="http://yoursite.com/2017/12/04/001-三维CAD建模笔记/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="�㽭��ѧCS2017���ڶ��о�ɭ��">
+<meta property="og:description" content="前言念叨三维CAD建模是秋学期上的课，课程作业是实现边界表示Brep中的半边数据结构，并且实现欧拉操作完成物体的扫成。实现的过程中遇到了许多琐碎的问题，这里就记录一下算法以及一些遇到的小问题。半边数据结构是C++编写的，不需要用到其他的库，但是显示图形需要借助OpenGL，我又希望添加一些功能所以是在Qt的基础上写的，但是出现了一些奇怪的bug暂时没有解决，希望之后熟练了OpenGL之后可以解决这">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-12-04T13:51:31.493Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Polaris&#39;s blog">
-<meta name="twitter:description" content="�㽭��ѧCS2017���ڶ��о�ɭ��">
+<meta name="twitter:title" content="001  三维CAD建模笔记">
+<meta name="twitter:description" content="前言念叨三维CAD建模是秋学期上的课，课程作业是实现边界表示Brep中的半边数据结构，并且实现欧拉操作完成物体的扫成。实现的过程中遇到了许多琐碎的问题，这里就记录一下算法以及一些遇到的小问题。半边数据结构是C++编写的，不需要用到其他的库，但是显示图形需要借助OpenGL，我又希望添加一些功能所以是在Qt的基础上写的，但是出现了一些奇怪的bug暂时没有解决，希望之后熟练了OpenGL之后可以解决这">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -139,148 +141,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-001-三维CAD建模笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      001  三维CAD建模笔记
+    </h1>
+  
+
+        
+        <a href="/2017/12/04/001-三维CAD建模笔记/" class="archive-article-date">
+  	<time datetime="2017-12-04T11:48:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-04</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言念叨"><a href="#前言念叨" class="headerlink" title="前言念叨"></a>前言念叨</h4><p>三维CAD建模是秋学期上的课，课程作业是实现边界表示Brep中的半边数据结构，并且实现欧拉操作完成物体的扫成。实现的过程中遇到了许多琐碎的问题，这里就记录一下算法以及一些遇到的小问题。<br>半边数据结构是C++编写的，不需要用到其他的库，但是显示图形需要借助OpenGL，我又希望添加一些功能所以是在Qt的基础上写的，但是出现了一些奇怪的bug暂时没有解决，希望之后熟练了OpenGL之后可以解决这个小bug。</p>
+<h3 id="半边数据结构"><a href="#半边数据结构" class="headerlink" title="半边数据结构"></a>半边数据结构</h3><ul>
+<li>边界表示Brep：利用边界表示三维物体；描述物体的信息包括几何信息和拓扑信息两个方面，物体的拓扑信息指物体上所有的顶点、棱边、表面的连接方式；几何信息描述物体的大小、尺寸、位置、形状等。<br>边界表示通常有翼边数据结构、半边数据结构这几种表示形式，半边数据结构是将一条物理边分为两条半边进行表示，通过构建点、边、环、面、体之间的关系建立一个物体。</li>
+<li>体Solid：物体的表示；</li>
+<li>点Vertex：物体的顶点；</li>
+<li>边Edge：物体的物理边；</li>
+<li>半边HalfEdge：一条物理边对应两条半边；</li>
+<li>面Face：物体的面；</li>
+<li>环Loop：将多条边相连闭合可以产生一个新的面，由于每条物理边都有两条半边，因而此时会产生两个环路，一般将环路的外环作为环存储，环的走向应该满足右手坐标系。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solid</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Solid() :nexts(<span class="literal">nullptr</span>), prevs(<span class="literal">nullptr</span>), lpNum(<span class="number">0</span>) &#123;&#125;</div><div class="line">	<span class="keyword">int</span> lpNum;</div><div class="line">	<span class="built_in">vector</span>&lt;Face*&gt; faceList;</div><div class="line">	<span class="built_in">vector</span>&lt;Vertex*&gt; vertexList;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vertex</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Vertex(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; _coordinate, <span class="keyword">int</span> _id = <span class="number">-1</span>) &#123;</div><div class="line">		coordinate = _coordinate;</div><div class="line">		id = _id;</div><div class="line">	&#125;</div><div class="line">	Vertex(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; _coordinate, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; direction, <span class="keyword">double</span> d, <span class="keyword">int</span> _id = <span class="number">-1</span>) &#123;</div><div class="line">		coordinate.push_back(_coordinate[<span class="number">0</span>] + direction[<span class="number">0</span>] * d);</div><div class="line">		coordinate.push_back(_coordinate[<span class="number">1</span>] + direction[<span class="number">1</span>] * d);</div><div class="line">		coordinate.push_back(_coordinate[<span class="number">2</span>] + direction[<span class="number">2</span>] * d);</div><div class="line">		id = _id;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; coordinate;</div><div class="line">	<span class="keyword">int</span> id;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Edge</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Edge(HalfEdge* _lhe, HalfEdge* _rhe) :lhe(_lhe), rhe(_rhe) &#123;&#125;</div><div class="line">	HalfEdge *lhe, *rhe;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HalfEdge</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	HalfEdge(Vertex* _stv, Vertex *_endv, Loop* _lp = <span class="literal">nullptr</span>) :startv(_stv), endv(_endv), wloop(_lp),</div><div class="line">		nxt(<span class="literal">nullptr</span>), prv(<span class="literal">nullptr</span>), brotherEdg(<span class="literal">nullptr</span>), edg(<span class="literal">nullptr</span>) &#123;&#125;</div><div class="line">	HalfEdge *nxt, *prv;</div><div class="line">	HalfEdge *brotherEdg;</div><div class="line">	Edge *edg;</div><div class="line">	Loop *wloop;</div><div class="line">	Vertex *startv, *endv;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Face</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Face(Solid* _solid = <span class="literal">nullptr</span>, <span class="keyword">int</span> _id = <span class="number">-1</span>) :</div><div class="line">		fsolid(_solid), id(_id)&#123;&#125;</div><div class="line"></div><div class="line">	Solid *fsolid;</div><div class="line">	<span class="built_in">vector</span>&lt;Loop*&gt; loopList;</div><div class="line">	<span class="keyword">int</span> id;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loop</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Loop(Face* _face = <span class="literal">nullptr</span>, <span class="keyword">int</span> _id = <span class="number">-1</span>, HalfEdge* _ledge = <span class="literal">nullptr</span>) :</div><div class="line">		lface(_face), ledg(_ledge), id(_id) &#123;&#125;</div><div class="line">	Face *lface;</div><div class="line">	HalfEdge *ledg;</div><div class="line">	<span class="keyword">int</span> id;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="欧拉操作"><a href="#欧拉操作" class="headerlink" title="欧拉操作"></a>欧拉操作</h3><p>运用欧拉操作，可以构建三维物体边界表示的拓扑关系。由于操作符合欧拉公式v-e+f=2(s-h)+r因而得名，主要实现的6个操作：</p>
+<ol>
+<li>mvfs：第一步的操作，输入一个顶点，建立新的面、环、体；</li>
+<li>mev：输入一个顶点v2，将已有顶点v1与v2相连，建立一条新的边；</li>
+<li>mef：将已有顶点v1和v2相连，建立新的边、面、环；</li>
+<li>kemr：删除一条桥边e，生成一个新的环；</li>
+<li>kfmrh：删除与面f1贴合的面f2，生成面f1的内环，并生成物体的通孔。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line">Solid * EulerOperator::mvsf(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; _coordinate)</div><div class="line">&#123;</div><div class="line">	Solid* solid = <span class="keyword">new</span> Solid();</div><div class="line">	Face* face = <span class="keyword">new</span> Face(solid, solid-&gt;faceList.size());</div><div class="line">	Loop *lp = <span class="keyword">new</span> Loop(face, solid-&gt;lpNum++);</div><div class="line">	Vertex *v = <span class="keyword">new</span> Vertex(_coordinate, solid-&gt;vertexList.size());</div><div class="line"></div><div class="line">	solid-&gt;faceList.push_back(face);</div><div class="line">	solid-&gt;vertexList.push_back(v);</div><div class="line">	face-&gt;fsolid = solid;</div><div class="line">	face-&gt;loopList.push_back(lp);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> solid;	</div><div class="line">&#125;</div><div class="line"></div><div class="line">HalfEdge * EulerOperator::mev(Vertex * startv, Vertex* endv, Loop * lp)</div><div class="line">&#123;</div><div class="line">	Solid* curSolid = lp-&gt;lface-&gt;fsolid;</div><div class="line">	solid-&gt;vertexList.push_back(endv);</div><div class="line"></div><div class="line">	HalfEdge* lhe = <span class="keyword">new</span> HalfEdge(startv, endv, lp);</div><div class="line">	HalfEdge* rhe = <span class="keyword">new</span> HalfEdge(endv, startv, lp);</div><div class="line"></div><div class="line">	Edge* edg = <span class="keyword">new</span> Edge(lhe, rhe);</div><div class="line"></div><div class="line">	lhe-&gt;edg = edg;</div><div class="line">	rhe-&gt;edg = edg;</div><div class="line">	lhe-&gt;nxt = rhe;</div><div class="line">	rhe-&gt;prv = lhe;</div><div class="line">	lhe-&gt;brotherEdg = rhe;</div><div class="line">	rhe-&gt;brotherEdg = lhe;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (lp-&gt;ledg == <span class="literal">nullptr</span>) &#123;</div><div class="line">		lhe-&gt;prv = rhe;</div><div class="line">		rhe-&gt;nxt = lhe;</div><div class="line">		lp-&gt;ledg = lhe;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> &#123;</div><div class="line">		HalfEdge* he = lp-&gt;ledg;</div><div class="line">		<span class="keyword">for</span> (; he-&gt;endv != startv; he = he-&gt;nxt);</div><div class="line">		rhe-&gt;nxt = he-&gt;nxt;</div><div class="line">		he-&gt;nxt-&gt;prv = rhe;</div><div class="line">		he-&gt;nxt = lhe;</div><div class="line">		lhe-&gt;prv = he;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> lhe;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Loop * EulerOperator::mef(Vertex * startv, Vertex * endv, Loop * lp)</div><div class="line">&#123;</div><div class="line">	Solid *curSolid = lp-&gt;lface-&gt;fsolid;</div><div class="line">	Face *newFace = <span class="keyword">new</span> Face(curSolid, solid-&gt;faceList.size());</div><div class="line">	Loop* newLoop = <span class="keyword">new</span> Loop(newFace, curSolid-&gt;lpNum++);</div><div class="line"></div><div class="line">	HalfEdge *lhe = <span class="keyword">new</span> HalfEdge(startv, endv, newLoop);</div><div class="line">	HalfEdge *rhe = <span class="keyword">new</span> HalfEdge(endv, startv, lp);</div><div class="line">	Edge* edg = <span class="keyword">new</span> Edge(lhe, rhe);</div><div class="line">	lhe-&gt;edg = edg;</div><div class="line">	rhe-&gt;edg = edg;</div><div class="line">	lhe-&gt;brotherEdg = rhe;</div><div class="line">	rhe-&gt;brotherEdg = lhe;</div><div class="line"></div><div class="line">	HalfEdge *tmphe1 = lp-&gt;ledg;</div><div class="line">	HalfEdge *tmphe2 = lp-&gt;ledg;</div><div class="line">	<span class="keyword">for</span> (; tmphe1-&gt;startv != endv; tmphe1 = tmphe1-&gt;nxt);</div><div class="line">	<span class="keyword">for</span> (; tmphe2-&gt;endv != startv; tmphe2 = tmphe2-&gt;nxt);</div><div class="line">	lhe-&gt;nxt = tmphe1;</div><div class="line">	lhe-&gt;prv = tmphe2;</div><div class="line">	rhe-&gt;nxt = tmphe2-&gt;nxt;</div><div class="line">	rhe-&gt;prv = tmphe1-&gt;prv;</div><div class="line">	tmphe1-&gt;prv = lhe;</div><div class="line">	tmphe2-&gt;nxt = lhe;</div><div class="line">	rhe-&gt;prv-&gt;nxt = rhe;</div><div class="line">	rhe-&gt;nxt-&gt;prv = rhe;</div><div class="line"></div><div class="line">	newLoop-&gt;ledg = lhe;</div><div class="line">	<span class="keyword">for</span> (tmphe1 = lhe; tmphe1-&gt;nxt != lhe; tmphe1 = tmphe1-&gt;nxt)</div><div class="line">		tmphe1-&gt;wloop = newLoop;</div><div class="line">	lp-&gt;ledg = rhe;</div><div class="line"></div><div class="line">	<span class="comment">//将面加入体中</span></div><div class="line">	curSolid-&gt;faceList.push_back(newFace);</div><div class="line"></div><div class="line">	<span class="comment">//将环加入面中</span></div><div class="line">	newFace-&gt;loopList.push_back(newLoop);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> newLoop;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Loop * EulerOperator::kemr(HalfEdge* lhe)	</div><div class="line">&#123;</div><div class="line">	Solid* curSolid = lhe-&gt;wloop-&gt;lface-&gt;fsolid;</div><div class="line">	Edge* curEdg = lhe-&gt;edg;</div><div class="line">	Face* newFace = <span class="keyword">new</span> Face(curSolid, curSolid-&gt;faceList.size());</div><div class="line">	HalfEdge* rhe = curEdg-&gt;rhe;</div><div class="line">	Loop* newLoop = <span class="keyword">new</span> Loop(newFace, solid-&gt;lpNum++);</div><div class="line">	</div><div class="line">	rhe-&gt;nxt-&gt;prv = lhe-&gt;prv;</div><div class="line">	lhe-&gt;prv-&gt;nxt = rhe-&gt;nxt;</div><div class="line"></div><div class="line">	curSolid-&gt;faceList.push_back(newFace);</div><div class="line">	newFace-&gt;loopList.push_back(newLoop);</div><div class="line"></div><div class="line">	<span class="keyword">delete</span> curEdg;</div><div class="line">	<span class="keyword">return</span> newLoop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> EulerOperator::kfmrh(Face * f1, Face * f2)</div><div class="line">&#123;</div><div class="line">	f1-&gt;loopList.insert(f1-&gt;loopList.end(), f2-&gt;loopList.begin(), f2-&gt;loopList.end());</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> it = f1-&gt;fsolid-&gt;faceList.begin(); it != f1-&gt;fsolid-&gt;faceList.end(); it++) &#123;</div><div class="line">		<span class="keyword">if</span> (*it == f2) &#123;</div><div class="line">			f1-&gt;fsolid-&gt;faceList.erase(it);</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">delete</span> f2;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="扫成操作"><a href="#扫成操作" class="headerlink" title="扫成操作"></a>扫成操作</h3><p>实现了平移扫成的过程，通过给定移动的方向向量及位移距离计算出物体的顶点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> EulerOperator::sweeping(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; direction, <span class="keyword">double</span> d)</div><div class="line">&#123;</div><div class="line">	Loop* curLoop;</div><div class="line">	HalfEdge* he;</div><div class="line">	Vertex* firstv, *nextv, *firstup, *nextup, *prevup;</div><div class="line">	Face* curFace = solid-&gt;faceList[<span class="number">0</span>];</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; solid-&gt;faceList[<span class="number">1</span>]-&gt;loopList.size(); j++) &#123;</div><div class="line">		curLoop = solid-&gt;faceList[<span class="number">1</span>]-&gt;loopList[j]-&gt;ledg-&gt;brotherEdg-&gt;wloop;</div><div class="line">		he = solid-&gt;faceList[<span class="number">1</span>]-&gt;loopList[j]-&gt;ledg;</div><div class="line">		firstv = he-&gt;endv;</div><div class="line">		nextv = he-&gt;startv;</div><div class="line">		firstup = <span class="keyword">new</span> Vertex(firstv-&gt;coordinate, direction, d, solid-&gt;vertexList.size());</div><div class="line">		prevup = firstup;</div><div class="line">		mev(firstv, firstup, curLoop);</div><div class="line">		he = he-&gt;prv;</div><div class="line">		<span class="keyword">while</span> (nextv != firstv) &#123;</div><div class="line">			nextup = <span class="keyword">new</span> Vertex(nextv-&gt;coordinate, direction, d, solid-&gt;vertexList.size());</div><div class="line">			mev(nextv, nextup, curLoop);</div><div class="line">			mef(nextup, prevup, curLoop);</div><div class="line">			prevup = nextup;</div><div class="line">			nextv = he-&gt;startv;</div><div class="line">			he = he-&gt;prv;</div><div class="line">		&#125;</div><div class="line">		Loop* newLoop = mef(prevup, firstup, curLoop);</div><div class="line">		<span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</div><div class="line">			curFace = newLoop-&gt;lface;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			kfmrh(curFace, newLoop-&gt;lface);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Bug记录"><a href="#Bug记录" class="headerlink" title="Bug记录"></a>Bug记录</h3><ol>
+<li>一开始没有把数据结构想明白，主要是没有理解内环和外环的意思，将边围成闭合回路之后会产生内环路和外环路，面的外环应为符合其法向方向的环路，面的内环则与外环的方向相反。</li>
+<li>Qt实现部分，比较琐碎的问题，主要是因为自己不够熟悉，之后需要进一步了解一下各个部件以及之间的一些关系；</li>
+<li>OpenGL实现，这个部分主要使用了gluTess函数画凹多边形以及带孔的图形，但是也遇到了非常多的问题，主要是不太熟悉可编程管线的使用，两个带孔的图形绘制有很大的问题，可能与buffer有关，但是现阶段不够了解OpenGL需要再学习一下之后再来将bug修复；</li>
+</ol>
+<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><ol>
+<li>之后编程之前需要先把数据结构和算法理解清楚，并且要把伪代码给写出来，算是对思路进行一整理；</li>
+<li>OpenGL的使用这几天需要补习一下，以防以后使用的时候又要请教别人；</li>
+<li>Qt的部件和结构还不是很了解，也要再学习一下；</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/02/002-Android-UI开发/" class="archive-article-date">
-  	<time datetime="2017-11-02T12:12:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/02/002-Android-UI开发/">002 Android UI开发</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">算法笔记</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/12/04/001-三维CAD建模笔记/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/31/002-第一行代码-Bug记录/" class="archive-article-date">
-  	<time datetime="2017-10-31T11:28:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/03/006-Java异常、断言和日志/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">006 Java 异常、断言和日志</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/31/002-第一行代码-Bug记录/">002 第一行代码 Bug记录</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/27/001-Android-探究活动/" class="archive-article-date">
-  	<time datetime="2017-10-27T12:25:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/27/001-Android-探究活动/">001 Android 探究活动</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -303,9 +354,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

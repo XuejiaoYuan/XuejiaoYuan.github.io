@@ -8,18 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>001 Android 探究活动 | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="活动定义及基本用法活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。">
-<meta name="keywords" content="读书笔记,Android">
+  <meta name="description" content="活动定义及基本用法活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。 活动的生命周期返回栈Android使用任务管理活动，一个任务即一组存放在栈里的活动的集合，这个栈也被称为返回栈。每当按下Back建或调用finish()方法销毁一个活动，处于栈顶的活动就会出栈。 活动状态每个活动在其生命周期中最多为4种状态：  运行状态：处于返回栈栈顶的活动即处于运行状态； 暂停状态">
+<meta name="keywords" content="Android,读书笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="001 Android 探究活动">
 <meta property="og:url" content="http://yoursite.com/2017/10/27/001-Android-探究活动/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="活动定义及基本用法活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。">
+<meta property="og:description" content="活动定义及基本用法活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。 活动的生命周期返回栈Android使用任务管理活动，一个任务即一组存放在栈里的活动的集合，这个栈也被称为返回栈。每当按下Back建或调用finish()方法销毁一个活动，处于栈顶的活动就会出栈。 活动状态每个活动在其生命周期中最多为4种状态：  运行状态：处于返回栈栈顶的活动即处于运行状态； 暂停状态">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-30T09:04:55.537Z">
+<meta property="og:image" content="http://yoursite.com/2017/10/assets/2.jpg">
+<meta property="og:updated_time" content="2017-11-26T15:51:03.599Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="001 Android 探究活动">
-<meta name="twitter:description" content="活动定义及基本用法活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。">
+<meta name="twitter:description" content="活动定义及基本用法活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。 活动的生命周期返回栈Android使用任务管理活动，一个任务即一组存放在栈里的活动的集合，这个栈也被称为返回栈。每当按下Back建或调用finish()方法销毁一个活动，处于栈顶的活动就会出栈。 活动状态每个活动在其生命周期中最多为4种状态：  运行状态：处于返回栈栈顶的活动即处于运行状态； 暂停状态">
+<meta name="twitter:image" content="http://yoursite.com/2017/10/assets/2.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -162,6 +164,38 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="活动定义及基本用法"><a href="#活动定义及基本用法" class="headerlink" title="活动定义及基本用法"></a>活动定义及基本用法</h2><p>活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。</p>
+<h2 id="活动的生命周期"><a href="#活动的生命周期" class="headerlink" title="活动的生命周期"></a>活动的生命周期</h2><h3 id="返回栈"><a href="#返回栈" class="headerlink" title="返回栈"></a>返回栈</h3><p>Android使用任务管理活动，一个任务即一组存放在栈里的活动的集合，这个栈也被称为返回栈。每当按下Back建或调用finish()方法销毁一个活动，处于栈顶的活动就会出栈。</p>
+<h3 id="活动状态"><a href="#活动状态" class="headerlink" title="活动状态"></a>活动状态</h3><p>每个活动在其生命周期中最多为4种状态：</p>
+<ol>
+<li>运行状态：处于返回栈栈顶的活动即处于运行状态；</li>
+<li>暂停状态：不处于栈顶但仍可见的活动处于暂停状态；</li>
+<li>停止状态；不处于栈顶且完全不可见的活动处于停止状态；</li>
+<li>销毁状态：活动从返回栈中移除后就编程销毁状态；</li>
+</ol>
+<h3 id="活动的生存期"><a href="#活动的生存期" class="headerlink" title="活动的生存期"></a>活动的生存期</h3><p>Activity类中定义了7个回调方法，覆盖活动声明周期的每个环节：</p>
+<ol>
+<li>onCreate()：每个活动中都重写该方法，在活动第一次被创建时调用，用于完成活动的初始化操作，如加载布局、绑定事件；</li>
+<li>onStart()：在活动由不可见变为可见时调用；</li>
+<li>onResume()：活动处于运行状态，准备好与用户进行交互时调用；</li>
+<li>onPause()：在系统准备启动或恢复另一活动时调用；</li>
+<li>onStop()：在活动完全不可见时调用；</li>
+<li>onDestroy()：在活动被销毁之前调用，之后活动将变为销毁状态；</li>
+<li>onRestart()：在活动由停止状态变为运行状态之前调用，即活动重新被启动；<br>活动可以分为3种生存期：</li>
+</ol>
+<ul>
+<li>完整生存期：活动在onCreate()和onDetroy()之间所经历的，即为完整生存期；</li>
+<li>可见生存期：活动在onStart()和onStop()之间经历的，即为可见生存期。在此期间，活动对于用户总是可见的，可能无法与用户进行交互；</li>
+<li>前台生存期：活动在onResume()和onPause()之间经历的，即为前台生存期。在此期间，活动总是处于运行状态，可与用户进行交互；<br><img src="../../assets/2.jpg" alt="Android生命周期"></li>
+</ul>
+<h2 id="活动的启动模式"><a href="#活动的启动模式" class="headerlink" title="活动的启动模式"></a>活动的启动模式</h2><p>启动模式一共有4种，standart、singleTop、singleTask和singleInstance，可以在AndroidManifest.xml中通过给<activity>标签指定android:launchMode属性来选择启动模式。</activity></p>
+<h3 id="1-standard"><a href="#1-standard" class="headerlink" title="1. standard"></a>1. standard</h3><p>standard是活动默认的启动模式，该模式下，每当启动一个新的活动，就会在返回栈中入栈，并处于栈顶的位置。每次启动standard模式的活动，系统都会创建该活动的一个新的实例。</p>
+<h3 id="2-singleTop"><a href="#2-singleTop" class="headerlink" title="2. singleTop"></a>2. singleTop</h3><p>singleTop，在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例，不过当活动不处于栈顶时，再次启动该活动，会创建新的实例。</p>
+<h3 id="3-singleTask"><a href="#3-singleTask" class="headerlink" title="3. singleTask"></a>3. singleTask</h3><p>singleTask，每次启动该活动时系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。</p>
+<h3 id="4-singleInstance"><a href="#4-singleInstance" class="headerlink" title="4. singleInstance"></a>4. singleInstance</h3><p>singleInstance，会启用一个新的返回栈来管理这个活动，则不管哪个应用程序来访问该活动，都会共用同一个返回栈，也解决了共享活动实例的问题。<br>程序中有两个返回栈，在按下Back回退时，先将当前栈顶活动出栈，并显示栈中的栈顶活动，直到栈清空后，才能显示另一个栈中的栈顶活动。</p>
+<h2 id="活动的最佳实践"><a href="#活动的最佳实践" class="headerlink" title="活动的最佳实践"></a>活动的最佳实践</h2><h3 id="知晓当前是哪个活动"><a href="#知晓当前是哪个活动" class="headerlink" title="知晓当前是哪个活动"></a>知晓当前是哪个活动</h3><p>创建一个普通Java类，让其继承所有活动的父类，并修改其称为项目中所有活动的父类，该类的onCreate()设计如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreate(saveInstanceState);</div><div class="line">	Log.d(<span class="string">"BaseActivity"</span>, getClass().getSimpleName());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="随时退出程序"><a href="#随时退出程序" class="headerlink" title="随时退出程序"></a>随时退出程序</h3><p>创建一个ActivityCollector类作为活动管理器对所有活动进行管理。每个活动创建后加入List，每个活动删除后从List移除。由于声明的是静态变量及函数，因此在调用时直接用ActivityCollector.add()即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActivityCollector</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Activity&gt; activities = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">        activities.add(activity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removeActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">        activities.remove(activity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">finishAll</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(Activity activity:activities)&#123;</div><div class="line">            <span class="keyword">if</span>(!activity.isFinishing())</div><div class="line">                activity.finish();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="启动活动的最佳写法"><a href="#启动活动的最佳写法" class="headerlink" title="启动活动的最佳写法"></a>启动活动的最佳写法</h3><p>在活动中定义一个静态函数，用于设置Intent中的参数，并在创建该活动的函数中调用该静态函数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">actionStart</span><span class="params">(Context context, String data1, String data2)</span></span>&#123;</div><div class="line">	Intent intent = <span class="keyword">new</span> Intent(context, SecondActivity.class);</div><div class="line">    intent.putExtra(<span class="string">"param1"</span>, data1);</div><div class="line">    intent.putExtra(<span class="string">"param2"</span>, data2);</div><div class="line">    context.startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="onCreate"><a href="#onCreate" class="headerlink" title="onCreate()"></a>onCreate()</h3><p>当Activity非正常销毁之后，如内存不足导致的后台自动销毁，为了保护数据可以将数据保存在saveInstanceState中，当Activity重启数据依旧不会消失，可以通过重载onSaveInstanceState或者onRestoreInstance重新获得。</p>
 
       
 
@@ -196,11 +230,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -403,15 +437,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java 读书笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -420,10 +458,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">闲聊</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
             
             <div class="clearfix"></div>

@@ -141,6 +141,389 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-001-三维CAD建模笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/04/001-三维CAD建模笔记/">001  三维CAD建模笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/04/001-三维CAD建模笔记/" class="archive-article-date">
+  	<time datetime="2017-12-04T11:48:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言念叨"><a href="#前言念叨" class="headerlink" title="前言念叨"></a>前言念叨</h4><p>三维CAD建模是秋学期上的课，课程作业是实现边界表示Brep中的半边数据结构，并且实现欧拉操作完成物体的扫成。实现的过程中遇到了许多琐碎的问题，这里就记录一下算法以及一些遇到的小问题。<br>半边数据结构是C++编写的，不需要用到其他的库，但是显示图形需要借助OpenGL，我又希望添加一些功能所以是在Qt的基础上写的，但是出现了一些奇怪的bug暂时没有解决，希望之后熟练了OpenGL之后可以解决这个小bug。</p>
+<h3 id="半边数据结构"><a href="#半边数据结构" class="headerlink" title="半边数据结构"></a>半边数据结构</h3><ul>
+<li>边界表示Brep：利用边界表示三维物体；描述物体的信息包括几何信息和拓扑信息两个方面，物体的拓扑信息指物体上所有的顶点、棱边、表面的连接方式；几何信息描述物体的大小、尺寸、位置、形状等。<br>边界表示通常有翼边数据结构、半边数据结构这几种表示形式，半边数据结构是将一条物理边分为两条半边进行表示，通过构建点、边、环、面、体之间的关系建立一个物体。</li>
+<li>体Solid：物体的表示；</li>
+<li>点Vertex：物体的顶点；</li>
+<li>边Edge：物体的物理边；</li>
+<li>半边HalfEdge：一条物理边对应两条半边；</li>
+<li>面Face：物体的面；</li>
+<li>环Loop：将多条边相连闭合可以产生一个新的面，由于每条物理边都有两条半边，因而此时会产生两个环路，一般将环路的外环作为环存储，环的走向应该满足右手坐标系。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solid</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Solid() :nexts(<span class="literal">nullptr</span>), prevs(<span class="literal">nullptr</span>), lpNum(<span class="number">0</span>) &#123;&#125;</div><div class="line">	<span class="keyword">int</span> lpNum;</div><div class="line">	<span class="built_in">vector</span>&lt;Face*&gt; faceList;</div><div class="line">	<span class="built_in">vector</span>&lt;Vertex*&gt; vertexList;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vertex</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Vertex(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; _coordinate, <span class="keyword">int</span> _id = <span class="number">-1</span>) &#123;</div><div class="line">		coordinate = _coordinate;</div><div class="line">		id = _id;</div><div class="line">	&#125;</div><div class="line">	Vertex(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; _coordinate, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; direction, <span class="keyword">double</span> d, <span class="keyword">int</span> _id = <span class="number">-1</span>) &#123;</div><div class="line">		coordinate.push_back(_coordinate[<span class="number">0</span>] + direction[<span class="number">0</span>] * d);</div><div class="line">		coordinate.push_back(_coordinate[<span class="number">1</span>] + direction[<span class="number">1</span>] * d);</div><div class="line">		coordinate.push_back(_coordinate[<span class="number">2</span>] + direction[<span class="number">2</span>] * d);</div><div class="line">		id = _id;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; coordinate;</div><div class="line">	<span class="keyword">int</span> id;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Edge</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Edge(HalfEdge* _lhe, HalfEdge* _rhe) :lhe(_lhe), rhe(_rhe) &#123;&#125;</div><div class="line">	HalfEdge *lhe, *rhe;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HalfEdge</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	HalfEdge(Vertex* _stv, Vertex *_endv, Loop* _lp = <span class="literal">nullptr</span>) :startv(_stv), endv(_endv), wloop(_lp),</div><div class="line">		nxt(<span class="literal">nullptr</span>), prv(<span class="literal">nullptr</span>), brotherEdg(<span class="literal">nullptr</span>), edg(<span class="literal">nullptr</span>) &#123;&#125;</div><div class="line">	HalfEdge *nxt, *prv;</div><div class="line">	HalfEdge *brotherEdg;</div><div class="line">	Edge *edg;</div><div class="line">	Loop *wloop;</div><div class="line">	Vertex *startv, *endv;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Face</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Face(Solid* _solid = <span class="literal">nullptr</span>, <span class="keyword">int</span> _id = <span class="number">-1</span>) :</div><div class="line">		fsolid(_solid), id(_id)&#123;&#125;</div><div class="line"></div><div class="line">	Solid *fsolid;</div><div class="line">	<span class="built_in">vector</span>&lt;Loop*&gt; loopList;</div><div class="line">	<span class="keyword">int</span> id;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loop</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Loop(Face* _face = <span class="literal">nullptr</span>, <span class="keyword">int</span> _id = <span class="number">-1</span>, HalfEdge* _ledge = <span class="literal">nullptr</span>) :</div><div class="line">		lface(_face), ledg(_ledge), id(_id) &#123;&#125;</div><div class="line">	Face *lface;</div><div class="line">	HalfEdge *ledg;</div><div class="line">	<span class="keyword">int</span> id;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="欧拉操作"><a href="#欧拉操作" class="headerlink" title="欧拉操作"></a>欧拉操作</h3><p>运用欧拉操作，可以构建三维物体边界表示的拓扑关系。由于操作符合欧拉公式v-e+f=2(s-h)+r因而得名，主要实现的6个操作：</p>
+<ol>
+<li>mvfs：第一步的操作，输入一个顶点，建立新的面、环、体；</li>
+<li>mev：输入一个顶点v2，将已有顶点v1与v2相连，建立一条新的边；</li>
+<li>mef：将已有顶点v1和v2相连，建立新的边、面、环；</li>
+<li>kemr：删除一条桥边e，生成一个新的环；</li>
+<li>kfmrh：删除与面f1贴合的面f2，生成面f1的内环，并生成物体的通孔。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line">Solid * EulerOperator::mvsf(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; _coordinate)</div><div class="line">&#123;</div><div class="line">	Solid* solid = <span class="keyword">new</span> Solid();</div><div class="line">	Face* face = <span class="keyword">new</span> Face(solid, solid-&gt;faceList.size());</div><div class="line">	Loop *lp = <span class="keyword">new</span> Loop(face, solid-&gt;lpNum++);</div><div class="line">	Vertex *v = <span class="keyword">new</span> Vertex(_coordinate, solid-&gt;vertexList.size());</div><div class="line"></div><div class="line">	solid-&gt;faceList.push_back(face);</div><div class="line">	solid-&gt;vertexList.push_back(v);</div><div class="line">	face-&gt;fsolid = solid;</div><div class="line">	face-&gt;loopList.push_back(lp);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> solid;	</div><div class="line">&#125;</div><div class="line"></div><div class="line">HalfEdge * EulerOperator::mev(Vertex * startv, Vertex* endv, Loop * lp)</div><div class="line">&#123;</div><div class="line">	Solid* curSolid = lp-&gt;lface-&gt;fsolid;</div><div class="line">	solid-&gt;vertexList.push_back(endv);</div><div class="line"></div><div class="line">	HalfEdge* lhe = <span class="keyword">new</span> HalfEdge(startv, endv, lp);</div><div class="line">	HalfEdge* rhe = <span class="keyword">new</span> HalfEdge(endv, startv, lp);</div><div class="line"></div><div class="line">	Edge* edg = <span class="keyword">new</span> Edge(lhe, rhe);</div><div class="line"></div><div class="line">	lhe-&gt;edg = edg;</div><div class="line">	rhe-&gt;edg = edg;</div><div class="line">	lhe-&gt;nxt = rhe;</div><div class="line">	rhe-&gt;prv = lhe;</div><div class="line">	lhe-&gt;brotherEdg = rhe;</div><div class="line">	rhe-&gt;brotherEdg = lhe;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (lp-&gt;ledg == <span class="literal">nullptr</span>) &#123;</div><div class="line">		lhe-&gt;prv = rhe;</div><div class="line">		rhe-&gt;nxt = lhe;</div><div class="line">		lp-&gt;ledg = lhe;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> &#123;</div><div class="line">		HalfEdge* he = lp-&gt;ledg;</div><div class="line">		<span class="keyword">for</span> (; he-&gt;endv != startv; he = he-&gt;nxt);</div><div class="line">		rhe-&gt;nxt = he-&gt;nxt;</div><div class="line">		he-&gt;nxt-&gt;prv = rhe;</div><div class="line">		he-&gt;nxt = lhe;</div><div class="line">		lhe-&gt;prv = he;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> lhe;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Loop * EulerOperator::mef(Vertex * startv, Vertex * endv, Loop * lp)</div><div class="line">&#123;</div><div class="line">	Solid *curSolid = lp-&gt;lface-&gt;fsolid;</div><div class="line">	Face *newFace = <span class="keyword">new</span> Face(curSolid, solid-&gt;faceList.size());</div><div class="line">	Loop* newLoop = <span class="keyword">new</span> Loop(newFace, curSolid-&gt;lpNum++);</div><div class="line"></div><div class="line">	HalfEdge *lhe = <span class="keyword">new</span> HalfEdge(startv, endv, newLoop);</div><div class="line">	HalfEdge *rhe = <span class="keyword">new</span> HalfEdge(endv, startv, lp);</div><div class="line">	Edge* edg = <span class="keyword">new</span> Edge(lhe, rhe);</div><div class="line">	lhe-&gt;edg = edg;</div><div class="line">	rhe-&gt;edg = edg;</div><div class="line">	lhe-&gt;brotherEdg = rhe;</div><div class="line">	rhe-&gt;brotherEdg = lhe;</div><div class="line"></div><div class="line">	HalfEdge *tmphe1 = lp-&gt;ledg;</div><div class="line">	HalfEdge *tmphe2 = lp-&gt;ledg;</div><div class="line">	<span class="keyword">for</span> (; tmphe1-&gt;startv != endv; tmphe1 = tmphe1-&gt;nxt);</div><div class="line">	<span class="keyword">for</span> (; tmphe2-&gt;endv != startv; tmphe2 = tmphe2-&gt;nxt);</div><div class="line">	lhe-&gt;nxt = tmphe1;</div><div class="line">	lhe-&gt;prv = tmphe2;</div><div class="line">	rhe-&gt;nxt = tmphe2-&gt;nxt;</div><div class="line">	rhe-&gt;prv = tmphe1-&gt;prv;</div><div class="line">	tmphe1-&gt;prv = lhe;</div><div class="line">	tmphe2-&gt;nxt = lhe;</div><div class="line">	rhe-&gt;prv-&gt;nxt = rhe;</div><div class="line">	rhe-&gt;nxt-&gt;prv = rhe;</div><div class="line"></div><div class="line">	newLoop-&gt;ledg = lhe;</div><div class="line">	<span class="keyword">for</span> (tmphe1 = lhe; tmphe1-&gt;nxt != lhe; tmphe1 = tmphe1-&gt;nxt)</div><div class="line">		tmphe1-&gt;wloop = newLoop;</div><div class="line">	lp-&gt;ledg = rhe;</div><div class="line"></div><div class="line">	<span class="comment">//将面加入体中</span></div><div class="line">	curSolid-&gt;faceList.push_back(newFace);</div><div class="line"></div><div class="line">	<span class="comment">//将环加入面中</span></div><div class="line">	newFace-&gt;loopList.push_back(newLoop);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> newLoop;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Loop * EulerOperator::kemr(HalfEdge* lhe)	</div><div class="line">&#123;</div><div class="line">	Solid* curSolid = lhe-&gt;wloop-&gt;lface-&gt;fsolid;</div><div class="line">	Edge* curEdg = lhe-&gt;edg;</div><div class="line">	Face* newFace = <span class="keyword">new</span> Face(curSolid, curSolid-&gt;faceList.size());</div><div class="line">	HalfEdge* rhe = curEdg-&gt;rhe;</div><div class="line">	Loop* newLoop = <span class="keyword">new</span> Loop(newFace, solid-&gt;lpNum++);</div><div class="line">	</div><div class="line">	rhe-&gt;nxt-&gt;prv = lhe-&gt;prv;</div><div class="line">	lhe-&gt;prv-&gt;nxt = rhe-&gt;nxt;</div><div class="line"></div><div class="line">	curSolid-&gt;faceList.push_back(newFace);</div><div class="line">	newFace-&gt;loopList.push_back(newLoop);</div><div class="line"></div><div class="line">	<span class="keyword">delete</span> curEdg;</div><div class="line">	<span class="keyword">return</span> newLoop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> EulerOperator::kfmrh(Face * f1, Face * f2)</div><div class="line">&#123;</div><div class="line">	f1-&gt;loopList.insert(f1-&gt;loopList.end(), f2-&gt;loopList.begin(), f2-&gt;loopList.end());</div><div class="line">	</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> it = f1-&gt;fsolid-&gt;faceList.begin(); it != f1-&gt;fsolid-&gt;faceList.end(); it++) &#123;</div><div class="line">		<span class="keyword">if</span> (*it == f2) &#123;</div><div class="line">			f1-&gt;fsolid-&gt;faceList.erase(it);</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">delete</span> f2;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="扫成操作"><a href="#扫成操作" class="headerlink" title="扫成操作"></a>扫成操作</h3><p>实现了平移扫成的过程，通过给定移动的方向向量及位移距离计算出物体的顶点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> EulerOperator::sweeping(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt;&amp; direction, <span class="keyword">double</span> d)</div><div class="line">&#123;</div><div class="line">	Loop* curLoop;</div><div class="line">	HalfEdge* he;</div><div class="line">	Vertex* firstv, *nextv, *firstup, *nextup, *prevup;</div><div class="line">	Face* curFace = solid-&gt;faceList[<span class="number">0</span>];</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; solid-&gt;faceList[<span class="number">1</span>]-&gt;loopList.size(); j++) &#123;</div><div class="line">		curLoop = solid-&gt;faceList[<span class="number">1</span>]-&gt;loopList[j]-&gt;ledg-&gt;brotherEdg-&gt;wloop;</div><div class="line">		he = solid-&gt;faceList[<span class="number">1</span>]-&gt;loopList[j]-&gt;ledg;</div><div class="line">		firstv = he-&gt;endv;</div><div class="line">		nextv = he-&gt;startv;</div><div class="line">		firstup = <span class="keyword">new</span> Vertex(firstv-&gt;coordinate, direction, d, solid-&gt;vertexList.size());</div><div class="line">		prevup = firstup;</div><div class="line">		mev(firstv, firstup, curLoop);</div><div class="line">		he = he-&gt;prv;</div><div class="line">		<span class="keyword">while</span> (nextv != firstv) &#123;</div><div class="line">			nextup = <span class="keyword">new</span> Vertex(nextv-&gt;coordinate, direction, d, solid-&gt;vertexList.size());</div><div class="line">			mev(nextv, nextup, curLoop);</div><div class="line">			mef(nextup, prevup, curLoop);</div><div class="line">			prevup = nextup;</div><div class="line">			nextv = he-&gt;startv;</div><div class="line">			he = he-&gt;prv;</div><div class="line">		&#125;</div><div class="line">		Loop* newLoop = mef(prevup, firstup, curLoop);</div><div class="line">		<span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</div><div class="line">			curFace = newLoop-&gt;lface;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			kfmrh(curFace, newLoop-&gt;lface);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Bug记录"><a href="#Bug记录" class="headerlink" title="Bug记录"></a>Bug记录</h3><ol>
+<li>一开始没有把数据结构想明白，主要是没有理解内环和外环的意思，将边围成闭合回路之后会产生内环路和外环路，面的外环应为符合其法向方向的环路，面的内环则与外环的方向相反。</li>
+<li>Qt实现部分，比较琐碎的问题，主要是因为自己不够熟悉，之后需要进一步了解一下各个部件以及之间的一些关系；</li>
+<li>OpenGL实现，这个部分主要使用了gluTess函数画凹多边形以及带孔的图形，但是也遇到了非常多的问题，主要是不太熟悉可编程管线的使用，两个带孔的图形绘制有很大的问题，可能与buffer有关，但是现阶段不够了解OpenGL需要再学习一下之后再来将bug修复；</li>
+</ol>
+<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><ol>
+<li>之后编程之前需要先把数据结构和算法理解清楚，并且要把伪代码给写出来，算是对思路进行一整理；</li>
+<li>OpenGL的使用这几天需要补习一下，以防以后使用的时候又要请教别人；</li>
+<li>Qt的部件和结构还不是很了解，也要再学习一下；</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">算法笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/04/001-三维CAD建模笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-006-Java异常、断言和日志" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/03/006-Java异常、断言和日志/">006 Java 异常、断言和日志</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/03/006-Java异常、断言和日志/" class="archive-article-date">
+  	<time datetime="2017-11-03T00:16:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="处理错误"><a href="#处理错误" class="headerlink" title="处理错误"></a>处理错误</h2><h3 id="异常分类"><a href="#异常分类" class="headerlink" title="异常分类"></a>异常分类</h3><p>在Java中，异常对象都是派生于Throwable类的一个实例，Throwable又分解为：Error和Exception。Exception又可分解为两个分支：</p>
+<ul>
+<li>RuntimeException：由程序错误导致的异常：<ul>
+<li>错误的类型转换；</li>
+<li>数组访问越界；</li>
+<li>访问null指针；</li>
+</ul>
+</li>
+<li>IOException：由I/O错误导致的异常：<ul>
+<li>试图在文件尾部后面读取数据；</li>
+<li>试图打开一个不存在的文件；</li>
+<li>试图根据给定的字符串查找Class对象，而这个字符串表示的类并不存在；<br>Java将派生于Error类或RuntimeException类的所有异常称为非受查异常，所有其他异常称为受查异常。</li>
+</ul>
+</li>
+</ul>
+<h3 id="声明受查异常"><a href="#声明受查异常" class="headerlink" title="声明受查异常"></a>声明受查异常</h3><p>一个方法必须声明所有可能抛出的受查异常，而非受查异常要么不可控制（Error），要么就应该避免发生（RuntimeException）。如果在子类中覆盖了超类的一个方法，子类方法中声明的受查异常不能比超类方法中声明的异常更通用。如果超类方法没有抛出任何受查异常，子类也不能抛出任何受查异常。</p>
+<h3 id="创建异常类"><a href="#创建异常类" class="headerlink" title="创建异常类"></a>创建异常类</h3><p>创建异常类，只是定义一个派生于Exception的类，或者派生于Exception子类的类。</p>
+<h2 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h2><p>若某个异常发生的时候没有在任何地方进行捕获，那程序就会终止，并在控制台上打印出异常信息，其中包括异常的类型和堆栈的内容。要捕获一个异常，必须设置try/catch语句块。</p>
+<ul>
+<li>在try语句块中的任何代码抛出了一个在catch子句中说明的异常类，则：<ul>
+<li>程序将跳过try语句块的其余代码；</li>
+<li>程序将执行catch子句中的处理器代码；</li>
+</ul>
+</li>
+<li>在try语句块中的代码没有抛出任何异常，则程序将跳过catch子句；</li>
+<li>在方法中的任何代码抛出了一个在catch子句中没有声明的异常类型，这个方法就会立刻退出。</li>
+</ul>
+<h3 id="finally子句"><a href="#finally子句" class="headerlink" title="finally子句"></a>finally子句</h3><p>当代码抛出一个异常时，就会终止方法中剩余代码的处理，并退出这个方法的执行，若方法获得了一些本地资源，并且只有这个方法自己知道，若这些资源在退出方法之前必须被回收，则就会产生资源回收问题。使用finally子句，可以保证不管是否异常被捕获，finally子句中的代码都会被执行。建议解耦合try/catch和try/finally语句：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">InputStream in = ...;</div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">	<span class="keyword">try</span>&#123;</div><div class="line">		<span class="comment">//code that might throw exceptions</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">finally</span>&#123;</div><div class="line">		in.close();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">catch</span>(IOException e)&#123;</div><div class="line">	<span class="comment">//show error message</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="分析堆栈轨迹元素"><a href="#分析堆栈轨迹元素" class="headerlink" title="分析堆栈轨迹元素"></a>分析堆栈轨迹元素</h3><p>堆栈轨迹是一个方法调用过程的列表，包含了程序执行过程中方法调用的特定位置。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/03/006-Java异常、断言和日志/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-002-Android-UI开发" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/02/002-Android-UI开发/">002 Android UI开发</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/02/002-Android-UI开发/" class="archive-article-date">
+  	<time datetime="2017-11-02T12:12:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ImageView"><a href="#ImageView" class="headerlink" title="ImageView"></a>ImageView</h2><p>ImgaeView用于在界面上展示图片，我们需要根据图片的分辨率，将它放在不同的目录下，目录的设置对应手机屏幕的密度dpi：</p>
+<ul>
+<li>mipmap-mdpi：        48 * 48</li>
+<li>mipmap-hdpi：        72 * 72</li>
+<li>mipmap-xxhdpi：     96 * 96</li>
+<li>mipmap-xxhdpi：    144 * 144</li>
+<li>mipmap-xxxhdpi：    192 * 192<br>根据手机屏幕密度将图片放置在对应drawable-…文件夹下，并使用如下方式寻找图片：<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:src="@drawable/img"</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Android会按照手机屏幕密度匹配最适合的图片，如果在最适合密度对应的目录下没有找到，则向高密度文件夹中寻找图片，并在显示图片时缩小图片；若仍没有找到，则在低密度文件夹中寻找图片，并在显示图片时放大图片。</p>
+<h2 id="函数式接口与Lambda表达式"><a href="#函数式接口与Lambda表达式" class="headerlink" title="函数式接口与Lambda表达式"></a>函数式接口与Lambda表达式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">                <span class="comment">//some operations...</span></div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">button.setOnClickListener((v)-&gt;&#123;</div><div class="line">		<span class="comment">//some operations</span></div><div class="line">	&#125;);</div></pre></td></tr></table></figure>
+<p>上面两种表达式效果相同，前者是匿名内部类的表达方式，后者是Lambda表达式。<br>接口，主要用来描述类具有什么功能，而并不给出每个功能的具体实现，提供实例域和方法实现的任务应该由实现接口的类来完成。函数式接口，即只有一种抽象方法的接口，需要这种接口的对象时，可以提供一个lambda表达式。<br>匿名内部类即只能使用一次的内部类，必须继承一个父类或实现一个接口，注意通用格式中为InterfaceType。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> InterfaceType()&#123;</div><div class="line">	method and data</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于匿名类没有类名，因此匿名类没有构造器，对于在内部类实现接口的时候，可以使用lambda表达式来表达。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/02/002-Android-UI开发/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-002-第一行代码-Bug记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/31/002-第一行代码-Bug记录/">002 第一行代码 Bug记录</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/31/002-第一行代码-Bug记录/" class="archive-article-date">
+  	<time datetime="2017-10-31T11:28:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Dialog无法弹出且程序闪退"><a href="#Dialog无法弹出且程序闪退" class="headerlink" title="Dialog无法弹出且程序闪退"></a>Dialog无法弹出且程序闪退</h2><p>原始程序在AndroidManifest.xml中设置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".DialogActivity"</span></span></div><div class="line"><span class="tag">	      <span class="attr">android:theme</span>=<span class="string">"@android:style/Theme.Dialog"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>但是会导致程序点击按钮后无法跳出对话框，并且程序闪退，这里是设置theme错误，要修改为<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".DialogActivity"</span></span></div><div class="line"><span class="tag">		  <span class="attr">android:theme</span>=<span class="string">"@style/Theme.AppCompat.Dialog"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>当出现Android no debuggable processes时，需要设置</p>
+<blockquote>
+<p>Tools -&gt; Android -&gt; Enable ADB Integration active<br>设置完毕之后，需要重启Android Studio重新运行程序。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/31/002-第一行代码-Bug记录/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-005-Java-接口、lambda表达式与内部类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -178,6 +561,62 @@
 <li>接口冲突：若超接口提供了一个默认方法，另一个接口提供同名且参数类型相同的方法，子类必须覆盖这个方法来解决冲突；</li>
 </ul>
 <h3 id="对象克隆"><a href="#对象克隆" class="headerlink" title="对象克隆"></a>对象克隆</h3><p>Cloneable接口是Java提供的一组标记接口之一，不包含任何方法，唯一作用就是允许在类型查询中使用instanceof。不同于Comparable等接口通常用于确保一个类实现一个或一组特定的方法。<br>即使clone的默认（浅拷贝）实现能够满足要求，还是需要实现Cloneable接口，将clone重新定义为public，再调用super.clone()。若要建立深拷贝，需要克隆对象中可变的实例域。</p>
+<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><p>lambda表达式是一个代码块，以及必须传入代码的变量规范：</p>
+<ul>
+<li><p>lambda表达式形式：参数，箭头(-&gt;)以及一个表达式，可以将表达式代码放在{}中，并包含显式的return语句；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(String first, String second)-&gt;&#123;</div><div class="line">	<span class="keyword">if</span>(first.length() &lt; second.length()) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(first.length() &gt; second.length()) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>即时lambda表达式没有参数，仍然要提供空括号：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">()-&gt;&#123;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">100</span>; i++) System.out.println(i);&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果可以推导出lambda表达式的参数类型，可以忽略其类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Comparator&lt;String&gt; comp = </div><div class="line">(first, second)-&gt;first.length()-second.length();</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果方法只有一个参数，且参数类型可推导，可以省略小括号：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ActionListener listener = event-&gt;</div><div class="line">System.out.println(<span class="string">"The time is"</span> + <span class="keyword">new</span> Date());</div></pre></td></tr></table></figure>
+</li>
+<li><p>lambda表达式的返回类型不需指定，可以从上下文中推导得出；</p>
+</li>
+<li>lambda表达式必须在每个分支上都返回一个值；</li>
+</ul>
+<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个lambda表达式，这种接口称为函数式接口。</p>
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>使用现成的方法完成想要传递到其他代码的某个动作，用::操作符分隔方法名与对象或类名，等同于lambda表达式的情况；</p>
+<ul>
+<li>object::instanceMethod</li>
+<li>Class::staticMethod</li>
+<li>Class::instanceMethod<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">greet</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello, world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TimeGreeter</span> <span class="keyword">extends</span> <span class="title">Greeter</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">greet</span><span class="params">()</span></span>&#123;</div><div class="line">		Time t = <span class="keyword">new</span> Timer(<span class="number">1000</span>, <span class="keyword">super</span>::greet);</div><div class="line">		t.start();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>lambda表示式有3个部分：</p>
+<ul>
+<li>一个代码块；</li>
+<li>参数；</li>
+<li>自由变量的值，指非参数而且不在代码中定义的变量；<br>lambda表达式可以捕获外围作用域中的变量值，且只能引用值不会改变的变量，即在代码块内部或外部都不能改变，这种变量称为最终变量，即初始化之后就不会再为它赋新值。<br>在lambda表达式中声明一个与局部变量同名的参数或局部变量是不合法的。在lambda表达式中使用this关键字时，时指创建这个lambda表达式的方法的this参数。</li>
+</ul>
+<h3 id="处理lambda表达式"><a href="#处理lambda表达式" class="headerlink" title="处理lambda表达式"></a>处理lambda表达式</h3><p>使用lambda表达式的重点是延迟执行，希望延迟执行的原因如：</p>
+<ul>
+<li>在一个单独的线程中运行代码；</li>
+<li>多次运行代码；</li>
+<li>在算法的适当位置运行代码（如，排序中的比较操作）；</li>
+<li>发生某种情况时执行代码（如，点击了一个按钮，数据到达，等）</li>
+<li>只在必要时才运行代码；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IntConsumer</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeat</span><span class="params">(<span class="keyword">int</span> n, IntConsumer action)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) action.accept(i);</div><div class="line">&#125;</div><div class="line">repeat(<span class="number">10</span>, i-&gt;System.out.println(<span class="string">"Countdown: "</span> + (<span class="number">9</span>-i)));</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述代码中，i表示输入参数，在repeat中，每次执行action.accept(i)时才会调用lambda表达式，从而传入对应的i值。</p>
+<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><p>内部类是定义在另一个类中的类。使用内部类的原因：</p>
+<ul>
+<li>内部类方法可以访问该类定义所在的作用域中的数据，包括私有数据；</li>
+<li>内部类可以对同一个包中的其他类隐藏起来；</li>
+<li>当想要定义一个回调函数且不想编写大量代码时，使用匿名内部类比较便捷。</li>
+</ul>
+<h3 id="使用内部类访问对象状态"><a href="#使用内部类访问对象状态" class="headerlink" title="使用内部类访问对象状态"></a>使用内部类访问对象状态</h3><p>内部类既可以访问自身的数据域，也可以访问创建它的外围类对象的数据域。内部类的对象总有一个隐式引用，指向创建它的外部类对象。外围类的引用在构造器中设置，编译器修改了所有内部类的构造器，添加一个外围类引用的参数。只有内部类可以是私有类，而常规类只可以具有包可见性，或公有可见性。</p>
+<h3 id="内部类的特殊语法规则"><a href="#内部类的特殊语法规则" class="headerlink" title="内部类的特殊语法规则"></a>内部类的特殊语法规则</h3><p>在外围类内引用内部类可表示为<em>OuterClass.this</em>，在外围类外引用内部类可表示为<em>OuterClass.InnerClass</em>。<br>内部类中声明的所有静态域都必须是final，因为对于每个外部对象，会分别有一个单独的内部类实例，如果这个域不是final的，它可能就不唯一。内部类不能有static方法。</p>
+<h3 id="内部类是否有用、必要和安全"><a href="#内部类是否有用、必要和安全" class="headerlink" title="内部类是否有用、必要和安全"></a>内部类是否有用、必要和安全</h3><p>内部类是一个编译器现象，编译器将内部类翻译为用$分隔外部类名与内部类名的常规类文件，而与虚拟机无关。</p>
+<h3 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h3><p>可以在一个方法中定义局部类，不能使用public或private访问说明符声明局部类，它的作用域被限定在声明这个局部类的块中。</p>
+<h3 id="由外部方法访问变量"><a href="#由外部方法访问变量" class="headerlink" title="由外部方法访问变量"></a>由外部方法访问变量</h3><p>局部类不仅能够访问包含它们的外部类，还能访问局部变量，但是这些局部变量必须事实上为final。</p>
+<h3 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h3><p>通用语法格式为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> SuperType(construction parameters)&#123;</div><div class="line">	inner <span class="class"><span class="keyword">class</span> <span class="title">methods</span> <span class="title">and</span> <span class="title">data</span></span></div><div class="line"><span class="class">&#125;</span></div></pre></td></tr></table></figure></p>
+<h3 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h3><p>将内部类声明为static，可以取消产生的引用，从而使内部类不能引用外围类对象。与常规内部类不同，静态内部类可以有静态域和方法。声明在接口中的内部类自动称为static和public类。</p>
+<h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><p>====日后再看一遍====</p>
 
       
 
@@ -256,6 +695,38 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="活动定义及基本用法"><a href="#活动定义及基本用法" class="headerlink" title="活动定义及基本用法"></a>活动定义及基本用法</h2><p>活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。</p>
+<h2 id="活动的生命周期"><a href="#活动的生命周期" class="headerlink" title="活动的生命周期"></a>活动的生命周期</h2><h3 id="返回栈"><a href="#返回栈" class="headerlink" title="返回栈"></a>返回栈</h3><p>Android使用任务管理活动，一个任务即一组存放在栈里的活动的集合，这个栈也被称为返回栈。每当按下Back建或调用finish()方法销毁一个活动，处于栈顶的活动就会出栈。</p>
+<h3 id="活动状态"><a href="#活动状态" class="headerlink" title="活动状态"></a>活动状态</h3><p>每个活动在其生命周期中最多为4种状态：</p>
+<ol>
+<li>运行状态：处于返回栈栈顶的活动即处于运行状态；</li>
+<li>暂停状态：不处于栈顶但仍可见的活动处于暂停状态；</li>
+<li>停止状态；不处于栈顶且完全不可见的活动处于停止状态；</li>
+<li>销毁状态：活动从返回栈中移除后就编程销毁状态；</li>
+</ol>
+<h3 id="活动的生存期"><a href="#活动的生存期" class="headerlink" title="活动的生存期"></a>活动的生存期</h3><p>Activity类中定义了7个回调方法，覆盖活动声明周期的每个环节：</p>
+<ol>
+<li>onCreate()：每个活动中都重写该方法，在活动第一次被创建时调用，用于完成活动的初始化操作，如加载布局、绑定事件；</li>
+<li>onStart()：在活动由不可见变为可见时调用；</li>
+<li>onResume()：活动处于运行状态，准备好与用户进行交互时调用；</li>
+<li>onPause()：在系统准备启动或恢复另一活动时调用；</li>
+<li>onStop()：在活动完全不可见时调用；</li>
+<li>onDestroy()：在活动被销毁之前调用，之后活动将变为销毁状态；</li>
+<li>onRestart()：在活动由停止状态变为运行状态之前调用，即活动重新被启动；<br>活动可以分为3种生存期：</li>
+</ol>
+<ul>
+<li>完整生存期：活动在onCreate()和onDetroy()之间所经历的，即为完整生存期；</li>
+<li>可见生存期：活动在onStart()和onStop()之间经历的，即为可见生存期。在此期间，活动对于用户总是可见的，可能无法与用户进行交互；</li>
+<li>前台生存期：活动在onResume()和onPause()之间经历的，即为前台生存期。在此期间，活动总是处于运行状态，可与用户进行交互；<br><img src="../../assets/2.jpg" alt="Android生命周期"></li>
+</ul>
+<h2 id="活动的启动模式"><a href="#活动的启动模式" class="headerlink" title="活动的启动模式"></a>活动的启动模式</h2><p>启动模式一共有4种，standart、singleTop、singleTask和singleInstance，可以在AndroidManifest.xml中通过给<activity>标签指定android:launchMode属性来选择启动模式。</activity></p>
+<h3 id="1-standard"><a href="#1-standard" class="headerlink" title="1. standard"></a>1. standard</h3><p>standard是活动默认的启动模式，该模式下，每当启动一个新的活动，就会在返回栈中入栈，并处于栈顶的位置。每次启动standard模式的活动，系统都会创建该活动的一个新的实例。</p>
+<h3 id="2-singleTop"><a href="#2-singleTop" class="headerlink" title="2. singleTop"></a>2. singleTop</h3><p>singleTop，在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例，不过当活动不处于栈顶时，再次启动该活动，会创建新的实例。</p>
+<h3 id="3-singleTask"><a href="#3-singleTask" class="headerlink" title="3. singleTask"></a>3. singleTask</h3><p>singleTask，每次启动该活动时系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。</p>
+<h3 id="4-singleInstance"><a href="#4-singleInstance" class="headerlink" title="4. singleInstance"></a>4. singleInstance</h3><p>singleInstance，会启用一个新的返回栈来管理这个活动，则不管哪个应用程序来访问该活动，都会共用同一个返回栈，也解决了共享活动实例的问题。<br>程序中有两个返回栈，在按下Back回退时，先将当前栈顶活动出栈，并显示栈中的栈顶活动，直到栈清空后，才能显示另一个栈中的栈顶活动。</p>
+<h2 id="活动的最佳实践"><a href="#活动的最佳实践" class="headerlink" title="活动的最佳实践"></a>活动的最佳实践</h2><h3 id="知晓当前是哪个活动"><a href="#知晓当前是哪个活动" class="headerlink" title="知晓当前是哪个活动"></a>知晓当前是哪个活动</h3><p>创建一个普通Java类，让其继承所有活动的父类，并修改其称为项目中所有活动的父类，该类的onCreate()设计如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreate(saveInstanceState);</div><div class="line">	Log.d(<span class="string">"BaseActivity"</span>, getClass().getSimpleName());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="随时退出程序"><a href="#随时退出程序" class="headerlink" title="随时退出程序"></a>随时退出程序</h3><p>创建一个ActivityCollector类作为活动管理器对所有活动进行管理。每个活动创建后加入List，每个活动删除后从List移除。由于声明的是静态变量及函数，因此在调用时直接用ActivityCollector.add()即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActivityCollector</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Activity&gt; activities = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">        activities.add(activity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removeActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">        activities.remove(activity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">finishAll</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(Activity activity:activities)&#123;</div><div class="line">            <span class="keyword">if</span>(!activity.isFinishing())</div><div class="line">                activity.finish();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="启动活动的最佳写法"><a href="#启动活动的最佳写法" class="headerlink" title="启动活动的最佳写法"></a>启动活动的最佳写法</h3><p>在活动中定义一个静态函数，用于设置Intent中的参数，并在创建该活动的函数中调用该静态函数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">actionStart</span><span class="params">(Context context, String data1, String data2)</span></span>&#123;</div><div class="line">	Intent intent = <span class="keyword">new</span> Intent(context, SecondActivity.class);</div><div class="line">    intent.putExtra(<span class="string">"param1"</span>, data1);</div><div class="line">    intent.putExtra(<span class="string">"param2"</span>, data2);</div><div class="line">    context.startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="onCreate"><a href="#onCreate" class="headerlink" title="onCreate()"></a>onCreate()</h3><p>当Activity非正常销毁之后，如内存不足导致的后台自动销毁，为了保护数据可以将数据保存在saveInstanceState中，当Activity重启数据依旧不会消失，可以通过重载onSaveInstanceState或者onRestoreInstance重新获得。</p>
 
       
 
@@ -269,11 +740,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -429,72 +900,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/10/27/004-Java-继承/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-001-论文笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Latent Factor Guided Convolution Neural Networks for Age-Invariant Face Recognition</p>
-<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>age-invariant face recognition: AIFR<br>第一次在AIFR中使用deep CNNs进行处理。</p>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>AIFR主要处理在显著年龄变化下的人脸匹配问题。原先的处理方法分为两类：</p>
-<ul>
-<li>generative approaches：首先合成对应目标年龄的面部图像，再和实际图像进行匹配；</li>
-<li><ul>
-<li>该类方法需要大量的参数估计，且aging处理的建模较为复杂，使得计算量较大且结果并不稳定。</li>
-</ul>
-</li>
-<li>discriminative approaches：存在多种方法；<br>本文提出了一种latent factor guided CNN(LF-CNN)框架学习age-invariant deep face features。通过设计一个fully connected layer（称为latent factor fully connected（LF-FC） layer）从convolutional features中提取age-invariant deep features。通过设计一个称为latent identity analysis（LIA）的latent variable model，将aging process造成的variations与convolutional features中identity-related的部分分离。并利用LIA模型中的参数对LF-FC层的参数进行更新。并且，利用LIA模型和CNNs的损失函数构成age-invariant identity loss，从而对LF-CNNs的学习进行指导。<br>本文contributions：</li>
-<li>第一个提出了在AIFR中使用deep CNNs的方法；</li>
-<li>提出了LF-CNN模型处理AIFR问题；</li>
-<li>实验结果好；</li>
-</ul>
-<h1 id="The-Proposed-Method"><a href="#The-Proposed-Method" class="headerlink" title="The Proposed Method"></a>The Proposed Method</h1><h2 id="The-LF-CNNs-Model"><a href="#The-LF-CNNs-Model" class="headerlink" title="The LF-CNNs Model"></a>The LF-CNNs Model</h2><p>LF-CNN由两个关键部分组成：用于convolution features learning的convolution unit，用于age-invariant deep feature learning的LF-FC layer。</p>
-<ul>
-<li>convolution features：与传统CNNs构造相同，或者堆叠convolution layer，nonlinearity layer，optional pooling layer。本文中使用5层convolution layers，convolution kernel size设为3x3， stride设为1。在第4层和第5层，卷积的权重是局部共享的，以学习不同区域的不同中级和高级特征。使用Parametric Rectified Linear Unit作为nonlinear function以提高模型拟合度，并使用max pooling来强化potential translation和subsampling的鲁棒性。</li>
-<li>LF-FC layer：将FC layer用一个矩阵乘法公式表示：$\textbf{F}<em>{fc}=\textbf{W}\textbf{F}</em>{conv}+textbf{b}$，其中$\textbf{F}<em>{fc}$表示FC层的输出，$\textbf{F}</em>{conv}$表示convolutional feature，$\textbf{W},\textbf{b}$表示FC层的参数。利用上述公式设计可以从$\textbf{F}_{conv}$中提取age-invariant feature的一组$\textbf{W},\textbf{b}$参数。通过设计了一个Latent Identity Analysis（LIA）方法从LF-CNN模型中学习$\textbf{W},\textbf{b}$参数。而对于convolution unit，我们固定$\textbf{W},\textbf{b}$参数并通过标准SGD对它们进行更新。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/26/001-论文笔记/">展开全文 >></a>
         </p>
       
 
@@ -925,236 +1330,10 @@
 
 
   
-    <article id="post-001-Hexo使用笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/23/001-Hexo使用笔记/">001 Hexo使用笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/23/001-Hexo使用笔记/" class="archive-article-date">
-  	<time datetime="2017-10-23T14:43:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><p>记录一下Hexo使用期间的一些问题以及补充的一些方法。</p>
-<h3 id="1-404问题"><a href="#1-404问题" class="headerlink" title="1. 404问题"></a>1. 404问题</h3><p>在使用<strong>hexo deploy</strong>发布博客之后，会发现404网页找不到的情况。一开始设置respository的时候，应将名字设置为<strong>ur_name.github.io</strong>，以此作为博客的域名。</p>
-<h3 id="2-hexo-deploy无法找到git"><a href="#2-hexo-deploy无法找到git" class="headerlink" title="2. hexo deploy无法找到git"></a>2. hexo deploy无法找到git</h3><p>在这里需要在博客所在文件夹下执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<h3 id="3-代码高亮"><a href="#3-代码高亮" class="headerlink" title="3. 代码高亮"></a>3. 代码高亮</h3><p>使用代码高亮的格式是：<br>在```后加语言名，如java，cpp。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/23/001-Hexo使用笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-001-JDK-9-0-11配置笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/23/001-JDK-9-0-11配置笔记/">001 JDK-9.0.11配置笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/23/001-JDK-9-0-11配置笔记/" class="archive-article-date">
-  	<time datetime="2017-10-23T14:21:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><p>使用Java，需要先在官网上下载Java开发工具包JDK，并配置环境变量。JDK9和JDK8的版本较为明显的区别在于jdk下不再包含jre文件夹，所以一开始按照网上教程配置的时候会出现javac无法使用的情况。</p>
-<p>配置环境可以为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">JAVA_HOME = ur_jdk_path</div><div class="line">JRE_HOME = ur_jre_path</div><div class="line">PATH = .;%JAVA_HOME%\bin;%JRE_HOME%\bin;</div><div class="line">CLASSPATH = .;%JAVA_HOME%\lib;%JRE_HOME%\lib;</div></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/23/001-JDK-9-0-11配置笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Hello-World-0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/23/Hello-World-0/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/23/Hello-World-0/" class="archive-article-date">
-  	<time datetime="2017-10-23T10:19:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><p>从今天开始在这个博客上面记录一些学习和生活的琐事，现在是研一上的第5周，虽然看了《Head First 设计模式》、《深度探索C++对象模型》、《GPU高性能编程CUDA实战》，现在在看《编程珠玑》，但是还是觉得没有学习到什么东西，可能是看了就有点忘了的缘故。</p>
-<p>所以花了创建这个博客，用来记录研究生阶段的学习进度，一来是监督自己学习（虽然我觉得写博客真的有点麻烦，想偷懒），二来是坚持到以后再回过头来看会比较有成就感吧（希望坚持下去）。</p>
-<p>昨天在舍友的催眠下，决定入Java的坑，其实这个决定犹豫了很久很久了，但是一直没有下决心，因为最开始接触的是C++，以后做老板给的项目估计也是用C++，一直担心自己学了Java也没有地方用，最后导致两门语言都没有学好。但是，既然已经下了决定，就好好学吧，利用还是很空闲的研一时间。到时候和舍友一起写个APP去参加比赛什么的美滋滋，又开始空想了。不过，努力去做的话，应该能够实现吧。很庆幸遇到三个靠谱的舍友，大家一起迷茫，一起找解决的办法，虽然她们现在真的很沉迷农药就是了。</p>
-<h3 id="Recent-Targets"><a href="#Recent-Targets" class="headerlink" title="Recent Targets"></a>Recent Targets</h3><p><strong>1. 坚持LeetCode刷题：</strong>用C++和Java写，并在博客记录；<br><strong>2. 学习Java</strong><br><strong>3. 看完《编程珠玑》</strong><br><strong>4. 看完《剑指Offer》</strong><br><strong>5. 学习Qt：</strong>用Qt把Brep写成一个应用（寒假做）；</p>
-<h3 id="Long-term-Targets"><a href="#Long-term-Targets" class="headerlink" title="Long-term Targets"></a>Long-term Targets</h3><p><strong>为了进阿里和网易努力！</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">闲聊</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/23/Hello-World-0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1244,15 +1423,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java 读书笔记</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1261,10 +1444,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">闲聊</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
             
             <div class="clearfix"></div>
