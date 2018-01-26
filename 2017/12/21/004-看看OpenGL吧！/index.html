@@ -8,19 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>004 看看OpenGL吧！ | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="摄像机观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。  摄像机位置1glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);   摄像机移动方向应与物体移动方向相反；  摄像机方向12glm::vec3 cameraTarget = glm::vec">
+  <meta name="description" content="摄像机观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。1.摄像机位置1glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f); 摄像机移动方向应与物体移动方向相反；2.摄像机方向12glm::vec3 cameraTarget = glm::vec3(">
 <meta name="keywords" content="OpenGL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="004 看看OpenGL吧！">
 <meta property="og:url" content="http://yoursite.com/2017/12/21/004-看看OpenGL吧！/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="摄像机观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。  摄像机位置1glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);   摄像机移动方向应与物体移动方向相反；  摄像机方向12glm::vec3 cameraTarget = glm::vec">
+<meta property="og:description" content="摄像机观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。1.摄像机位置1glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f); 摄像机移动方向应与物体移动方向相反；2.摄像机方向12glm::vec3 cameraTarget = glm::vec3(">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2017/12/assets/Note_img/7.png">
-<meta property="og:updated_time" content="2018-01-26T06:34:38.802Z">
+<meta property="og:image" content="http://yoursite.com/2017/12/assets/Note_img/10.png">
+<meta property="og:updated_time" content="2018-01-26T07:49:49.221Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="004 看看OpenGL吧！">
-<meta name="twitter:description" content="摄像机观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。  摄像机位置1glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);   摄像机移动方向应与物体移动方向相反；  摄像机方向12glm::vec3 cameraTarget = glm::vec">
+<meta name="twitter:description" content="摄像机观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。1.摄像机位置1glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f); 摄像机移动方向应与物体移动方向相反；2.摄像机方向12glm::vec3 cameraTarget = glm::vec3(">
 <meta name="twitter:image" content="http://yoursite.com/2017/12/assets/Note_img/7.png">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
@@ -163,26 +164,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="摄像机"><a href="#摄像机" class="headerlink" title="摄像机"></a>摄像机</h3><p>观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。<br><img src="../../assets/Note_img/7.png" alt="摄像机坐标系构造"></p>
-<ol>
-<li>摄像机位置<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraPos = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>摄像机移动方向应与物体移动方向相反；</p>
-<ol>
-<li>摄像机方向<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraTarget = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>);</div><div class="line">glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>摄像机方向向量指从它到目标向量的相反方向；</p>
-<ol>
-<li><p>右轴<br>代表摄像机空间的x轴的正向；通过先定义一个上向量，将其与方向向量叉乘。即可得右向量。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glm::vec3 up = glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>);</div><div class="line">glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));</div></pre></td></tr></table></figure>
-</li>
-<li><p>上轴<br>将右向量和方向向量进行叉乘；</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="LookAt"><a href="#LookAt" class="headerlink" title="LookAt"></a>LookAt</h4><p>若有三个相互垂直的轴定义了一个坐标空间，即可使用这三个轴加一个平移向量创建一个矩阵，该矩阵乘以任何向量可以将其变换到该坐标空间中；故可以创建LookAt矩阵：<br>$$LookAt = \begin{bmatrix} \color{red}{R_x} &amp; \color{red}{R_y} &amp; \color{red}{R_z} &amp; 0 \ \color{green}{U_x} &amp; \color{green}{U_y} &amp; \color{green}{U_z} &amp; 0 \ \color{blue}{D_x} &amp; \color{blue}{D_y} &amp; \color{blue}{D_z} &amp; 0 \ 0 &amp; 0 &amp; 0  &amp; 1 \end{bmatrix} * \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; -\color{purple}{P_x} \ 0 &amp; 1 &amp; 0 &amp; -\color{purple}{P_y} \ 0 &amp; 0 &amp; 1 &amp; -\color{purple}{P_z} \ 0 &amp; 0 &amp; 0  &amp; 1 \end{bmatrix}$$<br>其中R为右向量，U为上向量，D为方向向量，P为摄像机位置向量。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">glm::mat4 view;</div><div class="line">view = glm::lookAt(glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>),</div><div class="line">				   glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>),</div><div class="line">				   glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</div></pre></td></tr></table></figure></p>
+        <h3 id="摄像机"><a href="#摄像机" class="headerlink" title="摄像机"></a>摄像机</h3><p>观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。<br><img src="../../assets/Note_img/7.png" alt="摄像机坐标系构造"><br>1.摄像机位置<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraPos = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>);</div></pre></td></tr></table></figure></p>
+<p>摄像机移动方向应与物体移动方向相反；<br>2.摄像机方向<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraTarget = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>);</div><div class="line">glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);</div></pre></td></tr></table></figure></p>
+<p>摄像机方向向量指从它到目标向量的相反方向；<br>3.右轴<br>代表摄像机空间的x轴的正向；通过先定义一个上向量，将其与方向向量叉乘。即可得右向量。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glm::vec3 up = glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>);</div><div class="line">glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));</div></pre></td></tr></table></figure></p>
+<p>4.上轴<br>将右向量和方向向量进行叉乘；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);</div></pre></td></tr></table></figure></p>
+<h4 id="LookAt"><a href="#LookAt" class="headerlink" title="LookAt"></a>LookAt</h4><p>若有三个相互垂直的轴定义了一个坐标空间，即可使用这三个轴加一个平移向量创建一个矩阵，该矩阵乘以任何向量可以将其变换到该坐标空间中；故可以创建LookAt矩阵：<br><img src="../../assets/Note_img/10.png" alt="LookAt矩阵"><br>其中R为右向量，U为上向量，D为方向向量，P为摄像机位置向量。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">glm::mat4 view;</div><div class="line">view = glm::lookAt(glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>),</div><div class="line">				   glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>),</div><div class="line">				   glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</div></pre></td></tr></table></figure></p>
 <p>通过定义摄像机位置，目标位置和表示世界空间中的上向量的向量（用于计算右向量使用的上向量）即可计算LookAt矩阵。</p>
 <h4 id="自由移动"><a href="#自由移动" class="headerlink" title="自由移动"></a>自由移动</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraPos = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>);</div><div class="line">glm::vec3 cameraFront = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">-1.0f</span>);</div><div class="line">glm::vec3 cameraUp = glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>);</div><div class="line">veiw =  glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);</div></pre></td></tr></table></figure>
 <p>设置了相机位置，相机朝向和上方向之后，可以通过按键对相机位置进行修改，从而调整观察角度；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SpecialKeyboardCB</span><span class="params">(<span class="keyword">int</span> Key, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">	<span class="keyword">switch</span>(Key)&#123;</div><div class="line">		<span class="keyword">case</span> GLUT_KEY_UP:</div><div class="line">			cameraPos += cameraSpeed*cameraFront;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> GLUT_KEY_DOWN:</div><div class="line">			cameraPos -= cameraSpeed*cameraFront;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span>  GLUT_KEY_LEFT:</div><div class="line">			cameraPos -= normalize(cross(cameraFront, cameraUp))*cameraSpeed;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> GLUT_KEY_RIGHT:</div><div class="line">			cameraPos += normalize(cross(cameraFront, cameraUp))*cameraSpeed;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">InitializeGlutCallbacks</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//...</span></div><div class="line">	glutSpecialFunc(SpecialKeyboardCB);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -469,11 +455,7 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">OpenGL</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -481,7 +463,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">OpenGL</a>
               </li>
              
               <li class="article-tag-list-item">
