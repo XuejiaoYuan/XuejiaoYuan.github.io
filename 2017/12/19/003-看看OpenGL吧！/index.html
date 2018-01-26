@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="Polaris&#39;s blog">
 <meta property="og:description" content="平移变换齐次坐标中，第四个分量为1，表示坐标点；第四个分量为0，表示向量； 源码详解123struct Matrix4f&amp;#123;	float m[4][4];&amp;#125; 定义4维矩阵； 1GLuint gWorldLocation; 用此handle来获取shader中的“世界”平移变换矩阵一致变量的引用； 12345Matrix4f World; World.m[0][0] = 1.0f;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2017/12/assets/3.png">
-<meta property="og:image" content="http://yoursite.com/2017/12/assets/4.png">
-<meta property="og:image" content="http://yoursite.com/2017/12/assets/5.png">
-<meta property="og:image" content="http://yoursite.com/2017/12/assets/6.png">
-<meta property="og:updated_time" content="2017-12-21T01:10:56.293Z">
+<meta property="og:image" content="http://yoursite.com/2017/12/assets/Note_img/3.png">
+<meta property="og:image" content="http://yoursite.com/2017/12/assets/Note_img/4.png">
+<meta property="og:image" content="http://yoursite.com/2017/12/assets/Note_img/5.png">
+<meta property="og:image" content="http://yoursite.com/2017/12/assets/Note_img/6.png">
+<meta property="og:updated_time" content="2018-01-26T06:35:12.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="003 看看OpenGL吧！">
 <meta name="twitter:description" content="平移变换齐次坐标中，第四个分量为1，表示坐标点；第四个分量为0，表示向量； 源码详解123struct Matrix4f&amp;#123;	float m[4][4];&amp;#125; 定义4维矩阵； 1GLuint gWorldLocation; 用此handle来获取shader中的“世界”平移变换矩阵一致变量的引用； 12345Matrix4f World; World.m[0][0] = 1.0f;">
-<meta name="twitter:image" content="http://yoursite.com/2017/12/assets/3.png">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/assets/Note_img/3.png">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -178,7 +178,7 @@
 **OpenGL是列主序的，故使用GLM记录矩阵时，由于GLM使用列主序，因此需要设置为GL_FALSE;**
 </code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">uniform mat4 gWorld;</div><div class="line">gl_Position = gWorld * vec4(Position, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
 <p>定义了一个4x4的矩阵一致变量；由于顶点缓冲区中三角形的顶点位置是一些3维的向量，故需要在顶点着色器中添加第四个分量；</p>
-<h3 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h3><p><img src="../../assets/3.png" alt="坐标旋转"><br>绕z轴逆时针旋转矩阵计算：<br><img src="../../assets/4.png" alt="绕z轴旋转"><br>绕y轴逆时针旋转矩阵计算：<br><img src="../../assets/5.png" alt="绕y轴旋转"><br>绕x轴逆时针旋转矩阵计算：<br><img src="../../assets/6.png" alt="绕x轴旋转"></p>
+<h3 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h3><p><img src="../../assets/Note_img/3.png" alt="坐标旋转"><br>绕z轴逆时针旋转矩阵计算：<br><img src="../../assets/Note_img/4.png" alt="绕z轴旋转"><br>绕y轴逆时针旋转矩阵计算：<br><img src="../../assets/Note_img/5.png" alt="绕y轴旋转"><br>绕x轴逆时针旋转矩阵计算：<br><img src="../../assets/Note_img/6.png" alt="绕x轴旋转"></p>
 <h3 id="复合变换"><a href="#复合变换" class="headerlink" title="复合变换"></a>复合变换</h3><p>这里借助GLM库对矩阵进行存储；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/glm.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/matrix_transform.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/type_ptr.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
 <pre><code>需要的GLM的大多数功能都可以在下面三个头文件中找到；
 </code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">glm::<span class="function">vec4 <span class="title">vec</span><span class="params">(<span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>)</span></span>;</div><div class="line">glm::mat4 trans;</div><div class="line">trans = glm::translate(trans, glm:vec3(<span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</div></pre></td></tr></table></figure>
@@ -461,19 +461,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">OpenGL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">杂记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">OpenGL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
               </li>
              
               <li class="article-tag-list-item">

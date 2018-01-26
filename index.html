@@ -235,7 +235,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="摄像机"><a href="#摄像机" class="headerlink" title="摄像机"></a>摄像机</h3><p>观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。<br><img src="../../assets/7.png" alt="摄像机坐标系构造"></p>
+        <h3 id="摄像机"><a href="#摄像机" class="headerlink" title="摄像机"></a>摄像机</h3><p>观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。<br><img src="../../assets/Note_img/7.png" alt="摄像机坐标系构造"></p>
 <ol>
 <li>摄像机位置<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraPos = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>);</div></pre></td></tr></table></figure>
 </li>
@@ -381,7 +381,7 @@
 **OpenGL是列主序的，故使用GLM记录矩阵时，由于GLM使用列主序，因此需要设置为GL_FALSE;**
 </code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">uniform mat4 gWorld;</div><div class="line">gl_Position = gWorld * vec4(Position, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
 <p>定义了一个4x4的矩阵一致变量；由于顶点缓冲区中三角形的顶点位置是一些3维的向量，故需要在顶点着色器中添加第四个分量；</p>
-<h3 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h3><p><img src="../../assets/3.png" alt="坐标旋转"><br>绕z轴逆时针旋转矩阵计算：<br><img src="../../assets/4.png" alt="绕z轴旋转"><br>绕y轴逆时针旋转矩阵计算：<br><img src="../../assets/5.png" alt="绕y轴旋转"><br>绕x轴逆时针旋转矩阵计算：<br><img src="../../assets/6.png" alt="绕x轴旋转"></p>
+<h3 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h3><p><img src="../../assets/Note_img/3.png" alt="坐标旋转"><br>绕z轴逆时针旋转矩阵计算：<br><img src="../../assets/Note_img/4.png" alt="绕z轴旋转"><br>绕y轴逆时针旋转矩阵计算：<br><img src="../../assets/Note_img/5.png" alt="绕y轴旋转"><br>绕x轴逆时针旋转矩阵计算：<br><img src="../../assets/Note_img/6.png" alt="绕x轴旋转"></p>
 <h3 id="复合变换"><a href="#复合变换" class="headerlink" title="复合变换"></a>复合变换</h3><p>这里借助GLM库对矩阵进行存储；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/glm.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/matrix_transform.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/type_ptr.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
 <pre><code>需要的GLM的大多数功能都可以在下面三个头文件中找到；
 </code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">glm::<span class="function">vec4 <span class="title">vec</span><span class="params">(<span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>)</span></span>;</div><div class="line">glm::mat4 trans;</div><div class="line">trans = glm::translate(trans, glm:vec3(<span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</div></pre></td></tr></table></figure>
@@ -492,23 +492,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><p>输入.obj文件，在解析obj文件时，若一行不是以V、VT、VN、F开头，则可将改行忽略：</p>
+        <h2 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h2><p>输入.obj文件，在解析obj文件时，若一行不是以V、VT、VN、F开头，则可将改行忽略：</p>
 <ul>
 <li>V：代表顶点，格式为V X Y Z；</li>
 <li>VT：表示纹理坐标，每个三角形的三个顶点都要指定一个纹理坐标，格式为VT TU TV；</li>
 <li>VN：法向量，每个三角形的三个顶点都要指定一个法向量，格式为VN NX NY NZ；</li>
 <li>F：面，面后面跟着的整型数表示属于这个面的顶点、纹理、法向量的索引，格式为f Vertex1/Texture1/Normal1 Vertex2/Texture2/Normal2 Vertex3/Texture3/Normal3，f中顶点的序号以1为起始；</li>
 </ul>
-<h3 id="区域扫描线zbuffer"><a href="#区域扫描线zbuffer" class="headerlink" title="区域扫描线zbuffer"></a>区域扫描线zbuffer</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>区域扫描线z-buffer算法是由z-buffer算法及扫描线z-buffer算法一步步优化得来的：<br><strong>- z-buffer算法：</strong>创建与像素个数相同的z-buffer存储单元和帧缓冲器，将带显示对象的每个面上各点的z坐标与z-buffer中相应单元的z值比较，只有前者大于后者时才改变帧缓冲器对应单元的值，最终以帧缓冲器中的值绘制图像。<br><strong>- 扫描线z-buffer算法：</strong>z-buffer算法需要很大的z缓冲器，工作量较大，因此采用将平面分区域处理的方式，z-buffer的单元数取成和一行上像素数目相同，通过检查每个多边形的投影与当前扫描线的相交情况，比较每对交点之间的像素所在多边形的z值，获得消隐的图像；<br><strong>- 区域扫描线z-buffer算法：</strong>由于每条扫描线被各多边形的投影分割成多个区间，因此只要在区间上任一点处找到该处z值最大的一个面，该区间上每个像素的都用该面的颜色来显示。</p>
-<h4 id="区域扫描线算法基本思想"><a href="#区域扫描线算法基本思想" class="headerlink" title="区域扫描线算法基本思想"></a>区域扫描线算法基本思想</h4><ol>
-<li>开两个一维数组分别作为当前扫描线的z缓冲器和帧缓冲器；</li>
-<li>处理当前扫描线时；<ul>
+<h2 id="区域扫描线zbuffer"><a href="#区域扫描线zbuffer" class="headerlink" title="区域扫描线zbuffer"></a>区域扫描线zbuffer</h2><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>区域扫描线z-buffer算法是由z-buffer算法及扫描线z-buffer算法一步步优化得来的：</p>
+<ul>
+<li><strong>z-buffer算法：</strong>创建与像素个数相同的z-buffer存储单元和帧缓冲器，将带显示对象的每个面上各点的z坐标与z-buffer中相应单元的z值比较，只有前者大于后者时才改变帧缓冲器对应单元的值，最终以帧缓冲器中的值绘制图像。</li>
+<li><strong>扫描线z-buffer算法：</strong>z-buffer算法需要很大的z缓冲器，工作量较大，因此采用将平面分区域处理的方式，z-buffer的单元数取成和一行上像素数目相同，通过检查每个多边形的投影与当前扫描线的相交情况，比较每对交点之间的像素所在多边形的z值，获得消隐的图像；</li>
+<li><strong>区域扫描线z-buffer算法：</strong>由于每条扫描线被各多边形的投影分割成多个区间，因此只要在区间上任一点处找到该处z值最大的一个面，该区间上每个像素的都用该面的颜色来显示。</li>
+</ul>
+<h4 id="区域扫描线算法基本思想"><a href="#区域扫描线算法基本思想" class="headerlink" title="区域扫描线算法基本思想"></a>区域扫描线算法基本思想</h4><p>1.开两个一维数组分别作为当前扫描线的z缓冲器和帧缓冲器；<br>2.处理当前扫描线时；</p>
+<ul>
 <li>帧缓冲器的初值为背景颜色；</li>
 <li>z缓冲器的初值为最小z值；</li>
 </ul>
-</li>
-<li>求出扫描线与场景中各多边形的二维投影之间的交点，一条扫描线分解为一些列区间扫描线段；</li>
-<li>每一个区间扫描线段位于多边形“内部”和“外部”<ul>
+<p>3.求出扫描线与场景中各多边形的二维投影之间的交点，一条扫描线分解为一些列区间扫描线段；<br>4.每一个区间扫描线段位于多边形“内部”和“外部”</p>
+<ul>
 <li>“外部”扫描线段：直接着背景色；</li>
 <li>“内部”扫描线段：位于一个或多个多边形内部<ul>
 <li>位于一个多边形内部，该线段上的像素着多边形的颜色；</li>
@@ -516,73 +519,70 @@
 </ul>
 </li>
 </ul>
-</li>
-<li>当场景中所有多边形处理完毕时，扫描线帧缓冲器中的内容为画面在此扫描线的消隐结果；</li>
-</ol>
-<p><strong>扫描线与单个多边形内外关系</strong></p>
-<ol>
-<li>当扫描线与多边形的一条边相交时：<ul>
+<p>5.当场景中所有多边形处理完毕时，扫描线帧缓冲器中的内容为画面在此扫描线的消隐结果；</p>
+<p><strong>扫描线与单个多边形内外关系</strong><br>1.当扫描线与多边形的一条边相交时：</p>
+<ul>
 <li>第一个交点表示扫描线段进入多边形；</li>
 <li>第二个交点表示扫描线段离开多边形；</li>
 </ul>
-</li>
-<li>对每一个多边形，用一个“in/out”标记符flag跟踪记录当前扫描线段的状态：<ul>
+<p>2.对每一个多边形，用一个“in/out”标记符flag跟踪记录当前扫描线段的状态：</p>
+<ul>
 <li>初始：flag=0；</li>
 <li>进入多边形：flag=1；</li>
 <li>离开多边形：flag=0；</li>
 </ul>
-</li>
-<li>对于一条扫描线上一个给定的区间，可能有多个多边形的flag值为1；</li>
-<li>在当前扫描线上，跟踪flag为1的多边形<ul>
+<p>3.对于一条扫描线上一个给定的区间，可能有多个多边形的flag值为1；<br>4.在当前扫描线上，跟踪flag为1的多边形</p>
+<ul>
 <li>如果多于一个多边形flag为1，需要比较扫描线区间的z值确定颜色；</li>
 </ul>
-</li>
-</ol>
-<p>####区域扫描线算法的数据结构</p>
-<h5 id="分类多边形表"><a href="#分类多边形表" class="headerlink" title="分类多边形表"></a>分类多边形表</h5><p>根据多边形最大y坐标ymax将多边形放入相应类中：</p>
-<pre><code>- a,b,c,d：多边形所在平面的方程系数，需要根据读入的三角面片坐标点计算获得；
-- id：多边形的编号；
-- dy：多边形跨越的扫描线的数目；
-- color：多边形的颜色，颜色自行定义；
-- nxt：指向下一个与扫描线相交的多边形；
-</code></pre><h5 id="分类边表"><a href="#分类边表" class="headerlink" title="分类边表"></a>分类边表</h5><p>根据边的上端点y坐标ymax将边放入相应的类中：</p>
-<pre><code>- x：边的上端点的x坐标；
-- dx：相邻两条扫描线交点的x坐标差dx（-1/k）;
-- dy：边跨越的扫描线数目；
-- id：边所属多边形的编号；
-- nxt：指向下一条与扫描线相交的边；
-</code></pre><h5 id="活化多边形表"><a href="#活化多边形表" class="headerlink" title="活化多边形表"></a>活化多边形表</h5><p>记录当前扫描线与多边形在oxy投影面上投影相交的多边形：</p>
-<pre><code>- a,b,c,d：多边形所在平面的方程系数；
-- id：多边形的编号；
-- dy：多边形跨越的**剩余**扫描线数目；
-- color：多边形的颜色；
-- flag：记录扫描线与多边形的内外状态；
-- nxt：指向下一个与扫描线相交的多边形；
-</code></pre><h5 id="活化边表"><a href="#活化边表" class="headerlink" title="活化边表"></a>活化边表</h5><p>记录投影多边形边界与扫描线相交的边对：</p>
-<pre><code>- x：边与扫描线交点的x坐标值；
-- dx：相邻两扫描线交点的x坐标差（-1/k）；
-- dy：边跨越的扫描线数目；
-- id：边所属多边形的编号；
-- nxt：指向下一条与扫描线相交的边（边表按x值的大小次序排列）；
-</code></pre><h5 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE:"></a>NOTE:</h5><p>一开始想要选择从下至上扫描图像以符合glDrawPixel的行为，但是发现我们在建立分类边表时记录的是y的最大值，从而推算在其下方的扫描线与边的交点，因此还是需要从上至下扫描；所以需要进一步考虑存储图像的问题；</p>
-<h4 id="区域扫描线实现"><a href="#区域扫描线实现" class="headerlink" title="区域扫描线实现"></a>区域扫描线实现</h4><h5 id="构建分类多边形表"><a href="#构建分类多边形表" class="headerlink" title="构建分类多边形表"></a>构建分类多边形表</h5><p>遍历每一个三角形面片，计算其最大y值，创建分类多边形，将其放入对应其y值的分类多边形表中；</p>
-<h5 id="构建分类边表"><a href="#构建分类边表" class="headerlink" title="构建分类边表"></a>构建分类边表</h5><p>遍历每一个三角形面片，计算它的三条边，创建分类边，将其放入边y最大值对应的分类边表中；</p>
-<h5 id="构建活化多边形表"><a href="#构建活化多边形表" class="headerlink" title="构建活化多边形表"></a>构建活化多边形表</h5><p>由上至下扫描，将新加入的多边形加入到活化多边形表中；由于进入下一条扫描线，因此需要将多边形跨越的剩余扫描线数目减1。<br>在数据中需要考虑本来多边形横跨扫描线数目就为0的多边形，此处考虑将剩余扫描线数目小于等于0的多边形都从活化多边形表中删去；</p>
-<h5 id="构建活化边表"><a href="#构建活化边表" class="headerlink" title="构建活化边表"></a>构建活化边表</h5><p>遍历分类边表，更新原有边表，加入新的与扫描线相交的边；</p>
-<h5 id="zbuffer计算"><a href="#zbuffer计算" class="headerlink" title="zbuffer计算"></a>zbuffer计算</h5><p>需要注意在程序中要保证整个图形的各个三角面片都在window中，超出window的部分没有进行考虑；</p>
-<h4 id="处理记录"><a href="#处理记录" class="headerlink" title="处理记录"></a>处理记录</h4><ol>
-<li><p>在这里稍微对dy进行调整，dy表示边占据的扫描线的条数，例如在同一扫描线上的边其dy为1，加入边表时，跨越的剩余扫描线数目则为0，在下一次处理时由于对resDy的更新，其小于0，将从活化边表中删除；</p>
-</li>
-<li><p>遗留问题：似乎在inPolygon中加入三角面片之后，无法合理删除，因为观察获得的颜色结果，相同颜色占据了后面一大段而没有其他的变化，应该是存在问题。</p>
-</li>
-<li><p>程序实现了，剩下需要对输入的图形进行尺寸调整；</p>
-</li>
-</ol>
+<h4 id="区域扫描线算法的数据结构"><a href="#区域扫描线算法的数据结构" class="headerlink" title="区域扫描线算法的数据结构"></a>区域扫描线算法的数据结构</h4><p><strong>1.分类多边形表</strong><br>根据多边形最大y坐标ymax将多边形放入相应类中：</p>
+<ul>
+<li>a,b,c,d：多边形所在平面的方程系数，需要根据读入的三角面片坐标点计算获得；</li>
+<li>id：多边形的编号；</li>
+<li>dy：多边形跨越的扫描线的数目；</li>
+<li>color：多边形的颜色，颜色自行定义；</li>
+<li>nxt：指向下一个与扫描线相交的多边形；</li>
+</ul>
+<p><strong>2.分类边表</strong><br>根据边的上端点y坐标ymax将边放入相应的类中：</p>
+<ul>
+<li>x：边的上端点的x坐标；</li>
+<li>dx：相邻两条扫描线交点的x坐标差dx（-1/k）;</li>
+<li>dy：边跨越的扫描线数目；</li>
+<li>id：边所属多边形的编号；</li>
+<li>nxt：指向下一条与扫描线相交的边；</li>
+</ul>
+<p><strong>3.活化多边形表</strong><br>记录当前扫描线与多边形在oxy投影面上投影相交的多边形：</p>
+<ul>
+<li>a,b,c,d：多边形所在平面的方程系数；</li>
+<li>id：多边形的编号；</li>
+<li>dy：多边形跨越的<strong>剩余</strong>扫描线数目；</li>
+<li>color：多边形的颜色；</li>
+<li>flag：记录扫描线与多边形的内外状态；</li>
+<li>nxt：指向下一个与扫描线相交的多边形；</li>
+</ul>
+<p><strong>4.活化边表</strong><br>记录投影多边形边界与扫描线相交的边对：</p>
+<ul>
+<li>x：边与扫描线交点的x坐标值；</li>
+<li>dx：相邻两扫描线交点的x坐标差（-1/k）；</li>
+<li>dy：边跨越的扫描线数目；</li>
+<li>id：边所属多边形的编号；</li>
+<li>nxt：指向下一条与扫描线相交的边（边表按x值的大小次序排列）；</li>
+</ul>
+<p><strong>NOTE:</strong><br>一开始想要选择从下至上扫描图像以符合glDrawPixel的行为，但是发现我们在建立分类边表时记录的是y的最大值，从而推算在其下方的扫描线与边的交点，因此还是需要从上至下扫描；所以需要进一步考虑存储图像的问题；</p>
+<h4 id="区域扫描线实现"><a href="#区域扫描线实现" class="headerlink" title="区域扫描线实现"></a>区域扫描线实现</h4><p><strong>1.构建分类多边形表</strong><br>遍历每一个三角形面片，计算其最大y值，创建分类多边形，将其放入对应其y值的分类多边形表中；</p>
+<p><strong>2.构建分类边表</strong><br>遍历每一个三角形面片，计算它的三条边，创建分类边，将其放入边y最大值对应的分类边表中；</p>
+<p><strong>3.构建活化多边形表</strong><br>由上至下扫描，将新加入的多边形加入到活化多边形表中；由于进入下一条扫描线，因此需要将多边形跨越的剩余扫描线数目减1。<br>在数据中需要考虑本来多边形横跨扫描线数目就为0的多边形，此处考虑将剩余扫描线数目小于等于0的多边形都从活化多边形表中删去；</p>
+<p><strong>4.构建活化边表</strong><br>遍历分类边表，更新原有边表，加入新的与扫描线相交的边；</p>
+<p><strong>5.zbuffer计算</strong><br>需要注意在程序中要保证整个图形的各个三角面片都在window中，超出window的部分没有进行考虑；</p>
+<h4 id="处理记录"><a href="#处理记录" class="headerlink" title="处理记录"></a>处理记录</h4><p>1.在这里稍微对dy进行调整，dy表示边占据的扫描线的条数，例如在同一扫描线上的边其dy为1，加入边表时，跨越的剩余扫描线数目则为0，在下一次处理时由于对resDy的更新，其小于0，将从活化边表中删除；</p>
+<p>2.遗留问题：似乎在inPolygon中加入三角面片之后，无法合理删除，因为观察获得的颜色结果，相同颜色占据了后面一大段而没有其他的变化，应该是存在问题。</p>
+<p>3.程序实现了，剩下需要对输入的图形进行尺寸调整；</p>
 <h4 id="OpenGL绘制zBuffer结果"><a href="#OpenGL绘制zBuffer结果" class="headerlink" title="OpenGL绘制zBuffer结果"></a>OpenGL绘制zBuffer结果</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;GLfloat&gt; frameBufferData;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">RenderScenceCB</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//...</span></div><div class="line">	glPixelStorei(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</div><div class="line">	glRasterPos2i(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">	glDrawPixels(width, height, GL_RGB, GL_FLOAT, &amp;frameBufferData[<span class="number">0</span>]);</div><div class="line">	<span class="comment">//...</span></div><div class="line"></div><div class="line">	glutSwapBuffers();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我们使用framBufferData存储每个像素的颜色值，共需width x height x 3的存储空间。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glPixelStorei(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</div></pre></td></tr></table></figure></p>
 <p>该函数用于对齐像素字节，默认4字节对齐，即图像数据字节必须是4的整数倍，则读取数据时，读取4的整数倍的字节数据来渲染一行。若为RGB图像，则一行10个像素共30字节，在4字节对齐模式下，会读取32个字节，这将导致读取越界；因此，此处将数据读取方式改为1字节读取形式，这种方式牺牲了存取效率，但是保证了不会出现存取越界的情况；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glRasterPos2i(<span class="number">0</span>, <span class="number">0</span>);</div></pre></td></tr></table></figure></p>
 <p>该函数设置像素点绘制的起始位置，此处是从窗口中心对像素进行一行一行的绘制；若不适用该函数，则之后的像素将从左下角开始绘制；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDrawPixels(width, height, GL_RGB, GL_FLOAT, &amp;frameBufferData[<span class="number">0</span>]);</div></pre></td></tr></table></figure></p>
 <p>根据frameBufferData中存储的颜色数据绘制每一个像素点的颜色，width和height控制绘制图像的宽和高，这两个两和窗口的宽和高没有关系；GL_RGB设置的是frameBufferData中存储的颜色值的排列顺序；GL_FLOAT表示数据的类型；</p>
+<h2 id="结果图像"><a href="#结果图像" class="headerlink" title="结果图像"></a>结果图像</h2><p><strong>程序测试结果</strong><br><img src="../../assets/Note_img/8.png" alt="程序测试结果"><br><img src="../../assets/Note_img/9.png" alt="程序测试图片"></p>
 
       
 
@@ -1354,19 +1354,19 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">OpenGL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">杂记</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">OpenGL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
               </li>
              
               <li class="article-tag-list-item">
