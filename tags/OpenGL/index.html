@@ -6,22 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>003 Java 对象与类 | Polaris&#39;s blog</title>
+  <title>Tag: OpenGL | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
-<meta name="keywords" content="读书笔记,Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="003 Java 对象与类">
-<meta property="og:url" content="http://yoursite.com/2017/10/25/003-Java-对象与类/index.html">
+  <meta name="description" content="�㽭��ѧCS2017���ڶ��о�ɭ��">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Polaris&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/tags/OpenGL/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
+<meta property="og:description" content="�㽭��ѧCS2017���ڶ��о�ɭ��">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2017/10/assets/Note_img/1.png">
-<meta property="og:updated_time" content="2017-10-27T12:23:41.458Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="003 Java 对象与类">
-<meta name="twitter:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
-<meta name="twitter:image" content="http://yoursite.com/2017/10/assets/Note_img/1.png">
+<meta name="twitter:title" content="Polaris&#39;s blog">
+<meta name="twitter:description" content="�㽭��ѧCS2017���ڶ��о�ɭ��">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -143,276 +139,212 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-003-Java-对象与类" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      003 Java 对象与类
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/22/005-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-22T07:19:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-22</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/22/005-看看OpenGL吧！/">005 看看OpenGL吧！</a>
     </h1>
   
 
-        
-        <a href="/2017/10/25/003-Java-对象与类/" class="archive-article-date">
-  	<time datetime="2017-10-25T10:47:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Java类之间的关系"><a href="#Java类之间的关系" class="headerlink" title="Java类之间的关系"></a>Java类之间的关系</h2><p><img src="../../assets/Note_img/1.png" alt="UML符号"></p>
-<ol>
-<li>依赖（“use-a”）<br> 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。</li>
-<li>聚合（“has-a”）<br> 一个类的对象包含另一个类的对象；</li>
-<li>继承（“is-a”）</li>
-</ol>
-<h2 id="对象与对象变量"><a href="#对象与对象变量" class="headerlink" title="对象与对象变量"></a>对象与对象变量</h2><p>在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。</p>
-<h2 id="访问器和更改器"><a href="#访问器和更改器" class="headerlink" title="访问器和更改器"></a>访问器和更改器</h2><p>只访问对象而不修改对象的方法称为访问器方法。在Java中，访问器方法与更改器方法在语法上没有明显区别；在C++中，带有const后缀的方法是访问器方法，默认为更改器方法。</p>
-<h2 id="final实例域"><a href="#final实例域" class="headerlink" title="final实例域"></a>final实例域</h2><p>可以将实例域定义为final，构建对象时必须初始化这样的域。final关键字只是表示存储在变量中的对象引用不会再指示其他的对象，但是该对象可以修改。</p>
-<ul>
-<li>final变量：final变量是只读的；</li>
-<li>final方法：该方法不能被子类的方法重写，在编译时静态绑定，不需要在运行时动态绑定；</li>
-<li>final类：不能被继承的类；</li>
-</ul>
-<h2 id="静态域与静态方法"><a href="#静态域与静态方法" class="headerlink" title="静态域与静态方法"></a>静态域与静态方法</h2><ul>
-<li>静态域：每个类只有一个静态域，但每个对象对所有实例域有自己的一份拷贝；</li>
-<li>静态常量：使用static final定义；</li>
-<li>静态方法：不能向对象实施操作的方法，故静态方法不能访问类的实例域，但是可以访问自身类中的静态域；建议使用类名调用静态方法。</li>
-</ul>
-<h2 id="main方法"><a href="#main方法" class="headerlink" title="main方法"></a>main方法</h2><p>每一个类可以有一个main方法，用于对类进行单元测试。执行类中的main方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java className</div></pre></td></tr></table></figure></p>
-<h2 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h2><p>Java对对象采用的是按值传递，故对两种类型的方法参数修改时，根据类型不同有所差异：</p>
-<ul>
-<li>基本数据类型：方法不能修改基本数据类型的参数；</li>
-<li>对象引用：由于方法得到的是对象引用的拷贝，对象引用及其他的拷贝同时引用同一个对象，因此可以修改对象引用的参数；但是方法不能让对象参数引用一个新的对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleValue</span><span class="params">(<span class="keyword">double</span> x)</span>	<span class="comment">//不可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x = x*<span class="number">3</span>;	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleSalary</span><span class="params">(Employee x)</span>	<span class="comment">//可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x.raiseSalary(<span class="number">200</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Employee x, Employee y)</span><span class="comment">//不可用</span></span></div><div class="line"><span class="function"> </span>&#123;</div><div class="line"> 	Employee temp = x;</div><div class="line"> 	x = y;</div><div class="line"> 	y = temp;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><p>Java允许使用包将类组织起来，使用包确保类名的唯一性。从编译器的角度来看，嵌套的包之间没有任何关系，如java.util包与java.util.jar包无关。每一个都拥有独立的类集合。</p>
-<ul>
-<li>一个类可以使用所属包中的所有类，以及其他包中的共有类。</li>
-<li>使用import static静态导入，可以在使用类的静态方法和静态域时不加类名前缀：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.*;</div><div class="line">out.println(<span class="string">"Hello World"</span>);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="将类放入包中"><a href="#将类放入包中" class="headerlink" title="将类放入包中"></a>将类放入包中</h3><p>若要将类放入包中，则必须将包的名字放在源文件开头，包中定义类的代码之前，并将包中的文件放到与完整的包匹配的子目录中。若没有在源文件中放置package语句，这个源文件中的类就被放置在一个默认包中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> classdir;</div></pre></td></tr></table></figure></p>
-<h3 id="包作用域"><a href="#包作用域" class="headerlink" title="包作用域"></a>包作用域</h3><p>如果没有指定public或private，这个部分（类、方法或变量）可以被同一个包中的所有方法访问。</p>
-<h2 id="类路径"><a href="#类路径" class="headerlink" title="类路径"></a>类路径</h2><p>类文件可以存储在JAR(Java归档)文件中，一个JAR文件中，可以包含多个压缩形式的类文件和子目录，JAR文件使用ZIP格式组织文件和子目录。<br>为了使类能够被多个程序共享，需要设置：</p>
-<ul>
-<li>将类放在一个目录下，该目录是包树状结构的基目录；</li>
-<li>将JAR文件放在一个目录下；</li>
-<li>设置类路径，类路径包括基目录、当前目录(.)、JAR文件。<br>例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/home/user/classdir:.:/home/user/archieves/archieve.jar <span class="comment">//UNIX环境</span></div><div class="line">c:\classdir;.;c:\archieves\archieve.jar <span class="comment">//Windows环境</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>javac编辑器总是在当前目录中查找文件，但Java虚拟机仅在类路径中有“.”目录时才查看当前目录<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">javac classdir\MyProg.java</div><div class="line">java classdir.MyProg</div></pre></td></tr></table></figure></p>
-<p>建议采用-classpath选项指定类路径：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -classpath c:\classdir;.;c:\archieves\archieve.jar MyProg</div></pre></td></tr></table></figure></p>
-<h2 id="文档注释"><a href="#文档注释" class="headerlink" title="文档注释"></a>文档注释</h2><p>JDK包含javadoc，可以由源文件生成一个HTML文件。</p>
-<h3 id="注释的插入"><a href="#注释的插入" class="headerlink" title="注释的插入"></a>注释的插入</h3><p>javadoc实用程序从以下特性中抽取信息：</p>
-<ul>
-<li>包；</li>
-<li>共有类与接口；</li>
-<li>共有的和受保护的构造器及方法；</li>
-<li><p>共有的和受保护的域；<br>注释以/**开始，以*/结束，每个/**…*/文档注释在标记之后紧跟着自由格式文本，标记由@开头；自由格式文本的第一句应为一个概要性的句子，javadoc实用程序自动将这些句子抽出来形成概要页。</p>
-</li>
-<li><p><strong>类注释：</strong>类注释必须放在import语句之后，类定义之前；</p>
-</li>
-<li><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</li>
-<li><ul>
-<li>@param变量描述：将对当前方法的“param”（参数）部分添加一个条目；</li>
-</ul>
-</li>
-<li><ul>
-<li>@return描述：将对当前方法添加“return”（返回）部分；</li>
-</ul>
-</li>
-<li><ul>
-<li>@throws类描述：将添加一个注释，用于表示这个方法有可能抛出异常；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Raise the salary of an employee.</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> byPercent the percentage by which to raise the salary (e.g. 10 means 10%)</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> the amount of the raise</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">raiseSalary</span><span class="params">(<span class="keyword">double</span> byPercent)</span></span>&#123;</div><div class="line">	<span class="keyword">double</span> raise = salary * byPercent / <span class="number">100</span>;</div><div class="line">	salary += raise;</div><div class="line">	<span class="keyword">return</span> raise;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>域注释：</strong>只需对公有域（通常指静态常量）建立文档；</p>
-</li>
-<li><strong>通用注释：</strong></li>
-<li><ul>
-<li>@author姓名；</li>
-</ul>
-</li>
-<li><ul>
-<li>@version文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@since文本：这里的text可以是对引入特性的版本描述；</li>
-</ul>
-</li>
-<li><ul>
-<li>@deprecated文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@see引用；</li>
-</ul>
-</li>
-</ul>
-<h2 id="类设计技巧"><a href="#类设计技巧" class="headerlink" title="类设计技巧"></a>类设计技巧</h2><ol>
-<li>一定要保证数据私有；</li>
-<li>一定要对数据初始化；</li>
-<li>不要在类中使用过多的基本类型；</li>
-<li>不是所有的域都需要独立的域访问器和域更改器；</li>
-</ol>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/25/003-Java-对象与类/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
-  
-    <a href="/2017/10/27/004-Java-继承/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          004 Java 继承
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/10/24/003-Java与C++/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">003 Java与C++</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/21/004-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-21T01:12:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-21</time>
+</a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
+    	 
   
-  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/21/004-看看OpenGL吧！/">004 看看OpenGL吧！</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/19/003-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-19T06:09:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-19</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/19/003-看看OpenGL吧！/">003 看看OpenGL吧！</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/05/002-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-05T14:01:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/05/002-看看OpenGL吧！/">002 看看OpenGL吧！</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
   
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/05/001-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-05T00:55:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/05/001-看看OpenGL吧！/">001 看看OpenGL吧！</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
+
+    
 
 
           </div>
@@ -435,9 +367,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

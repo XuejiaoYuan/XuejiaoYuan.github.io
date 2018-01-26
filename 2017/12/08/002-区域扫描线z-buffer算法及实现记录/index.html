@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>003 Java 对象与类 | Polaris&#39;s blog</title>
+  <title>002 区域扫描线z-buffer算法及实现记录 | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
-<meta name="keywords" content="读书笔记,Java">
+  <meta name="description" content="输入文件输入.obj文件，在解析obj文件时，若一行不是以V、VT、VN、F开头，则可将改行忽略：  V：代表顶点，格式为V X Y Z； VT：表示纹理坐标，每个三角形的三个顶点都要指定一个纹理坐标，格式为VT TU TV； VN：法向量，每个三角形的三个顶点都要指定一个法向量，格式为VN NX NY NZ； F：面，面后面跟着的整型数表示属于这个面的顶点、纹理、法向量的索引，格式为f Vert">
+<meta name="keywords" content="算法笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="003 Java 对象与类">
-<meta property="og:url" content="http://yoursite.com/2017/10/25/003-Java-对象与类/index.html">
+<meta property="og:title" content="002 区域扫描线z-buffer算法及实现记录">
+<meta property="og:url" content="http://yoursite.com/2017/12/08/002-区域扫描线z-buffer算法及实现记录/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
+<meta property="og:description" content="输入文件输入.obj文件，在解析obj文件时，若一行不是以V、VT、VN、F开头，则可将改行忽略：  V：代表顶点，格式为V X Y Z； VT：表示纹理坐标，每个三角形的三个顶点都要指定一个纹理坐标，格式为VT TU TV； VN：法向量，每个三角形的三个顶点都要指定一个法向量，格式为VN NX NY NZ； F：面，面后面跟着的整型数表示属于这个面的顶点、纹理、法向量的索引，格式为f Vert">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2017/10/assets/Note_img/1.png">
-<meta property="og:updated_time" content="2017-10-27T12:23:41.458Z">
+<meta property="og:updated_time" content="2017-12-15T11:40:46.209Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="003 Java 对象与类">
-<meta name="twitter:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
-<meta name="twitter:image" content="http://yoursite.com/2017/10/assets/Note_img/1.png">
+<meta name="twitter:title" content="002 区域扫描线z-buffer算法及实现记录">
+<meta name="twitter:description" content="输入文件输入.obj文件，在解析obj文件时，若一行不是以V、VT、VN、F开头，则可将改行忽略：  V：代表顶点，格式为V X Y Z； VT：表示纹理坐标，每个三角形的三个顶点都要指定一个纹理坐标，格式为VT TU TV； VN：法向量，每个三角形的三个顶点都要指定一个法向量，格式为VN NX NY NZ； F：面，面后面跟着的整型数表示属于这个面的顶点、纹理、法向量的索引，格式为f Vert">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -143,123 +141,117 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-003-Java-对象与类" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-002-区域扫描线z-buffer算法及实现记录" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      003 Java 对象与类
+      002 区域扫描线z-buffer算法及实现记录
     </h1>
   
 
         
-        <a href="/2017/10/25/003-Java-对象与类/" class="archive-article-date">
-  	<time datetime="2017-10-25T10:47:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
+        <a href="/2017/12/08/002-区域扫描线z-buffer算法及实现记录/" class="archive-article-date">
+  	<time datetime="2017-12-08T02:31:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Java类之间的关系"><a href="#Java类之间的关系" class="headerlink" title="Java类之间的关系"></a>Java类之间的关系</h2><p><img src="../../assets/Note_img/1.png" alt="UML符号"></p>
+        <h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><p>输入.obj文件，在解析obj文件时，若一行不是以V、VT、VN、F开头，则可将改行忽略：</p>
+<ul>
+<li>V：代表顶点，格式为V X Y Z；</li>
+<li>VT：表示纹理坐标，每个三角形的三个顶点都要指定一个纹理坐标，格式为VT TU TV；</li>
+<li>VN：法向量，每个三角形的三个顶点都要指定一个法向量，格式为VN NX NY NZ；</li>
+<li>F：面，面后面跟着的整型数表示属于这个面的顶点、纹理、法向量的索引，格式为f Vertex1/Texture1/Normal1 Vertex2/Texture2/Normal2 Vertex3/Texture3/Normal3，f中顶点的序号以1为起始；</li>
+</ul>
+<h3 id="区域扫描线zbuffer"><a href="#区域扫描线zbuffer" class="headerlink" title="区域扫描线zbuffer"></a>区域扫描线zbuffer</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>区域扫描线z-buffer算法是由z-buffer算法及扫描线z-buffer算法一步步优化得来的：<br><strong>- z-buffer算法：</strong>创建与像素个数相同的z-buffer存储单元和帧缓冲器，将带显示对象的每个面上各点的z坐标与z-buffer中相应单元的z值比较，只有前者大于后者时才改变帧缓冲器对应单元的值，最终以帧缓冲器中的值绘制图像。<br><strong>- 扫描线z-buffer算法：</strong>z-buffer算法需要很大的z缓冲器，工作量较大，因此采用将平面分区域处理的方式，z-buffer的单元数取成和一行上像素数目相同，通过检查每个多边形的投影与当前扫描线的相交情况，比较每对交点之间的像素所在多边形的z值，获得消隐的图像；<br><strong>- 区域扫描线z-buffer算法：</strong>由于每条扫描线被各多边形的投影分割成多个区间，因此只要在区间上任一点处找到该处z值最大的一个面，该区间上每个像素的都用该面的颜色来显示。</p>
+<h4 id="区域扫描线算法基本思想"><a href="#区域扫描线算法基本思想" class="headerlink" title="区域扫描线算法基本思想"></a>区域扫描线算法基本思想</h4><ol>
+<li>开两个一维数组分别作为当前扫描线的z缓冲器和帧缓冲器；</li>
+<li>处理当前扫描线时；<ul>
+<li>帧缓冲器的初值为背景颜色；</li>
+<li>z缓冲器的初值为最小z值；</li>
+</ul>
+</li>
+<li>求出扫描线与场景中各多边形的二维投影之间的交点，一条扫描线分解为一些列区间扫描线段；</li>
+<li>每一个区间扫描线段位于多边形“内部”和“外部”<ul>
+<li>“外部”扫描线段：直接着背景色；</li>
+<li>“内部”扫描线段：位于一个或多个多边形内部<ul>
+<li>位于一个多边形内部，该线段上的像素着多边形的颜色；</li>
+<li>位于多个多边形内部，比较扫描线段端点的z值，以确定该线段上像素的颜色；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>当场景中所有多边形处理完毕时，扫描线帧缓冲器中的内容为画面在此扫描线的消隐结果；</li>
+</ol>
+<p><strong>扫描线与单个多边形内外关系</strong></p>
 <ol>
-<li>依赖（“use-a”）<br> 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。</li>
-<li>聚合（“has-a”）<br> 一个类的对象包含另一个类的对象；</li>
-<li>继承（“is-a”）</li>
+<li>当扫描线与多边形的一条边相交时：<ul>
+<li>第一个交点表示扫描线段进入多边形；</li>
+<li>第二个交点表示扫描线段离开多边形；</li>
+</ul>
+</li>
+<li>对每一个多边形，用一个“in/out”标记符flag跟踪记录当前扫描线段的状态：<ul>
+<li>初始：flag=0；</li>
+<li>进入多边形：flag=1；</li>
+<li>离开多边形：flag=0；</li>
+</ul>
+</li>
+<li>对于一条扫描线上一个给定的区间，可能有多个多边形的flag值为1；</li>
+<li>在当前扫描线上，跟踪flag为1的多边形<ul>
+<li>如果多于一个多边形flag为1，需要比较扫描线区间的z值确定颜色；</li>
+</ul>
+</li>
 </ol>
-<h2 id="对象与对象变量"><a href="#对象与对象变量" class="headerlink" title="对象与对象变量"></a>对象与对象变量</h2><p>在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。</p>
-<h2 id="访问器和更改器"><a href="#访问器和更改器" class="headerlink" title="访问器和更改器"></a>访问器和更改器</h2><p>只访问对象而不修改对象的方法称为访问器方法。在Java中，访问器方法与更改器方法在语法上没有明显区别；在C++中，带有const后缀的方法是访问器方法，默认为更改器方法。</p>
-<h2 id="final实例域"><a href="#final实例域" class="headerlink" title="final实例域"></a>final实例域</h2><p>可以将实例域定义为final，构建对象时必须初始化这样的域。final关键字只是表示存储在变量中的对象引用不会再指示其他的对象，但是该对象可以修改。</p>
-<ul>
-<li>final变量：final变量是只读的；</li>
-<li>final方法：该方法不能被子类的方法重写，在编译时静态绑定，不需要在运行时动态绑定；</li>
-<li>final类：不能被继承的类；</li>
-</ul>
-<h2 id="静态域与静态方法"><a href="#静态域与静态方法" class="headerlink" title="静态域与静态方法"></a>静态域与静态方法</h2><ul>
-<li>静态域：每个类只有一个静态域，但每个对象对所有实例域有自己的一份拷贝；</li>
-<li>静态常量：使用static final定义；</li>
-<li>静态方法：不能向对象实施操作的方法，故静态方法不能访问类的实例域，但是可以访问自身类中的静态域；建议使用类名调用静态方法。</li>
-</ul>
-<h2 id="main方法"><a href="#main方法" class="headerlink" title="main方法"></a>main方法</h2><p>每一个类可以有一个main方法，用于对类进行单元测试。执行类中的main方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java className</div></pre></td></tr></table></figure></p>
-<h2 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h2><p>Java对对象采用的是按值传递，故对两种类型的方法参数修改时，根据类型不同有所差异：</p>
-<ul>
-<li>基本数据类型：方法不能修改基本数据类型的参数；</li>
-<li>对象引用：由于方法得到的是对象引用的拷贝，对象引用及其他的拷贝同时引用同一个对象，因此可以修改对象引用的参数；但是方法不能让对象参数引用一个新的对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleValue</span><span class="params">(<span class="keyword">double</span> x)</span>	<span class="comment">//不可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x = x*<span class="number">3</span>;	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleSalary</span><span class="params">(Employee x)</span>	<span class="comment">//可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x.raiseSalary(<span class="number">200</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Employee x, Employee y)</span><span class="comment">//不可用</span></span></div><div class="line"><span class="function"> </span>&#123;</div><div class="line"> 	Employee temp = x;</div><div class="line"> 	x = y;</div><div class="line"> 	y = temp;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>####区域扫描线算法的数据结构</p>
+<h5 id="分类多边形表"><a href="#分类多边形表" class="headerlink" title="分类多边形表"></a>分类多边形表</h5><p>根据多边形最大y坐标ymax将多边形放入相应类中：</p>
+<pre><code>- a,b,c,d：多边形所在平面的方程系数，需要根据读入的三角面片坐标点计算获得；
+- id：多边形的编号；
+- dy：多边形跨越的扫描线的数目；
+- color：多边形的颜色，颜色自行定义；
+- nxt：指向下一个与扫描线相交的多边形；
+</code></pre><h5 id="分类边表"><a href="#分类边表" class="headerlink" title="分类边表"></a>分类边表</h5><p>根据边的上端点y坐标ymax将边放入相应的类中：</p>
+<pre><code>- x：边的上端点的x坐标；
+- dx：相邻两条扫描线交点的x坐标差dx（-1/k）;
+- dy：边跨越的扫描线数目；
+- id：边所属多边形的编号；
+- nxt：指向下一条与扫描线相交的边；
+</code></pre><h5 id="活化多边形表"><a href="#活化多边形表" class="headerlink" title="活化多边形表"></a>活化多边形表</h5><p>记录当前扫描线与多边形在oxy投影面上投影相交的多边形：</p>
+<pre><code>- a,b,c,d：多边形所在平面的方程系数；
+- id：多边形的编号；
+- dy：多边形跨越的**剩余**扫描线数目；
+- color：多边形的颜色；
+- flag：记录扫描线与多边形的内外状态；
+- nxt：指向下一个与扫描线相交的多边形；
+</code></pre><h5 id="活化边表"><a href="#活化边表" class="headerlink" title="活化边表"></a>活化边表</h5><p>记录投影多边形边界与扫描线相交的边对：</p>
+<pre><code>- x：边与扫描线交点的x坐标值；
+- dx：相邻两扫描线交点的x坐标差（-1/k）；
+- dy：边跨越的扫描线数目；
+- id：边所属多边形的编号；
+- nxt：指向下一条与扫描线相交的边（边表按x值的大小次序排列）；
+</code></pre><h5 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE:"></a>NOTE:</h5><p>一开始想要选择从下至上扫描图像以符合glDrawPixel的行为，但是发现我们在建立分类边表时记录的是y的最大值，从而推算在其下方的扫描线与边的交点，因此还是需要从上至下扫描；所以需要进一步考虑存储图像的问题；</p>
+<h4 id="区域扫描线实现"><a href="#区域扫描线实现" class="headerlink" title="区域扫描线实现"></a>区域扫描线实现</h4><h5 id="构建分类多边形表"><a href="#构建分类多边形表" class="headerlink" title="构建分类多边形表"></a>构建分类多边形表</h5><p>遍历每一个三角形面片，计算其最大y值，创建分类多边形，将其放入对应其y值的分类多边形表中；</p>
+<h5 id="构建分类边表"><a href="#构建分类边表" class="headerlink" title="构建分类边表"></a>构建分类边表</h5><p>遍历每一个三角形面片，计算它的三条边，创建分类边，将其放入边y最大值对应的分类边表中；</p>
+<h5 id="构建活化多边形表"><a href="#构建活化多边形表" class="headerlink" title="构建活化多边形表"></a>构建活化多边形表</h5><p>由上至下扫描，将新加入的多边形加入到活化多边形表中；由于进入下一条扫描线，因此需要将多边形跨越的剩余扫描线数目减1。<br>在数据中需要考虑本来多边形横跨扫描线数目就为0的多边形，此处考虑将剩余扫描线数目小于等于0的多边形都从活化多边形表中删去；</p>
+<h5 id="构建活化边表"><a href="#构建活化边表" class="headerlink" title="构建活化边表"></a>构建活化边表</h5><p>遍历分类边表，更新原有边表，加入新的与扫描线相交的边；</p>
+<h5 id="zbuffer计算"><a href="#zbuffer计算" class="headerlink" title="zbuffer计算"></a>zbuffer计算</h5><p>需要注意在程序中要保证整个图形的各个三角面片都在window中，超出window的部分没有进行考虑；</p>
+<h4 id="处理记录"><a href="#处理记录" class="headerlink" title="处理记录"></a>处理记录</h4><ol>
+<li><p>在这里稍微对dy进行调整，dy表示边占据的扫描线的条数，例如在同一扫描线上的边其dy为1，加入边表时，跨越的剩余扫描线数目则为0，在下一次处理时由于对resDy的更新，其小于0，将从活化边表中删除；</p>
 </li>
-</ul>
-<h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><p>Java允许使用包将类组织起来，使用包确保类名的唯一性。从编译器的角度来看，嵌套的包之间没有任何关系，如java.util包与java.util.jar包无关。每一个都拥有独立的类集合。</p>
-<ul>
-<li>一个类可以使用所属包中的所有类，以及其他包中的共有类。</li>
-<li>使用import static静态导入，可以在使用类的静态方法和静态域时不加类名前缀：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.*;</div><div class="line">out.println(<span class="string">"Hello World"</span>);</div></pre></td></tr></table></figure>
+<li><p>遗留问题：似乎在inPolygon中加入三角面片之后，无法合理删除，因为观察获得的颜色结果，相同颜色占据了后面一大段而没有其他的变化，应该是存在问题。</p>
 </li>
-</ul>
-<h3 id="将类放入包中"><a href="#将类放入包中" class="headerlink" title="将类放入包中"></a>将类放入包中</h3><p>若要将类放入包中，则必须将包的名字放在源文件开头，包中定义类的代码之前，并将包中的文件放到与完整的包匹配的子目录中。若没有在源文件中放置package语句，这个源文件中的类就被放置在一个默认包中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> classdir;</div></pre></td></tr></table></figure></p>
-<h3 id="包作用域"><a href="#包作用域" class="headerlink" title="包作用域"></a>包作用域</h3><p>如果没有指定public或private，这个部分（类、方法或变量）可以被同一个包中的所有方法访问。</p>
-<h2 id="类路径"><a href="#类路径" class="headerlink" title="类路径"></a>类路径</h2><p>类文件可以存储在JAR(Java归档)文件中，一个JAR文件中，可以包含多个压缩形式的类文件和子目录，JAR文件使用ZIP格式组织文件和子目录。<br>为了使类能够被多个程序共享，需要设置：</p>
-<ul>
-<li>将类放在一个目录下，该目录是包树状结构的基目录；</li>
-<li>将JAR文件放在一个目录下；</li>
-<li>设置类路径，类路径包括基目录、当前目录(.)、JAR文件。<br>例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/home/user/classdir:.:/home/user/archieves/archieve.jar <span class="comment">//UNIX环境</span></div><div class="line">c:\classdir;.;c:\archieves\archieve.jar <span class="comment">//Windows环境</span></div></pre></td></tr></table></figure>
+<li><p>程序实现了，剩下需要对输入的图形进行尺寸调整；</p>
 </li>
-</ul>
-<p>javac编辑器总是在当前目录中查找文件，但Java虚拟机仅在类路径中有“.”目录时才查看当前目录<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">javac classdir\MyProg.java</div><div class="line">java classdir.MyProg</div></pre></td></tr></table></figure></p>
-<p>建议采用-classpath选项指定类路径：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -classpath c:\classdir;.;c:\archieves\archieve.jar MyProg</div></pre></td></tr></table></figure></p>
-<h2 id="文档注释"><a href="#文档注释" class="headerlink" title="文档注释"></a>文档注释</h2><p>JDK包含javadoc，可以由源文件生成一个HTML文件。</p>
-<h3 id="注释的插入"><a href="#注释的插入" class="headerlink" title="注释的插入"></a>注释的插入</h3><p>javadoc实用程序从以下特性中抽取信息：</p>
-<ul>
-<li>包；</li>
-<li>共有类与接口；</li>
-<li>共有的和受保护的构造器及方法；</li>
-<li><p>共有的和受保护的域；<br>注释以/**开始，以*/结束，每个/**…*/文档注释在标记之后紧跟着自由格式文本，标记由@开头；自由格式文本的第一句应为一个概要性的句子，javadoc实用程序自动将这些句子抽出来形成概要页。</p>
-</li>
-<li><p><strong>类注释：</strong>类注释必须放在import语句之后，类定义之前；</p>
-</li>
-<li><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</li>
-<li><ul>
-<li>@param变量描述：将对当前方法的“param”（参数）部分添加一个条目；</li>
-</ul>
-</li>
-<li><ul>
-<li>@return描述：将对当前方法添加“return”（返回）部分；</li>
-</ul>
-</li>
-<li><ul>
-<li>@throws类描述：将添加一个注释，用于表示这个方法有可能抛出异常；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Raise the salary of an employee.</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> byPercent the percentage by which to raise the salary (e.g. 10 means 10%)</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> the amount of the raise</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">raiseSalary</span><span class="params">(<span class="keyword">double</span> byPercent)</span></span>&#123;</div><div class="line">	<span class="keyword">double</span> raise = salary * byPercent / <span class="number">100</span>;</div><div class="line">	salary += raise;</div><div class="line">	<span class="keyword">return</span> raise;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>域注释：</strong>只需对公有域（通常指静态常量）建立文档；</p>
-</li>
-<li><strong>通用注释：</strong></li>
-<li><ul>
-<li>@author姓名；</li>
-</ul>
-</li>
-<li><ul>
-<li>@version文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@since文本：这里的text可以是对引入特性的版本描述；</li>
-</ul>
-</li>
-<li><ul>
-<li>@deprecated文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@see引用；</li>
-</ul>
-</li>
-</ul>
-<h2 id="类设计技巧"><a href="#类设计技巧" class="headerlink" title="类设计技巧"></a>类设计技巧</h2><ol>
-<li>一定要保证数据私有；</li>
-<li>一定要对数据初始化；</li>
-<li>不要在类中使用过多的基本类型；</li>
-<li>不是所有的域都需要独立的域访问器和域更改器；</li>
 </ol>
+<h4 id="OpenGL绘制zBuffer结果"><a href="#OpenGL绘制zBuffer结果" class="headerlink" title="OpenGL绘制zBuffer结果"></a>OpenGL绘制zBuffer结果</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;GLfloat&gt; frameBufferData;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">RenderScenceCB</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//...</span></div><div class="line">	glPixelStorei(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</div><div class="line">	glRasterPos2i(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">	glDrawPixels(width, height, GL_RGB, GL_FLOAT, &amp;frameBufferData[<span class="number">0</span>]);</div><div class="line">	<span class="comment">//...</span></div><div class="line"></div><div class="line">	glutSwapBuffers();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们使用framBufferData存储每个像素的颜色值，共需width x height x 3的存储空间。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glPixelStorei(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</div></pre></td></tr></table></figure></p>
+<p>该函数用于对齐像素字节，默认4字节对齐，即图像数据字节必须是4的整数倍，则读取数据时，读取4的整数倍的字节数据来渲染一行。若为RGB图像，则一行10个像素共30字节，在4字节对齐模式下，会读取32个字节，这将导致读取越界；因此，此处将数据读取方式改为1字节读取形式，这种方式牺牲了存取效率，但是保证了不会出现存取越界的情况；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glRasterPos2i(<span class="number">0</span>, <span class="number">0</span>);</div></pre></td></tr></table></figure></p>
+<p>该函数设置像素点绘制的起始位置，此处是从窗口中心对像素进行一行一行的绘制；若不适用该函数，则之后的像素将从左下角开始绘制；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDrawPixels(width, height, GL_RGB, GL_FLOAT, &amp;frameBufferData[<span class="number">0</span>]);</div></pre></td></tr></table></figure></p>
+<p>根据frameBufferData中存储的颜色数据绘制每一个像素点的颜色，width和height控制绘制图像的宽和高，这两个两和窗口的宽和高没有关系；GL_RGB设置的是frameBufferData中存储的颜色值的排列顺序；GL_FLOAT表示数据的类型；</p>
 
       
 
@@ -294,11 +286,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">算法笔记</a>
         		</li>
       		
 		</ul>
@@ -354,7 +342,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/25/003-Java-对象与类/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/12/08/002-区域扫描线z-buffer算法及实现记录/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -368,18 +356,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/10/27/004-Java-继承/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/12/19/003-看看OpenGL吧！/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          004 Java 继承
+          003 看看OpenGL吧！
         
       </div>
     </a>
   
   
-    <a href="/2017/10/24/003-Java与C++/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">003 Java与C++</div>
+    <a href="/2017/12/05/002-看看OpenGL吧！/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">002 看看OpenGL吧！</div>
       <i class="icon-circle-right"></i>
     </a>
   

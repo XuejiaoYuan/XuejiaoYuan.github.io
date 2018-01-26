@@ -141,6 +141,735 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-005-看看OpenGL吧！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/22/005-看看OpenGL吧！/">005 看看OpenGL吧！</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/22/005-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-22T07:19:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="基础光照"><a href="#基础光照" class="headerlink" title="基础光照"></a>基础光照</h3><p>冯氏光照模型（Phong Lighting Model）由3个分量组成：环境(Ambient)、漫反射(Diffuse)、镜面（Specular）光照。</p>
+<h4 id="环境光照"><a href="#环境光照" class="headerlink" title="环境光照"></a>环境光照</h4>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/22/005-看看OpenGL吧！/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-004-看看OpenGL吧！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/21/004-看看OpenGL吧！/">004 看看OpenGL吧！</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/21/004-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-21T01:12:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摄像机"><a href="#摄像机" class="headerlink" title="摄像机"></a>摄像机</h3><p>观察空间，是以摄像机的视角作为场景原点时场景中所有的顶点坐标；要定义一个摄像机，需要它在世界空间中的位置、观察方向、指向它右侧的向量及指向它上方的向量。<br><img src="../../assets/7.png" alt="摄像机坐标系构造"></p>
+<ol>
+<li>摄像机位置<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraPos = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>摄像机移动方向应与物体移动方向相反；</p>
+<ol>
+<li>摄像机方向<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraTarget = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>);</div><div class="line">glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>摄像机方向向量指从它到目标向量的相反方向；</p>
+<ol>
+<li><p>右轴<br>代表摄像机空间的x轴的正向；通过先定义一个上向量，将其与方向向量叉乘。即可得右向量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glm::vec3 up = glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>);</div><div class="line">glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));</div></pre></td></tr></table></figure>
+</li>
+<li><p>上轴<br>将右向量和方向向量进行叉乘；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="LookAt"><a href="#LookAt" class="headerlink" title="LookAt"></a>LookAt</h4><p>若有三个相互垂直的轴定义了一个坐标空间，即可使用这三个轴加一个平移向量创建一个矩阵，该矩阵乘以任何向量可以将其变换到该坐标空间中；故可以创建LookAt矩阵：<br>$$LookAt = \begin{bmatrix} \color{red}{R_x} &amp; \color{red}{R_y} &amp; \color{red}{R_z} &amp; 0 \ \color{green}{U_x} &amp; \color{green}{U_y} &amp; \color{green}{U_z} &amp; 0 \ \color{blue}{D_x} &amp; \color{blue}{D_y} &amp; \color{blue}{D_z} &amp; 0 \ 0 &amp; 0 &amp; 0  &amp; 1 \end{bmatrix} * \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; -\color{purple}{P_x} \ 0 &amp; 1 &amp; 0 &amp; -\color{purple}{P_y} \ 0 &amp; 0 &amp; 1 &amp; -\color{purple}{P_z} \ 0 &amp; 0 &amp; 0  &amp; 1 \end{bmatrix}$$<br>其中R为右向量，U为上向量，D为方向向量，P为摄像机位置向量。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">glm::mat4 view;</div><div class="line">view = glm::lookAt(glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>),</div><div class="line">				   glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>),</div><div class="line">				   glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</div></pre></td></tr></table></figure></p>
+<p>通过定义摄像机位置，目标位置和表示世界空间中的上向量的向量（用于计算右向量使用的上向量）即可计算LookAt矩阵。</p>
+<h4 id="自由移动"><a href="#自由移动" class="headerlink" title="自由移动"></a>自由移动</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">glm::vec3 cameraPos = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>);</div><div class="line">glm::vec3 cameraFront = glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">-1.0f</span>);</div><div class="line">glm::vec3 cameraUp = glm::vec3(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>);</div><div class="line">veiw =  glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);</div></pre></td></tr></table></figure>
+<p>设置了相机位置，相机朝向和上方向之后，可以通过按键对相机位置进行修改，从而调整观察角度；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SpecialKeyboardCB</span><span class="params">(<span class="keyword">int</span> Key, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">	<span class="keyword">switch</span>(Key)&#123;</div><div class="line">		<span class="keyword">case</span> GLUT_KEY_UP:</div><div class="line">			cameraPos += cameraSpeed*cameraFront;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> GLUT_KEY_DOWN:</div><div class="line">			cameraPos -= cameraSpeed*cameraFront;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span>  GLUT_KEY_LEFT:</div><div class="line">			cameraPos -= normalize(cross(cameraFront, cameraUp))*cameraSpeed;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> GLUT_KEY_RIGHT:</div><div class="line">			cameraPos += normalize(cross(cameraFront, cameraUp))*cameraSpeed;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">InitializeGlutCallbacks</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//...</span></div><div class="line">	glutSpecialFunc(SpecialKeyboardCB);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>设置通过按键输入调整摄像机的位置；</p>
+<h4 id="欧拉角"><a href="#欧拉角" class="headerlink" title="欧拉角"></a>欧拉角</h4><ul>
+<li>俯仰角pitch：物体绕x轴转过的角度；</li>
+<li>偏航角yaw：物体绕y轴转过的角度；<br>鼠标输入时，水平移动影响偏航角；竖直移动影响俯仰角；<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> firstMouse = <span class="literal">true</span>;</div><div class="line"><span class="keyword">float</span> lastX = <span class="number">400</span>;</div><div class="line"><span class="keyword">float</span> lastY = <span class="number">300</span>;</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PssiveMouseCB</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">	<span class="keyword">if</span>(firstMouse)&#123;</div><div class="line">		lastX = x;</div><div class="line">		lastY = y;</div><div class="line">		firstMouse = <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">float</span> xoffset = x - lastX;</div><div class="line">	<span class="keyword">float</span> yoffset = y - lastY;</div><div class="line">	lastX = x;</div><div class="line">	lastY = y;</div><div class="line"></div><div class="line">	<span class="keyword">float</span> sensitivity = <span class="number">0.05f</span>;</div><div class="line">	xoffset *= sensitivity;</div><div class="line">	yoffset *= sensitivity;</div><div class="line"></div><div class="line">	yaw += xoffset;</div><div class="line">	pitch += yoffset;</div><div class="line"></div><div class="line">	<span class="keyword">if</span>(pitch &gt; <span class="number">89.0f</span>)</div><div class="line">		pitch = <span class="number">89.0f</span>;</div><div class="line">	<span class="keyword">if</span>(pitch &lt; <span class="number">-89.0f</span>)</div><div class="line">		pitch = <span class="number">-89.0f</span>;</div><div class="line"></div><div class="line">	vec3 front;</div><div class="line">	front.x = cosf(radians(pitch)) * cosf(radians(yaw));</div><div class="line">	front.y = sinf(radians(pitch));</div><div class="line">	front.z = cosf(radians(pitch)) * sinf(radians(yaw));</div><div class="line">	cameraFront = normalize(front); </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="纹理"><a href="#纹理" class="headerlink" title="纹理"></a>纹理</h3><p>纹理坐标，与每个顶点关联，表示该从纹理图像的哪个部分采样，之后在图形的其他片段上进行片段插值；纹理坐标在x和y轴上，范围为0到1（2D纹理图像），纹理坐标起始于(0,0)，即纹理图片的左下角，终于(1,1)，即纹理图片的右上角。</p>
+<h4 id="纹理环绕方式"><a href="#纹理环绕方式" class="headerlink" title="纹理环绕方式"></a>纹理环绕方式</h4><p>将纹理坐标设置在范围(0,1)之外，OpenGL的处理方式：</p>
+<ul>
+<li>GL_REPEAT:对纹理的默认行为，重复纹理图像；</li>
+<li>GL_MIRRORED_REPEAT:重复纹理图像，但每次重复图片是镜像放置的；</li>
+<li>GL_CLAMP_TO_EDGE:纹理坐标被约束在0到1之间，超出部分重复纹理坐标的边缘，产生一种边缘被拉伸的效果；</li>
+<li>GL_CLAMP_TO_BORDER:超出的坐标为用户指定的边缘颜色；<br>上述选项都可以使用glTexParameter*函数对单独的一个坐标轴设置:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);</div><div class="line">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>若选择GL_CLAMP_TO_BORDER选项，需要指定边缘的颜色：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">float</span> borderColor[] = &#123; <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>&#125;;</div><div class="line">glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);</div></pre></td></tr></table></figure></p>
+<h4 id="纹理过滤"><a href="#纹理过滤" class="headerlink" title="纹理过滤"></a>纹理过滤</h4><ul>
+<li>纹理坐标：给模型顶点设置的数组，OpenGL以该顶点的纹理坐标去查找纹理图像上的像素，然后进行采样提取纹理像素的颜色；</li>
+<li>纹理像素：Texel，组成图片的像素点；</li>
+<li>纹理过滤，用于将纹理像素映射到纹理坐标上；<ul>
+<li>GL_NEAREST:近邻过滤，OpenGL选择中心点最接近纹理坐标的像素作为该坐标的颜色值；</li>
+<li>GL_LINEAR:线性过滤，基于纹理坐标附近的纹理像素，计算插值作为纹理坐标的像素值；<br>当进行放大和缩小时可以设置纹理过滤的选项，需要使用glTexParameter*函数为放大缩小指定过滤方式：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);</div><div class="line">glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="多级渐远纹理-MipMap"><a href="#多级渐远纹理-MipMap" class="headerlink" title="多级渐远纹理(MipMap)"></a>多级渐远纹理(MipMap)</h4><p>即一系列的纹理图像，后一个纹理图像是前一个的二分之一；距观察者的距离超过一定阈值时，OpenGL会使用不同的多级渐远纹理；</p>
+<h4 id="加载与创建纹理"><a href="#加载与创建纹理" class="headerlink" title="加载与创建纹理"></a>加载与创建纹理</h4><p><strong>1. stb_image.h</strong><br>单头文件图像加载库，可以加载大部分流行的文件格式，并能简单的整合到工程中。将stb_image.h文件加入工程，并另创建一个新的C++文件，输入代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STB_IMPLEMENTATION</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stb_image.h"</span></span></div></pre></td></tr></table></figure></p>
+<p>通过定义STB_IMAGE_IMPLEMENTATION，预处理器会修改头文件，让其只包含相关的函数定义源码，相当于将这个头文件变为一个.cpp文件。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> width, height, nrChannels;</div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> *data = stbi_load(<span class="string">"container.jpg"</span>, &amp;width, &amp;height, &amp;nrChannels, <span class="number">0</span>);</div></pre></td></tr></table></figure></p>
+<p>函数读取图像文件；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> texture;</div><div class="line">glGenTextures(<span class="number">1</span>, &amp;texture);</div><div class="line">glBindTexture(GL_TEXTURE_2D, texture);</div></pre></td></tr></table></figure></p>
+<p>函数输入生成纹理的数量，将其存在第二个参数的数组中（此处为单独的一个unsigned int），并绑定该纹理对象；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glTexImage2D(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, width, height, <span class="number">0</span>, GL_RGB, GL_UNSIGNED_BYTE, data);</div><div class="line">glGenerateMipmap(GL_TEXTURE_2D);</div></pre></td></tr></table></figure></p>
+<p>纹理通过glTexImage2D来生成，第一个参数指定了纹理目标；第二个参数为纹理指定多级渐远纹理的级别，0表示基本级别；第三个参数表示希望将纹理存储为何种格式；下个参数应始终设为0；第七第八个参数定义了源图的格式和数据类型；最后一个参数为图像数据；<br>调用glTexImage2D时，当前绑定的纹理对象会被附加上纹理图像，目前只有基本级别的纹理图像被加载，若要使用多级渐远纹理，必须手动设置所有不同的图像（不断递增第二个参数），或者直接在生成纹理之后调用glGenerateMipmap，这会为当前绑定的纹理自动生成所需要的多级渐远纹理。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">stbi_image_free(data);</div></pre></td></tr></table></figure></p>
+<p>释放图像的内存；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">out vec4 FragColor;</div><div class="line">in vec3 ourColor;</div><div class="line">in vec2 TexCoord;</div><div class="line">uniform sampler2D ourTexture;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	FragColor = texture(ourTexture, TexCoord);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>GLSL有一个供纹理对象使用的内奸数据类型，称为采样器，以纹理类型为后缀，可以简单声明一个uniform sampler*D把一个纹理添加到片段着色器中，之后将纹理赋值给该uniform。GLSL内建的texture函数来采样纹理的颜色，第一个参数是纹理采样器，第二个参数是对应的纹理坐标；texture函数会使用之前设置的纹理参数相应的颜色值进行采样，这个片段着色器的输出就是纹理的（插值）纹理坐标上的（过滤后的）颜色。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBindTexture(GL_TEXTURE_2D, texture);</div></pre></td></tr></table></figure></p>
+<p>在调用glDrawElements之前绑定纹理，会自动把纹理赋值给片段着色器的采样器；</p>
+<h4 id="纹理单元"><a href="#纹理单元" class="headerlink" title="纹理单元"></a>纹理单元</h4><p>一个纹理的位置值通常称为一个纹理单元，一个纹理单元的默认纹理单元是0，是默认的激活纹理单元，故不需要使用glUniformi进行位置分配。<br>纹理单元的主要目的是在着色器中使用多于一个的纹理，通过把纹理单元赋值给采样器，可以一次绑定多个纹理，只要首先激活对应的纹理单元。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glUniform1i(glGetUniformLocation(ShaderProgram, <span class="string">"texture1"</span>), <span class="number">0</span>);</div><div class="line">glUniform1i(glGetUniformLocation(ShaderProgram, <span class="string">"texture2"</span>), <span class="number">1</span>);</div></pre></td></tr></table></figure></p>
+<p>使用函数告知OpenGL每个着色器采样器属于哪个纹理单元，放在渲染循环之前进行；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">glActiveTexture(GL_TEXTURE0);</div><div class="line">glBindTexture(GL_TEXTURE_2D, texture1);</div><div class="line">glActiveTexture(G_TEXTURE1);</div><div class="line">glBindTexture(GL_TEXTURE_2D, texture2);</div><div class="line"></div><div class="line">glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VBO);</div><div class="line">glDrawElements(GL_TRIANGLES, <span class="number">12</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</div></pre></td></tr></table></figure></p>
+<p>在绑定纹理之前先激活纹理单元；</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/21/004-看看OpenGL吧！/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-003-看看OpenGL吧！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/19/003-看看OpenGL吧！/">003 看看OpenGL吧！</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/19/003-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-19T06:09:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="平移变换"><a href="#平移变换" class="headerlink" title="平移变换"></a>平移变换</h3><p>齐次坐标中，第四个分量为1，表示坐标点；第四个分量为0，表示向量；</p>
+<h3 id="源码详解"><a href="#源码详解" class="headerlink" title="源码详解"></a>源码详解</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Matrix4f</span>&#123;</span></div><div class="line">	<span class="keyword">float</span> m[<span class="number">4</span>][<span class="number">4</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>定义4维矩阵；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint gWorldLocation;</div></pre></td></tr></table></figure>
+<pre><code>用此handle来获取shader中的“世界”平移变换矩阵一致变量的引用；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Matrix4f World; </div><div class="line">World.m[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1.0f</span>; World.m[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">0.0f</span>; World.m[<span class="number">0</span>][<span class="number">2</span>] = <span class="number">0.0f</span>; World.m[<span class="number">0</span>][<span class="number">3</span>] = sinf(Scale);</div><div class="line">World.m[<span class="number">1</span>][<span class="number">0</span>] = <span class="number">0.0f</span>; World.m[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1.0f</span>; World.m[<span class="number">1</span>][<span class="number">2</span>] = <span class="number">0.0f</span>; World.m[<span class="number">1</span>][<span class="number">3</span>] = <span class="number">0.0f</span>; </div><div class="line">World.m[<span class="number">2</span>][<span class="number">0</span>] = <span class="number">0.0f</span>; World.m[<span class="number">2</span>][<span class="number">1</span>] = <span class="number">0.0f</span>; World.m[<span class="number">2</span>][<span class="number">2</span>] = <span class="number">1.0f</span>; World.m[<span class="number">2</span>][<span class="number">3</span>] = <span class="number">0.0f</span>; </div><div class="line">World.m[<span class="number">3</span>][<span class="number">0</span>] = <span class="number">0.0f</span>; World.m[<span class="number">3</span>][<span class="number">1</span>] = <span class="number">0.0f</span>; World.m[<span class="number">3</span>][<span class="number">2</span>] = <span class="number">0.0f</span>; World.m[<span class="number">3</span>][<span class="number">3</span>] = <span class="number">1.0f</span>;</div></pre></td></tr></table></figure>
+<pre><code>设置物体在x轴上-1到1之间来回滑动；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glUniformMatrix4fv(gWorldLocation, <span class="number">1</span>, GL_TRUE, &amp;World.m[<span class="number">0</span>][<span class="number">0</span>]);</div></pre></td></tr></table></figure>
+<pre><code>使用glUniform\*函数将数据加载到shader一致变量中，第一个参数是一致变量的位置（在shader编译后使用glGetUniformLocation()获取）；第二个参数是要更新的矩阵的个数；第三个参数指行优先还是列优先；第四个参数表示内存中矩阵的起始地址；
+**OpenGL是列主序的，故使用GLM记录矩阵时，由于GLM使用列主序，因此需要设置为GL_FALSE;**
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">uniform mat4 gWorld;</div><div class="line">gl_Position = gWorld * vec4(Position, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
+<p>定义了一个4x4的矩阵一致变量；由于顶点缓冲区中三角形的顶点位置是一些3维的向量，故需要在顶点着色器中添加第四个分量；</p>
+<h3 id="旋转变换"><a href="#旋转变换" class="headerlink" title="旋转变换"></a>旋转变换</h3><p><img src="../../assets/3.png" alt="坐标旋转"><br>绕z轴逆时针旋转矩阵计算：<br><img src="../../assets/4.png" alt="绕z轴旋转"><br>绕y轴逆时针旋转矩阵计算：<br><img src="../../assets/5.png" alt="绕y轴旋转"><br>绕x轴逆时针旋转矩阵计算：<br><img src="../../assets/6.png" alt="绕x轴旋转"></p>
+<h3 id="复合变换"><a href="#复合变换" class="headerlink" title="复合变换"></a>复合变换</h3><p>这里借助GLM库对矩阵进行存储；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/glm.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/matrix_transform.hpp&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/type_ptr.hpp&gt;</span></span></div></pre></td></tr></table></figure></p>
+<pre><code>需要的GLM的大多数功能都可以在下面三个头文件中找到；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">glm::<span class="function">vec4 <span class="title">vec</span><span class="params">(<span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>)</span></span>;</div><div class="line">glm::mat4 trans;</div><div class="line">trans = glm::translate(trans, glm:vec3(<span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</div></pre></td></tr></table></figure>
+<pre><code>将单位矩阵和位移向量传递给glm::translate函数来构造平移矩阵；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">trans = glm::rotate(trans, glm::radians(<span class="number">90.0f</span>), glm::vec3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>));</div><div class="line">trans = glm::scale(trans, glm::vec3(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>));</div></pre></td></tr></table></figure>
+<pre><code>将物体沿每个轴缩放到0.5倍，再沿z轴旋转90度，GLM希望它的角度是弧度制的，故使用glm::radians将角度转化为弧度；由于将矩阵传递给了GLM的每一个函数，GLM会自动将矩阵相乘，返回结果是一个包括了多个变换的变换矩阵。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> transformLoc = glGetUniformLocation(ShaderProgram, <span class="string">"transform"</span>);</div><div class="line">glUniformMatrix4dv(transformLoc, <span class="number">1</span>, GL_FALSE, glm::value_ptr(trans));</div></pre></td></tr></table></figure>
+<h3 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h3><p>光栅器在三角形的三个顶点之间进行插值，并执行片段着色器遍历三角形的每一个像素。片段着色器会返回光栅器存在颜色缓存中用于显示的像素颜色值。如果片段着色器没有显式请求顶点着色器春过来的其他变量，则一般的驱动优化会丢弃顶点着色器中的无关变量。若片段着色器使用到了该变量，则光栅器会在光栅化阶段对其进行插值，并且每一次片段着色器的调用都会提供一个匹配特定位置的插值后的值。<br><strong>通常境况下依赖插值的两个变量是三角形的法向量和纹理坐标。</strong>顶点的法向量通常计算包含该顶点的所有三角形法向量的平均值获得，若物体不平坦则每个三角形的三个顶点的法向量会各不相同，则可以通过插值来计算每个像素的法向量。</p>
+<h3 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">out vec4 Color;</div></pre></td></tr></table></figure>
+<pre><code>在各渲染管线之间进行传递的参数必须在shader中使用out保留字来全局的进行声明定义；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Color = vec4(clamp(Position, <span class="number">0.0</span>, <span class="number">1.0</span>), <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
+<p>在图形管线中颜色值通常使用一个在[0,1]范围内的浮点数来表示；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">in vec4 Color;</div></pre></td></tr></table></figure></p>
+<pre><code>在顶点着手其中的output输出颜色变量对应的另一边是片段着色器 的输入的颜色变量。该变量经过光栅器的插值，故每一个被执行的片段着色器可能都会是不同的颜色；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">FragColor = Color;</div></pre></td></tr></table></figure>
+<h3 id="索引绘制"><a href="#索引绘制" class="headerlink" title="索引绘制"></a>索引绘制</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint IBO;</div></pre></td></tr></table></figure>
+<pre><code>为索引缓冲创建缓冲对象的handle；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Vertices[<span class="number">1</span>] = Vector3f(<span class="number">0</span>, <span class="number">-1</span>, <span class="number">1</span>);</div><div class="line">Vertices[<span class="number">2</span>] = Vector3f(<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>);</div><div class="line">Vertices[<span class="number">3</span>] = Vector3f(<span class="number">0</span>,  <span class="number">1</span>, <span class="number">0</span>);</div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> Indices[] =&#123; <span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>,</div><div class="line">						  <span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>,</div><div class="line">						  <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span> &#125;;</div></pre></td></tr></table></figure>
+<pre><code>定义了坐标点及索引数组；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">glGenBuffers(<span class="number">1</span>, &amp;IBO);</div><div class="line">glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);</div><div class="line">glBufferData(GL_ELEMENT_ARRAY_BUFFER, <span class="keyword">sizeof</span>(Indices), Indices, GL_STATIC_DRAW);</div></pre></td></tr></table></figure>
+<pre><code>顶点缓冲使用GL_ARRAY_BUFFER参数表示缓冲类型；索引缓冲使用GL_ELEMENT_ARRAY_BUFFER;
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);</div></pre></td></tr></table></figure>
+<pre><code>除了绑定顶点缓冲还需要在绘制之前绑定索引缓冲；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDrawElements(GL_TRIANGLES, <span class="number">12</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</div></pre></td></tr></table></figure>
+<pre><code>索引绘制使用函数glDrawElements()，第一个参数表示待渲染的图元类型；第二个参数表示索引缓冲中用于产生图元的索引个数；第三个参数表示每个索引值的数据类型，若索引范围很小应选择小的数据类型来节省空间；最后一个参数表示从索引缓冲区起始位置到第一个需要扫描的索引值的偏移byte数，当使用同一个索引缓冲来保存多个物体的索引时使用；
+</code></pre><h3 id="坐标系统"><a href="#坐标系统" class="headerlink" title="坐标系统"></a>坐标系统</h3><ol>
+<li>局部空间<br>指物体所在的坐标空间，模型的所有顶点都在局部空间中；</li>
+<li>世界空间<br>指物体相对于世界的坐标；由模型矩阵（Model Matrix）将物体坐标由局部变换到世界空间；模型矩阵包含平移、缩放、旋转。</li>
+<li>观察空间<br>指从摄像机的视角观察到的空间，通常由一系列的位移和旋转的组合将特定对象变换到摄像机前面；这类组合变换通常存储在一个观察矩阵（View Matrix）中；</li>
+<li>裁剪空间<br>将特定范围之外的点都裁剪掉，通过投影矩阵（Projection Matrix）将指定范围上的坐标转换为标准设备坐标的范围(-1.0, 1.0)，所有在范围外的坐标不会被映射到(-1.0, 1.0)的范围之间，故被裁剪。<br>由投影矩阵创建的观察箱（Viewing Box）被称为平截头体（Frustum），出现在平截头体范围内的坐标都会最终出现在用户的屏幕上。<br>一旦所有顶点被变换到裁剪空间，将会执行透视除法将位置向量的x、y、z分量分别除以向量的齐次w分量，该步骤将会在每一个顶点着色器运行的最后被自动执行；<br>投影矩阵分为两种：</li>
+</ol>
+<ul>
+<li>正射投影矩阵：类似于立方体的平截头箱，但没有考虑透视，获得的结果不真实；</li>
+<li><p>透视投影矩阵：将给定的平截头体范围映射到裁剪空间，并修改每个顶点坐标的w值，从而使离观察者越远的顶点坐标w分量越大。被变换到裁剪空间的坐标都会在-w到w的范围之间，最后使用透视除法将所有可见坐标归一化到-1.0到1.0之间。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glm mat4 proj = glm::perspective(glm::radians(<span class="number">45.0f</span>), (<span class="keyword">float</span>)width/(<span class="keyword">float</span>)height, <span class="number">0.1f</span>, <span class="number">100.0f</span>);</div></pre></td></tr></table></figure>
+<p>  glm::perspective创建了一个定义了可是空间的平截头体；第一个参数定义了视野fov的值，并设置了观察空间的大小；第二个参数设置了宽高比；第三和第四个参数设置了平截头体的近和远平面；</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/19/003-看看OpenGL吧！/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-002-区域扫描线z-buffer算法及实现记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/08/002-区域扫描线z-buffer算法及实现记录/">002 区域扫描线z-buffer算法及实现记录</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/08/002-区域扫描线z-buffer算法及实现记录/" class="archive-article-date">
+  	<time datetime="2017-12-08T02:31:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h3><p>输入.obj文件，在解析obj文件时，若一行不是以V、VT、VN、F开头，则可将改行忽略：</p>
+<ul>
+<li>V：代表顶点，格式为V X Y Z；</li>
+<li>VT：表示纹理坐标，每个三角形的三个顶点都要指定一个纹理坐标，格式为VT TU TV；</li>
+<li>VN：法向量，每个三角形的三个顶点都要指定一个法向量，格式为VN NX NY NZ；</li>
+<li>F：面，面后面跟着的整型数表示属于这个面的顶点、纹理、法向量的索引，格式为f Vertex1/Texture1/Normal1 Vertex2/Texture2/Normal2 Vertex3/Texture3/Normal3，f中顶点的序号以1为起始；</li>
+</ul>
+<h3 id="区域扫描线zbuffer"><a href="#区域扫描线zbuffer" class="headerlink" title="区域扫描线zbuffer"></a>区域扫描线zbuffer</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>区域扫描线z-buffer算法是由z-buffer算法及扫描线z-buffer算法一步步优化得来的：<br><strong>- z-buffer算法：</strong>创建与像素个数相同的z-buffer存储单元和帧缓冲器，将带显示对象的每个面上各点的z坐标与z-buffer中相应单元的z值比较，只有前者大于后者时才改变帧缓冲器对应单元的值，最终以帧缓冲器中的值绘制图像。<br><strong>- 扫描线z-buffer算法：</strong>z-buffer算法需要很大的z缓冲器，工作量较大，因此采用将平面分区域处理的方式，z-buffer的单元数取成和一行上像素数目相同，通过检查每个多边形的投影与当前扫描线的相交情况，比较每对交点之间的像素所在多边形的z值，获得消隐的图像；<br><strong>- 区域扫描线z-buffer算法：</strong>由于每条扫描线被各多边形的投影分割成多个区间，因此只要在区间上任一点处找到该处z值最大的一个面，该区间上每个像素的都用该面的颜色来显示。</p>
+<h4 id="区域扫描线算法基本思想"><a href="#区域扫描线算法基本思想" class="headerlink" title="区域扫描线算法基本思想"></a>区域扫描线算法基本思想</h4><ol>
+<li>开两个一维数组分别作为当前扫描线的z缓冲器和帧缓冲器；</li>
+<li>处理当前扫描线时；<ul>
+<li>帧缓冲器的初值为背景颜色；</li>
+<li>z缓冲器的初值为最小z值；</li>
+</ul>
+</li>
+<li>求出扫描线与场景中各多边形的二维投影之间的交点，一条扫描线分解为一些列区间扫描线段；</li>
+<li>每一个区间扫描线段位于多边形“内部”和“外部”<ul>
+<li>“外部”扫描线段：直接着背景色；</li>
+<li>“内部”扫描线段：位于一个或多个多边形内部<ul>
+<li>位于一个多边形内部，该线段上的像素着多边形的颜色；</li>
+<li>位于多个多边形内部，比较扫描线段端点的z值，以确定该线段上像素的颜色；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>当场景中所有多边形处理完毕时，扫描线帧缓冲器中的内容为画面在此扫描线的消隐结果；</li>
+</ol>
+<p><strong>扫描线与单个多边形内外关系</strong></p>
+<ol>
+<li>当扫描线与多边形的一条边相交时：<ul>
+<li>第一个交点表示扫描线段进入多边形；</li>
+<li>第二个交点表示扫描线段离开多边形；</li>
+</ul>
+</li>
+<li>对每一个多边形，用一个“in/out”标记符flag跟踪记录当前扫描线段的状态：<ul>
+<li>初始：flag=0；</li>
+<li>进入多边形：flag=1；</li>
+<li>离开多边形：flag=0；</li>
+</ul>
+</li>
+<li>对于一条扫描线上一个给定的区间，可能有多个多边形的flag值为1；</li>
+<li>在当前扫描线上，跟踪flag为1的多边形<ul>
+<li>如果多于一个多边形flag为1，需要比较扫描线区间的z值确定颜色；</li>
+</ul>
+</li>
+</ol>
+<p>####区域扫描线算法的数据结构</p>
+<h5 id="分类多边形表"><a href="#分类多边形表" class="headerlink" title="分类多边形表"></a>分类多边形表</h5><p>根据多边形最大y坐标ymax将多边形放入相应类中：</p>
+<pre><code>- a,b,c,d：多边形所在平面的方程系数，需要根据读入的三角面片坐标点计算获得；
+- id：多边形的编号；
+- dy：多边形跨越的扫描线的数目；
+- color：多边形的颜色，颜色自行定义；
+- nxt：指向下一个与扫描线相交的多边形；
+</code></pre><h5 id="分类边表"><a href="#分类边表" class="headerlink" title="分类边表"></a>分类边表</h5><p>根据边的上端点y坐标ymax将边放入相应的类中：</p>
+<pre><code>- x：边的上端点的x坐标；
+- dx：相邻两条扫描线交点的x坐标差dx（-1/k）;
+- dy：边跨越的扫描线数目；
+- id：边所属多边形的编号；
+- nxt：指向下一条与扫描线相交的边；
+</code></pre><h5 id="活化多边形表"><a href="#活化多边形表" class="headerlink" title="活化多边形表"></a>活化多边形表</h5><p>记录当前扫描线与多边形在oxy投影面上投影相交的多边形：</p>
+<pre><code>- a,b,c,d：多边形所在平面的方程系数；
+- id：多边形的编号；
+- dy：多边形跨越的**剩余**扫描线数目；
+- color：多边形的颜色；
+- flag：记录扫描线与多边形的内外状态；
+- nxt：指向下一个与扫描线相交的多边形；
+</code></pre><h5 id="活化边表"><a href="#活化边表" class="headerlink" title="活化边表"></a>活化边表</h5><p>记录投影多边形边界与扫描线相交的边对：</p>
+<pre><code>- x：边与扫描线交点的x坐标值；
+- dx：相邻两扫描线交点的x坐标差（-1/k）；
+- dy：边跨越的扫描线数目；
+- id：边所属多边形的编号；
+- nxt：指向下一条与扫描线相交的边（边表按x值的大小次序排列）；
+</code></pre><h5 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE:"></a>NOTE:</h5><p>一开始想要选择从下至上扫描图像以符合glDrawPixel的行为，但是发现我们在建立分类边表时记录的是y的最大值，从而推算在其下方的扫描线与边的交点，因此还是需要从上至下扫描；所以需要进一步考虑存储图像的问题；</p>
+<h4 id="区域扫描线实现"><a href="#区域扫描线实现" class="headerlink" title="区域扫描线实现"></a>区域扫描线实现</h4><h5 id="构建分类多边形表"><a href="#构建分类多边形表" class="headerlink" title="构建分类多边形表"></a>构建分类多边形表</h5><p>遍历每一个三角形面片，计算其最大y值，创建分类多边形，将其放入对应其y值的分类多边形表中；</p>
+<h5 id="构建分类边表"><a href="#构建分类边表" class="headerlink" title="构建分类边表"></a>构建分类边表</h5><p>遍历每一个三角形面片，计算它的三条边，创建分类边，将其放入边y最大值对应的分类边表中；</p>
+<h5 id="构建活化多边形表"><a href="#构建活化多边形表" class="headerlink" title="构建活化多边形表"></a>构建活化多边形表</h5><p>由上至下扫描，将新加入的多边形加入到活化多边形表中；由于进入下一条扫描线，因此需要将多边形跨越的剩余扫描线数目减1。<br>在数据中需要考虑本来多边形横跨扫描线数目就为0的多边形，此处考虑将剩余扫描线数目小于等于0的多边形都从活化多边形表中删去；</p>
+<h5 id="构建活化边表"><a href="#构建活化边表" class="headerlink" title="构建活化边表"></a>构建活化边表</h5><p>遍历分类边表，更新原有边表，加入新的与扫描线相交的边；</p>
+<h5 id="zbuffer计算"><a href="#zbuffer计算" class="headerlink" title="zbuffer计算"></a>zbuffer计算</h5><p>需要注意在程序中要保证整个图形的各个三角面片都在window中，超出window的部分没有进行考虑；</p>
+<h4 id="处理记录"><a href="#处理记录" class="headerlink" title="处理记录"></a>处理记录</h4><ol>
+<li><p>在这里稍微对dy进行调整，dy表示边占据的扫描线的条数，例如在同一扫描线上的边其dy为1，加入边表时，跨越的剩余扫描线数目则为0，在下一次处理时由于对resDy的更新，其小于0，将从活化边表中删除；</p>
+</li>
+<li><p>遗留问题：似乎在inPolygon中加入三角面片之后，无法合理删除，因为观察获得的颜色结果，相同颜色占据了后面一大段而没有其他的变化，应该是存在问题。</p>
+</li>
+<li><p>程序实现了，剩下需要对输入的图形进行尺寸调整；</p>
+</li>
+</ol>
+<h4 id="OpenGL绘制zBuffer结果"><a href="#OpenGL绘制zBuffer结果" class="headerlink" title="OpenGL绘制zBuffer结果"></a>OpenGL绘制zBuffer结果</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;GLfloat&gt; frameBufferData;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">RenderScenceCB</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//...</span></div><div class="line">	glPixelStorei(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</div><div class="line">	glRasterPos2i(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">	glDrawPixels(width, height, GL_RGB, GL_FLOAT, &amp;frameBufferData[<span class="number">0</span>]);</div><div class="line">	<span class="comment">//...</span></div><div class="line"></div><div class="line">	glutSwapBuffers();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们使用framBufferData存储每个像素的颜色值，共需width x height x 3的存储空间。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glPixelStorei(GL_UNPACK_ALIGNMENT, <span class="number">1</span>);</div></pre></td></tr></table></figure></p>
+<p>该函数用于对齐像素字节，默认4字节对齐，即图像数据字节必须是4的整数倍，则读取数据时，读取4的整数倍的字节数据来渲染一行。若为RGB图像，则一行10个像素共30字节，在4字节对齐模式下，会读取32个字节，这将导致读取越界；因此，此处将数据读取方式改为1字节读取形式，这种方式牺牲了存取效率，但是保证了不会出现存取越界的情况；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glRasterPos2i(<span class="number">0</span>, <span class="number">0</span>);</div></pre></td></tr></table></figure></p>
+<p>该函数设置像素点绘制的起始位置，此处是从窗口中心对像素进行一行一行的绘制；若不适用该函数，则之后的像素将从左下角开始绘制；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDrawPixels(width, height, GL_RGB, GL_FLOAT, &amp;frameBufferData[<span class="number">0</span>]);</div></pre></td></tr></table></figure></p>
+<p>根据frameBufferData中存储的颜色数据绘制每一个像素点的颜色，width和height控制绘制图像的宽和高，这两个两和窗口的宽和高没有关系；GL_RGB设置的是frameBufferData中存储的颜色值的排列顺序；GL_FLOAT表示数据的类型；</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">算法笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/08/002-区域扫描线z-buffer算法及实现记录/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-002-看看OpenGL吧！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/05/002-看看OpenGL吧！/">002 看看OpenGL吧！</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/05/002-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-05T14:01:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><p>OpenGL的可编程管线处理流程如下：<br><img src="../../assets/2.png" alt="OpenGL可编程管线处理流程"><br><strong>- 顶点输入：</strong>在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；<br><strong>- 顶点着色器：</strong>从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数据；<br><strong>- 图元装配阶段：</strong>将顶点着色器输出的所有顶点作为输入，将所有点装配成指定的图元形状（图元，用于提示OpenGL输入数据所表示的渲染类型，如GL_POINTS、GL_TRIANGLES、GL_LINE_STRIP）；<br><strong>- 几何着色器：</strong>将图元形式的一系列顶点的几何作为输入，通过产生新顶点构造出新的或其他的图元来生成其他的形状；<br><strong>- 光栅化阶段：</strong>将图元映射为最终屏幕上相应的元素，生成供片段着色器使用的片段（一个片段是OpenGL渲染一个像素所需的所有数据）；在片段着色器处理之前会进行裁剪；<br><strong>- 片段着色器：</strong>通常包含3D场景数据（如光照、阴影、光的颜色等），这些数据用于计算最终像素的颜色；<br><strong>- Alpha测试和混合阶段：</strong>检测片段的对应深度值，判断这个像素在其他物体的前面还是后面，决定是否应该丢弃；同时该阶段价检查alpha值并对物体进行混合；</p>
+<h3 id="源码详解"><a href="#源码详解" class="headerlink" title="源码详解"></a>源码详解</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint ShaderProgram = glCreateProgram();</div></pre></td></tr></table></figure>
+<pre><code>创建着色器程序，将所有的着色器连接到该对象上；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint ShaderObj = glCreateShader(ShaderType);</div></pre></td></tr></table></figure>
+<pre><code>创建着色器对象，shaderType选择GL_VERTEX_SHADER表示顶点着色器，GL_FRAGEMENT_SHADER表示片段着色器；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> GLchar* p[<span class="number">1</span>];</div><div class="line">p[<span class="number">0</span>] = pShaderText;</div><div class="line">GLint Lengths[<span class="number">1</span>];</div><div class="line">Lengths[<span class="number">0</span>] = <span class="built_in">strlen</span>(pShaderText);</div><div class="line">glShaderSource(ShaderObj, <span class="number">1</span>, p,  Length);</div><div class="line">glCompileShader(ShaderObj);</div></pre></td></tr></table></figure>
+<pre><code>编译着色器对象前必须定义它的代码源；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GLint success;</div><div class="line">glGenShaderiv(ShaderObj, GL_COMPILE_STATUS, &amp;success);</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	GLchar InfoLog[<span class="number">1024</span>];</div><div class="line">	glGetShaderInfoLog(ShaderObj, <span class="keyword">sizeof</span>(InfoLog), <span class="literal">NULL</span>, InfoLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>检查着色器相关的错误；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glAttachShader(ShaderProgram, ShaderObj);</div></pre></td></tr></table></figure>
+<pre><code>将编译好的shader对象绑定到程序对象上；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glLinkProgram(ShaderProgram);</div></pre></td></tr></table></figure>
+<pre><code>编译好所有的shader对象并将它们绑定到程序中，之后完成连接。在实现程序连接之后可以通过调用glDetachShader和glDeleteShader解绑并删除着色器，若着色器绑定在程序上，只调用删除函数只会标记该着色器等待删除，只有调用解绑之后才会将其置零并删除；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &amp;success);;</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	glGetProgramInfoLog(ShaderProgram, <span class="keyword">sizeof</span>(ErrorLog), <span class="literal">NULL</span>, errorLog);</div><div class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error linking shader program: '%s\n'"</span>, ErrorLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>检查和程序相关的错误；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glValidateProgram(ShaderProgram);</div></pre></td></tr></table></figure>
+<pre><code>检查当前的管线状态程序是否可以被执行；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glUseProgram(ShaderProgram);</div></pre></td></tr></table></figure>
+<pre><code>使用回调函数将连接好的着色器程序设置到管线声明中，该着色器程序将在所有的绘制回调函数中一直生效知道你用另一个程序替换掉它或者使用glUseProgram指令将其置为NULL明确禁用它。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#version 330</span></div></pre></td></tr></table></figure>
+<pre><code>告诉编译器的目标GLSL编译器版本是3.3；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout (location = <span class="number">0</span>) in vec3 Position;</div></pre></td></tr></table></figure>
+<pre><code>在顶点着色器中，使用location指定输入变量，使得可以在CPU上配置顶点属性；使用layout将变量与顶点数据链接，这里位置变量的属性位置为0；
+让编译器知道缓冲区中顶点的哪个属性和shader中声明的哪个属性进行映射匹配有两种办法：
+1. 可以明确设置它（为0），这样就在应用中使用一个写死的编码值（通过调用glVertexAttributePointer调用第一个参数）；
+2. 简单在shader中声明“in vec3 Position”，之后使用glGetAttribLocation检索应用中这个是属性的实时位置；在复杂应用中最好让编译器定义属性的索引标志并实时检索它们，从而可以更加容易从多个来源整合shader着色器；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
+<pre><code>可以通过连接多个shader来创建着色器，但是每个着色器阶段（顶点着色器，几何着色器，片段着色器）有且只有一个main函数作为着色器的入口。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gl_Position = vec4(<span class="number">0.5</span> * Position.x, <span class="number">0.5</span> * Position.y, Position.z, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
+<pre><code>这里对输入顶点的位置做固定编码转换，‘gl_Postion’是一个内置的变量，用来保存顶点位置，光栅器会查找这个变量并用在一系列变换之后将它作为屏幕空间的位置。此处需要设置W值为1.0。将物体从三维投影到二维的过程需要经过两个独立的阶段：首先，将所有顶点乘以投影变换矩阵；然后，在顶点到达光栅器之前GPU会自动对位置属性进行‘透视分割’，即使用W值分割gl_Position的所有其他分量元素。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">out vec4 FragColor;</div><div class="line">FragColor = vec4(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
+<pre><code>片段着色器定义每个片段（像素）的颜色，输出的颜色通过上面代码中声明的变量完成，在这些变量上设置的值将会被光栅器接受最后写入帧缓存中；
+</code></pre><h3 id="一致变量"><a href="#一致变量" class="headerlink" title="一致变量"></a>一致变量</h3><p>uniform是一种从CPU中的应用向GPU中的着色器发送数据的方式，一致变量与普通属性的区别：</p>
+<ul>
+<li>普通变量：包含的数据是顶点具体化的，因此在每个着色器引入时，它们将从顶点缓冲区加载一个新的值；</li>
+<li><p>一致变量：uniform是全局的，在整个绘制回调的过程中保持不变，主要用于保存光照参数（光的位置和方向）、变换矩阵、材质对象的handle等数据；<br>GLUT只有在最大最小化窗口或者从另一个窗口后面重新出现等事件发生时才会重新调用渲染回调函数，若应用启动后没有在窗口布局中做任何变化则渲染回调只会执行一次。若想要多次重复改变一个变量的值，需要通过再注册一个闲置的回调函数，该函数在GLUT没有收到任何窗口事件的时候被调用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutIdleFunc(RenderScenceCB);</div></pre></td></tr></table></figure>
+<p>  将渲染回调函数注册为全局闲置回调，若使用一个专用的闲置回调则需要在它后面添加一个glutPostRedisplay()，该函数标记当前的窗口需要被重新绘制，当下一个GLUT的主循环开始时就调用渲染回调函数进行窗口绘制。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gScaledLocation = glGetUniformLocation(ShaderProgram, <span class="string">"gScale"</span>);</div><div class="line">assert(gScaleLocation != <span class="number">0xFFFFFFFF</span>);</div></pre></td></tr></table></figure>
+<p>  我们无法直接获取着色器的内容，因而也无法改变它的变量值，当编译着色器对象时，GLSL编译器会给每一个一致变量分配一个索引，在着色器内部表示中，是通过变量的索引值来获取编译器内部的变量的，该索引可通过glGetUniformLocation函数设置程序对象的句柄参数和变量名参数来获取，若有错误则返回-1.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">float</span> Scale = <span class="number">0.0f</span>;</div><div class="line">Scale += <span class="number">0.001f</span>;</div><div class="line">glUniform1f(gScaleLocation, sinf(Scale));</div></pre></td></tr></table></figure>
+<p>  glUniform{1234}{if}，该实例函数可以将浮点数或整型数赋给不同维度的向量作为参数；<br><code>`cpp
+uniform float gScale;
+gl_Postion = vec4(gScale*Postion.x, gScale*Postion.y, Position.z, 1);</code></p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/05/002-看看OpenGL吧！/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-001-看看OpenGL吧！" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/05/001-看看OpenGL吧！/">001 看看OpenGL吧！</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/05/001-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-05T00:55:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="库的使用"><a href="#库的使用" class="headerlink" title="库的使用"></a>库的使用</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL\glew.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL\freeglut.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"glew32.lib"</span>)</span></div></pre></td></tr></table></figure>
+<p>glew.h需要放在其他OpenGL头文件之前。</p>
+<h3 id="创建窗口"><a href="#创建窗口" class="headerlink" title="创建窗口"></a>创建窗口</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutInit(&amp;argc, argv)</div></pre></td></tr></table></figure>
+<pre><code>调用函数初始化GLUT。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA)</div></pre></td></tr></table></figure>
+<pre><code>配置GLUT的选项：GLUT_DOUBLE在渲染结束后开启双缓冲机制，即维护两个图像的缓冲数据，屏幕显示一幅图像时后台同时绘制另一份图像缓冲数据，交替显示；GLUT_RGBA颜色缓冲。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">glutInitWindowSize(w, h);</div><div class="line">glutInitWindowPosition(x, y);</div><div class="line">glutCreateWindow(WindowName);</div></pre></td></tr></table></figure>
+<pre><code>创建窗口。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutDisplayFunc(RenderScenceCB);</div></pre></td></tr></table></figure>
+<pre><code>在窗口系统中工作时，使用事件回调函数与运行的程序进行交互，这里使用主回调完成一帧图像的所有渲染工作，该回调函数会在GLUT内部不断循环调用。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glClearColor(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</div></pre></td></tr></table></figure>
+<pre><code>OpenGL是一个状态机，调用一个改变状态的函数后，具体的配置保持不变，直到下次再调用这个相同的函数时再次改变状态和配置。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutMainLoop();</div></pre></td></tr></table></figure>
+<pre><code>该函数调用传递指令给GLUT开始内部循环，在循环中该函数监听窗口系统中的事件并通过配置的回调函数传递出去；在本例中，GLUT将只会调用在glutDisplayFunc中注册的回调函数RenderScenceCB渲染图像。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glClear(GL_COLOR_BUFFER_BIT);</div><div class="line">glutSwapBuffers();</div></pre></td></tr></table></figure>
+<pre><code>glClear(GL_COLOR_BUFFER_BIT)清空颜色缓存，glutSwapBuffer函数告诉GLUT交换双缓冲机制中前后两个缓存的角色位置。
+</code></pre><h3 id="创建顶点"><a href="#创建顶点" class="headerlink" title="创建顶点"></a>创建顶点</h3><p><strong>顶点缓冲对象VBO</strong>，是在GPU中加载顶点最有效的方式。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>GLEW库需要在放在其他OpenGL库的前面。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"math3d.h"</span></span></div></pre></td></tr></table></figure></p>
+<p>用于OpenGL的3d数学库。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GLenum res = glewInit();</div><div class="line"><span class="keyword">if</span>(res != GLEW_OK)</div><div class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error: '%s'\n"</span>, glewGetErrorString(res));</div></pre></td></tr></table></figure></p>
+<pre><code>初始化GLEW并检查是否有错。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Vector3f Vertices[<span class="number">1</span>];</div><div class="line">Vertices[<span class="number">0</span>] = Vector3f(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</div></pre></td></tr></table></figure>
+<pre><code>创建Vector3f结构的数组，并初始化XYZ坐标为0，使该点位于屏幕中央。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint VBO；</div></pre></td></tr></table></figure>
+<p>定义一个GLuint引用变量，来操作顶点缓冲器对象。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glGenBuffers(<span class="number">1</span>, &amp;VBO);</div></pre></td></tr></table></figure></p>
+<p>OpenGL定义了若干glGen*前缀的函数来产生不同类型的对象，它们通常有两个参数：第一个参数用来定义想创建的对象的数量，第二个参数表示GLuint变量数组的地址，用于存储系统分配的引用变量handles。之后对该函数的的电泳不会重复产生相同的handle对象，除非先使用glDeleteBuffers删除对象。不需要在buffer中定义具体要做的事情，之后会进一步进行具体工作设定。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBindBuffer(GL_ARRAY_BUFFER, VBO);</div></pre></td></tr></table></figure>
+<pre><code>在OpenGL中需要将handle与一个目标的名称进行绑定，然后在该目标上执行命令，然后在该目标上执行命令。这些指令只会与handle绑定的目标上生效直到另外有其他的对象跟这个handle绑定或者这个handle被清空。此处GL_ARRAY_BUFFER为handle，将VBO绑定与该handle绑定。目标名GL_ARRAY_BUFFER表示这个buffer将存储一个顶点的数组。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(Vertices), Vertices, GL_STATIC_DRAW);</div></pre></td></tr></table></figure>
+<pre><code>绑定对象之后，需要往里添加数据，该回调函数的参数为已绑定的目标名参数GL_ARRAY_BUFFER，数据的比特数参数，顶点数组的地址，表示数据模式的标志变量。由于现在不会改变这个buffer的内容，所以使用了GL_STATIC_DRAW标志，该标志变量只是用于提示OpenGL驱动程序可以通过它来进行启发式的优化（如：内存中哪个位置最合适存储这个buffer缓冲）。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glEnableVertexAttribArray(<span class="number">0</span>);</div></pre></td></tr></table></figure>
+<pre><code>在shader着色器中，为每个顶点属性（位置、法线等）添加索引，使得C++程序中的数据和着色器中的属性名称绑定。必须开启每一个顶点的属性，否则渲染管线无法获取这些数据。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBindBuffer(GL_ARRAY_BUFFER, VBO)</div></pre></td></tr></table></figure>
+<pre><code>再次绑定buffer准备开始调用回调函数；在有很多buffer缓冲存储的不同模型的程序中，必须用将要调用的buffer来不断更新管线的状态。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, <span class="number">0</span>)</div></pre></td></tr></table></figure>
+<pre><code>该回调函数告诉管线如何解析buffer中的数据：第一个参数定义属性的索引；第二个参数指属性中元素的个数；第三个参数指每个元素的数据类型；第四个参数指是否希望属性在被管线使用之前被单位化；指缓冲中属性的两个实例之间的比特数距离（若有一个包含位置和法向量两个属性6个浮点数的数据结构的数组时，此值为24）；最后一个参数设置属性在数据结构中的内存偏移值；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDrawArrays(GL_POINTS, <span class="number">0</span>, <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<pre><code>调用顺序绘制回调函数绘制几何图形，该指令将整合这个指令收到的绘制参数和之前为该店建立的状态数据来将结果渲染在屏幕上。第一个参数定义拓扑结构；第二个参数表示第一个要绘制的顶点的索引；最后一个参数是要绘制的顶点数；
+OpenGL提供了不同类型的绘制回调，通常可以分为顺序绘制和索引绘制：
+- 顺序绘制：GPU经过顶点缓冲区，连续处理顶点，并移除绘制回调中定义的拓扑结构来解析这些顶点；
+- 索引绘制：相比顺序绘制更复杂，有额外的索引缓冲区，其中存储着顶点缓冲区中顶点的索引标志，这样可以避免顺序绘制中重复存储顶点的问题；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDisableVertexAttribArray(<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<pre><code>在顶点短时间内不使用时即时禁用顶点。
+</code></pre><h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/05/001-看看OpenGL吧！/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-001-三维CAD建模笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -307,11 +1036,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -524,812 +1253,6 @@
 
 
   
-    <article id="post-005-Java-接口、lambda表达式与内部类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/31/005-Java-接口、lambda表达式与内部类/">005 Java 接口、lambda表达式与内部类</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/31/005-Java-接口、lambda表达式与内部类/" class="archive-article-date">
-  	<time datetime="2017-10-31T05:06:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口（interface）技术，主要用来描述类具有什么功能，而并不给出每个功能的具体实现。一个类可以实现（implement）一个或多个接口，并在需要接口的地方，随时使用实现了相应接口的对象。<br>接口可以定义常量，但决不能含有实例域，提供实例域和方法实现的任务应该由实现接口的那个类来完成。在接口中的所有方法都自动地是public，在实现接口时，必须把方法声明为public。为了让类实现一个接口，通常需要下面两个步骤：</p>
-<ul>
-<li>将类声明为实现给定的接口，使用关键字implements；</li>
-<li><p>对接口中的所有方法进行定义；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//接口</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object other)</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//实现</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">Comparable</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object otherObject)</span></span>&#123;</div><div class="line">		Employee other = (Employee) otherObject;</div><div class="line">		<span class="keyword">return</span> Double.compare(salary, other.salary);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>  java.util.Arrays;<br>  static void sort(Object[] a)<br>  使用mergesort算法对数组a中的元素进行排序，要求数组中的元素必须实现Comparable接口的类，并且元素之间必须是可比较的。</p>
-</li>
-</ul>
-<h3 id="接口的特性"><a href="#接口的特性" class="headerlink" title="接口的特性"></a>接口的特性</h3><p>接口不是类，不能使用new运算符实例化一个接口，但可以声明接口的变量。接口变量必须引用实现了接口的类对象。可以使用instanceof检查一个对象是否实现某个特定的接口。<br>接口也可以被扩展，从而从通用接口变为专用接口。接口中的方法自动被设置为public，接口中的域被自动设为public static final。<br>类实现多个接口时，使用逗号将实现的各个接口分隔开。</p>
-<h3 id="接口与抽象类"><a href="#接口与抽象类" class="headerlink" title="接口与抽象类"></a>接口与抽象类</h3><p>由于Java不支持多重继承，因此每个类只能扩展于一个类，但是可以实现多个接口。</p>
-<h3 id="默认方法"><a href="#默认方法" class="headerlink" title="默认方法"></a>默认方法</h3><p>可以为接口提供一个默认实现，必须用default修饰符标记这样一个方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(T other)</span> </span>&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="解决默认方法冲突"><a href="#解决默认方法冲突" class="headerlink" title="解决默认方法冲突"></a>解决默认方法冲突</h3><p>若在接口中定义默认方法，并在超类或另一接口中定义同样的方法，处理方法如下：</p>
-<ul>
-<li>超类优先：若超类提供一个具体方法，同名且参数类型相同的默认方法会被忽略；</li>
-<li>接口冲突：若超接口提供了一个默认方法，另一个接口提供同名且参数类型相同的方法，子类必须覆盖这个方法来解决冲突；</li>
-</ul>
-<h3 id="对象克隆"><a href="#对象克隆" class="headerlink" title="对象克隆"></a>对象克隆</h3><p>Cloneable接口是Java提供的一组标记接口之一，不包含任何方法，唯一作用就是允许在类型查询中使用instanceof。不同于Comparable等接口通常用于确保一个类实现一个或一组特定的方法。<br>即使clone的默认（浅拷贝）实现能够满足要求，还是需要实现Cloneable接口，将clone重新定义为public，再调用super.clone()。若要建立深拷贝，需要克隆对象中可变的实例域。</p>
-<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><p>lambda表达式是一个代码块，以及必须传入代码的变量规范：</p>
-<ul>
-<li><p>lambda表达式形式：参数，箭头(-&gt;)以及一个表达式，可以将表达式代码放在{}中，并包含显式的return语句；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(String first, String second)-&gt;&#123;</div><div class="line">	<span class="keyword">if</span>(first.length() &lt; second.length()) <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(first.length() &gt; second.length()) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>即时lambda表达式没有参数，仍然要提供空括号：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">()-&gt;&#123;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">100</span>; i++) System.out.println(i);&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>如果可以推导出lambda表达式的参数类型，可以忽略其类型：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Comparator&lt;String&gt; comp = </div><div class="line">(first, second)-&gt;first.length()-second.length();</div></pre></td></tr></table></figure>
-</li>
-<li><p>如果方法只有一个参数，且参数类型可推导，可以省略小括号：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ActionListener listener = event-&gt;</div><div class="line">System.out.println(<span class="string">"The time is"</span> + <span class="keyword">new</span> Date());</div></pre></td></tr></table></figure>
-</li>
-<li><p>lambda表达式的返回类型不需指定，可以从上下文中推导得出；</p>
-</li>
-<li>lambda表达式必须在每个分支上都返回一个值；</li>
-</ul>
-<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个lambda表达式，这种接口称为函数式接口。</p>
-<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>使用现成的方法完成想要传递到其他代码的某个动作，用::操作符分隔方法名与对象或类名，等同于lambda表达式的情况；</p>
-<ul>
-<li>object::instanceMethod</li>
-<li>Class::staticMethod</li>
-<li>Class::instanceMethod<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">greet</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"Hello, world!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TimeGreeter</span> <span class="keyword">extends</span> <span class="title">Greeter</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">greet</span><span class="params">()</span></span>&#123;</div><div class="line">		Time t = <span class="keyword">new</span> Timer(<span class="number">1000</span>, <span class="keyword">super</span>::greet);</div><div class="line">		t.start();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>lambda表示式有3个部分：</p>
-<ul>
-<li>一个代码块；</li>
-<li>参数；</li>
-<li>自由变量的值，指非参数而且不在代码中定义的变量；<br>lambda表达式可以捕获外围作用域中的变量值，且只能引用值不会改变的变量，即在代码块内部或外部都不能改变，这种变量称为最终变量，即初始化之后就不会再为它赋新值。<br>在lambda表达式中声明一个与局部变量同名的参数或局部变量是不合法的。在lambda表达式中使用this关键字时，时指创建这个lambda表达式的方法的this参数。</li>
-</ul>
-<h3 id="处理lambda表达式"><a href="#处理lambda表达式" class="headerlink" title="处理lambda表达式"></a>处理lambda表达式</h3><p>使用lambda表达式的重点是延迟执行，希望延迟执行的原因如：</p>
-<ul>
-<li>在一个单独的线程中运行代码；</li>
-<li>多次运行代码；</li>
-<li>在算法的适当位置运行代码（如，排序中的比较操作）；</li>
-<li>发生某种情况时执行代码（如，点击了一个按钮，数据到达，等）</li>
-<li>只在必要时才运行代码；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IntConsumer</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">repeat</span><span class="params">(<span class="keyword">int</span> n, IntConsumer action)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) action.accept(i);</div><div class="line">&#125;</div><div class="line">repeat(<span class="number">10</span>, i-&gt;System.out.println(<span class="string">"Countdown: "</span> + (<span class="number">9</span>-i)));</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>上述代码中，i表示输入参数，在repeat中，每次执行action.accept(i)时才会调用lambda表达式，从而传入对应的i值。</p>
-<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><p>内部类是定义在另一个类中的类。使用内部类的原因：</p>
-<ul>
-<li>内部类方法可以访问该类定义所在的作用域中的数据，包括私有数据；</li>
-<li>内部类可以对同一个包中的其他类隐藏起来；</li>
-<li>当想要定义一个回调函数且不想编写大量代码时，使用匿名内部类比较便捷。</li>
-</ul>
-<h3 id="使用内部类访问对象状态"><a href="#使用内部类访问对象状态" class="headerlink" title="使用内部类访问对象状态"></a>使用内部类访问对象状态</h3><p>内部类既可以访问自身的数据域，也可以访问创建它的外围类对象的数据域。内部类的对象总有一个隐式引用，指向创建它的外部类对象。外围类的引用在构造器中设置，编译器修改了所有内部类的构造器，添加一个外围类引用的参数。只有内部类可以是私有类，而常规类只可以具有包可见性，或公有可见性。</p>
-<h3 id="内部类的特殊语法规则"><a href="#内部类的特殊语法规则" class="headerlink" title="内部类的特殊语法规则"></a>内部类的特殊语法规则</h3><p>在外围类内引用内部类可表示为<em>OuterClass.this</em>，在外围类外引用内部类可表示为<em>OuterClass.InnerClass</em>。<br>内部类中声明的所有静态域都必须是final，因为对于每个外部对象，会分别有一个单独的内部类实例，如果这个域不是final的，它可能就不唯一。内部类不能有static方法。</p>
-<h3 id="内部类是否有用、必要和安全"><a href="#内部类是否有用、必要和安全" class="headerlink" title="内部类是否有用、必要和安全"></a>内部类是否有用、必要和安全</h3><p>内部类是一个编译器现象，编译器将内部类翻译为用$分隔外部类名与内部类名的常规类文件，而与虚拟机无关。</p>
-<h3 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h3><p>可以在一个方法中定义局部类，不能使用public或private访问说明符声明局部类，它的作用域被限定在声明这个局部类的块中。</p>
-<h3 id="由外部方法访问变量"><a href="#由外部方法访问变量" class="headerlink" title="由外部方法访问变量"></a>由外部方法访问变量</h3><p>局部类不仅能够访问包含它们的外部类，还能访问局部变量，但是这些局部变量必须事实上为final。</p>
-<h3 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h3><p>通用语法格式为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> SuperType(construction parameters)&#123;</div><div class="line">	inner <span class="class"><span class="keyword">class</span> <span class="title">methods</span> <span class="title">and</span> <span class="title">data</span></span></div><div class="line"><span class="class">&#125;</span></div></pre></td></tr></table></figure></p>
-<h3 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h3><p>将内部类声明为static，可以取消产生的引用，从而使内部类不能引用外围类对象。与常规内部类不同，静态内部类可以有静态域和方法。声明在接口中的内部类自动称为static和public类。</p>
-<h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><p>====日后再看一遍====</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/31/005-Java-接口、lambda表达式与内部类/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-001-Android-探究活动" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/27/001-Android-探究活动/">001 Android 探究活动</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/27/001-Android-探究活动/" class="archive-article-date">
-  	<time datetime="2017-10-27T12:25:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="活动定义及基本用法"><a href="#活动定义及基本用法" class="headerlink" title="活动定义及基本用法"></a>活动定义及基本用法</h2><p>活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。</p>
-<h2 id="活动的生命周期"><a href="#活动的生命周期" class="headerlink" title="活动的生命周期"></a>活动的生命周期</h2><h3 id="返回栈"><a href="#返回栈" class="headerlink" title="返回栈"></a>返回栈</h3><p>Android使用任务管理活动，一个任务即一组存放在栈里的活动的集合，这个栈也被称为返回栈。每当按下Back建或调用finish()方法销毁一个活动，处于栈顶的活动就会出栈。</p>
-<h3 id="活动状态"><a href="#活动状态" class="headerlink" title="活动状态"></a>活动状态</h3><p>每个活动在其生命周期中最多为4种状态：</p>
-<ol>
-<li>运行状态：处于返回栈栈顶的活动即处于运行状态；</li>
-<li>暂停状态：不处于栈顶但仍可见的活动处于暂停状态；</li>
-<li>停止状态；不处于栈顶且完全不可见的活动处于停止状态；</li>
-<li>销毁状态：活动从返回栈中移除后就编程销毁状态；</li>
-</ol>
-<h3 id="活动的生存期"><a href="#活动的生存期" class="headerlink" title="活动的生存期"></a>活动的生存期</h3><p>Activity类中定义了7个回调方法，覆盖活动声明周期的每个环节：</p>
-<ol>
-<li>onCreate()：每个活动中都重写该方法，在活动第一次被创建时调用，用于完成活动的初始化操作，如加载布局、绑定事件；</li>
-<li>onStart()：在活动由不可见变为可见时调用；</li>
-<li>onResume()：活动处于运行状态，准备好与用户进行交互时调用；</li>
-<li>onPause()：在系统准备启动或恢复另一活动时调用；</li>
-<li>onStop()：在活动完全不可见时调用；</li>
-<li>onDestroy()：在活动被销毁之前调用，之后活动将变为销毁状态；</li>
-<li>onRestart()：在活动由停止状态变为运行状态之前调用，即活动重新被启动；<br>活动可以分为3种生存期：</li>
-</ol>
-<ul>
-<li>完整生存期：活动在onCreate()和onDetroy()之间所经历的，即为完整生存期；</li>
-<li>可见生存期：活动在onStart()和onStop()之间经历的，即为可见生存期。在此期间，活动对于用户总是可见的，可能无法与用户进行交互；</li>
-<li>前台生存期：活动在onResume()和onPause()之间经历的，即为前台生存期。在此期间，活动总是处于运行状态，可与用户进行交互；<br><img src="../../assets/2.jpg" alt="Android生命周期"></li>
-</ul>
-<h2 id="活动的启动模式"><a href="#活动的启动模式" class="headerlink" title="活动的启动模式"></a>活动的启动模式</h2><p>启动模式一共有4种，standart、singleTop、singleTask和singleInstance，可以在AndroidManifest.xml中通过给<activity>标签指定android:launchMode属性来选择启动模式。</activity></p>
-<h3 id="1-standard"><a href="#1-standard" class="headerlink" title="1. standard"></a>1. standard</h3><p>standard是活动默认的启动模式，该模式下，每当启动一个新的活动，就会在返回栈中入栈，并处于栈顶的位置。每次启动standard模式的活动，系统都会创建该活动的一个新的实例。</p>
-<h3 id="2-singleTop"><a href="#2-singleTop" class="headerlink" title="2. singleTop"></a>2. singleTop</h3><p>singleTop，在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例，不过当活动不处于栈顶时，再次启动该活动，会创建新的实例。</p>
-<h3 id="3-singleTask"><a href="#3-singleTask" class="headerlink" title="3. singleTask"></a>3. singleTask</h3><p>singleTask，每次启动该活动时系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。</p>
-<h3 id="4-singleInstance"><a href="#4-singleInstance" class="headerlink" title="4. singleInstance"></a>4. singleInstance</h3><p>singleInstance，会启用一个新的返回栈来管理这个活动，则不管哪个应用程序来访问该活动，都会共用同一个返回栈，也解决了共享活动实例的问题。<br>程序中有两个返回栈，在按下Back回退时，先将当前栈顶活动出栈，并显示栈中的栈顶活动，直到栈清空后，才能显示另一个栈中的栈顶活动。</p>
-<h2 id="活动的最佳实践"><a href="#活动的最佳实践" class="headerlink" title="活动的最佳实践"></a>活动的最佳实践</h2><h3 id="知晓当前是哪个活动"><a href="#知晓当前是哪个活动" class="headerlink" title="知晓当前是哪个活动"></a>知晓当前是哪个活动</h3><p>创建一个普通Java类，让其继承所有活动的父类，并修改其称为项目中所有活动的父类，该类的onCreate()设计如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</div><div class="line">	<span class="keyword">super</span>.onCreate(saveInstanceState);</div><div class="line">	Log.d(<span class="string">"BaseActivity"</span>, getClass().getSimpleName());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="随时退出程序"><a href="#随时退出程序" class="headerlink" title="随时退出程序"></a>随时退出程序</h3><p>创建一个ActivityCollector类作为活动管理器对所有活动进行管理。每个活动创建后加入List，每个活动删除后从List移除。由于声明的是静态变量及函数，因此在调用时直接用ActivityCollector.add()即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActivityCollector</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Activity&gt; activities = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">        activities.add(activity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removeActivity</span><span class="params">(Activity activity)</span></span>&#123;</div><div class="line">        activities.remove(activity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">finishAll</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(Activity activity:activities)&#123;</div><div class="line">            <span class="keyword">if</span>(!activity.isFinishing())</div><div class="line">                activity.finish();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="启动活动的最佳写法"><a href="#启动活动的最佳写法" class="headerlink" title="启动活动的最佳写法"></a>启动活动的最佳写法</h3><p>在活动中定义一个静态函数，用于设置Intent中的参数，并在创建该活动的函数中调用该静态函数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">actionStart</span><span class="params">(Context context, String data1, String data2)</span></span>&#123;</div><div class="line">	Intent intent = <span class="keyword">new</span> Intent(context, SecondActivity.class);</div><div class="line">    intent.putExtra(<span class="string">"param1"</span>, data1);</div><div class="line">    intent.putExtra(<span class="string">"param2"</span>, data2);</div><div class="line">    context.startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="onCreate"><a href="#onCreate" class="headerlink" title="onCreate()"></a>onCreate()</h3><p>当Activity非正常销毁之后，如内存不足导致的后台自动销毁，为了保护数据可以将数据保存在saveInstanceState中，当Activity重启数据依旧不会消失，可以通过重载onSaveInstanceState或者onRestoreInstance重新获得。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/27/001-Android-探究活动/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-004-Java-继承" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/27/004-Java-继承/">004 Java 继承</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/27/004-Java-继承/" class="archive-article-date">
-  	<time datetime="2017-10-27T01:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="类-、超类和子类"><a href="#类-、超类和子类" class="headerlink" title="类 、超类和子类"></a>类 、超类和子类</h2><h3 id="定义子类"><a href="#定义子类" class="headerlink" title="定义子类"></a>定义子类</h3><p>关键字extends表示正在构造的新类派生于一个已存在的类，在通过扩展超类定义子类的时候，仅需要指出子类与超类的不同之处。</p>
-<h3 id="覆盖方法"><a href="#覆盖方法" class="headerlink" title="覆盖方法"></a>覆盖方法</h3><p>子类可以定义新的方法来覆盖超类中的这个方法，由于子类不能直接访问超类的私有域，因此可以借助特定的关键字super来调用超类中公有接口。</p>
-<h3 id="子类构造器"><a href="#子类构造器" class="headerlink" title="子类构造器"></a>子类构造器</h3><p>在超类中可以通过super对超类构造器进行调用，从而实现对超类私有域的初始化，使用super调用构造器的语句必须是子类构造器的第一条语句。<br>如果子类的构造器没有显式调用超类的构造器，则将自动调用超类默认（没有参数）的构造器。如果超类没有默认构造器，并且在子类的构造器中没有显式地调用超类的其他构造器，则Java编译器将报告错误。<br>关键字this用途：1.引用隐式参数；2.调用该类其他的构造器；关键字super用途：1.调用超类的方法；2.调用超类的构造器；</p>
-<ul>
-<li><strong>多态：</strong>一个对象变量可以指示多种实际类型的现象；</li>
-<li><strong>动态绑定：</strong>在运行时能够自动选择调用哪个方法的现象；</li>
-</ul>
-<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>“is-a”规则表明程序中出现超类对象的任何地方都可以用子类对象置换，不能将一个超类的引用赋予子类变量。</p>
-<h3 id="理解方法调用"><a href="#理解方法调用" class="headerlink" title="理解方法调用"></a>理解方法调用</h3><ul>
-<li>静态绑定：对于private方法、static方法、final方法或者构造器，编译器可以准确知道应该调用哪个方法，这种调用方式称为静态绑定；</li>
-<li>动态绑定：依赖于隐式参数的实际类型，并且在运行时实现动态绑定。<br>每次调用方法都要进行搜索，时间消耗大，因此虚拟机预先为每个类创建了一个方法表，其中列出所有方法的签名和实际调用的方法。</li>
-</ul>
-<h3 id="组织继承：final类和方法"><a href="#组织继承：final类和方法" class="headerlink" title="组织继承：final类和方法"></a>组织继承：final类和方法</h3><ul>
-<li>final类：表示类不允许扩展，其中方法自动成为final，而不包括域；</li>
-<li>final方法：表示子类不能覆盖这个方法；</li>
-<li>final域：构造对象之后就不允许改变它们的值；<br>虚拟机中的即时编译器可以准确知道类之间的继承关系，并能够检测出类中是否真正地存在覆盖给定的方法。如果方法很简短，被频繁调用且没有真正地覆盖，那么即时编译器就会将这个方法进行内联处理。如果虚拟机加载了另外一个子类，而这个子类中包含了对内联方法的覆盖，则优化器将取消对覆盖方法的内联。</li>
-</ul>
-<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>将一个子类的引用赋给一个超类变量，编译器是允许的；将一个超类的引用赋给一个子类变量，必须进行类型转换，这样才能通过运行时的检查。</p>
-<ul>
-<li>只能在继承层次内进行类型转换；</li>
-<li>在将超类转换成子类之前，应该使用instanceof进行检查；</li>
-</ul>
-<h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><p>使用abstract关键字可声明抽象方法，包含一个或多个抽象方法的类本身必须被声明为抽象的。除了抽象方法外，抽象类还可以包含具体数据和具体方法。<br>类即使不含抽象方法，也可以将类声明为抽象类。抽象类不能被实例化，即不能创建这个类的对象。可以创建一个抽象类的对象变量，但是它只能引用非抽象子类的对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getDescription</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="受保护访问"><a href="#受保护访问" class="headerlink" title="受保护访问"></a>受保护访问</h3><p>Java中的受保护部分对所有子类及同一个包中的所有其他类都可见，比C++的保护机制安全性差。</p>
-<h2 id="Object：所有类的超类"><a href="#Object：所有类的超类" class="headerlink" title="Object：所有类的超类"></a>Object：所有类的超类</h2><p>在Java中，只有基本类型不是对象。所有的数组类型，不管是对象数组还是基本类型的数组都扩展了Object类。</p>
-<h3 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h3><p>Object类中的equals方法用于检测一个对象是否等于另一个对象。在Object类中，这个方法将判断两个对象是否具有相同的引用。<br>在子类中定义equals方法时，首先调用超类的equals。如果检测失败，对象就不可能相等。如果超类中的域都相等，就需要比较子类中的实例域。</p>
-<h3 id="相等测试与继承"><a href="#相等测试与继承" class="headerlink" title="相等测试与继承"></a>相等测试与继承</h3><p>编写equals方法的建议：</p>
-<ol>
-<li>显式参数名为otherObject，需要将它转换为另一个变量other；</li>
-<li><p>检测this与otherObject是否引用同一个对象；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">this</span> == otherObject) <span class="keyword">return</span> ture;</div></pre></td></tr></table></figure>
-</li>
-<li><p>检测otherObject是否为null，如果为null，返回false；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(otherObject == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
-</li>
-<li><p>比较this与otherObject是否属于同一类，如果equals的语义在每个子类中有所改变，就使用getClass检测，如果所有子类都属于统一的语义，就使用instanceof检测；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(getClass() != otherObject.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
-</li>
-<li><p>将otherObject转换为相应的类类型变量：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ClassName other = (ClassName) otherObjectl;</div></pre></td></tr></table></figure>
-</li>
-<li><p>对所有需要比较的于进行比较，使用==比较基本类型域，使用equals比较对象域，如果所有的域都匹配，就返回true，否则返回false。如果在子类中重新定义equals，就要在其中包含调用super.equals(other)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> field == other.field1</div><div class="line">	&amp;&amp; Object.equals(field2, other.field2)</div><div class="line">	&amp;&amp; ...;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="hashCode方法"><a href="#hashCode方法" class="headerlink" title="hashCode方法"></a>hashCode方法</h3><p>散列表是由对象导出的一个整型值。由于hashCode方法定义在Object类中，因此每个对象都有一个默认的散列码，其值为对象的存储地址。<br>如果重新定义equals方法，就必须重新定义hashCode方法，以便用户可以将对象插入到散列表中，equals与hashCode的定义必须一致。需要组合多个散列值时，可以调用Object.hash并提供多个参数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> Objects.hashCode(name, salary, hireDay);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>若用相同的参数构造不同对象，则对象的散列码相同，若后续对对象进行修改，则对象散列码随之发生改变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Manager carl = <span class="keyword">new</span> Manager(<span class="string">"Carl"</span>, <span class="number">80000</span>, <span class="number">1987</span>, <span class="number">12</span>, <span class="number">15</span>);</div><div class="line">Manager boss = <span class="keyword">new</span> Manager(<span class="string">"Carl"</span>, <span class="number">80000</span>, <span class="number">1987</span>, <span class="number">12</span>, <span class="number">15</span>);</div><div class="line">boss.setBonus(<span class="number">5000</span>);</div><div class="line">System.out.println(<span class="string">"carl.hashCode(): "</span> + carl.hashCode());</div><div class="line">System.out.println(<span class="string">"boss.hashCode(): "</span> + boss.hashCode());</div><div class="line"><span class="comment">//输出结果</span></div><div class="line"><span class="comment">//carl.hashCode(): 1436354726</span></div><div class="line"><span class="comment">//boss.hashCode(): -1584852826</span></div><div class="line"><span class="comment">//若将第三行注释掉，则有</span></div><div class="line"><span class="comment">//carl.hashCode(): 1436354726</span></div><div class="line"><span class="comment">///boss.hashCode(): 1436354726</span></div></pre></td></tr></table></figure></p>
-<h3 id="toString方法"><a href="#toString方法" class="headerlink" title="toString方法"></a>toString方法</h3><p>用于返回表示对象值的字符串。建议通过调用getClass().getName()获得类名的字符串。<br>随处可见toString方法的主要原因是：只要对象与一个字符串通过操作符“+x”相连，Java编译就会自动调用toString方法，以便获得这个对象的字符串描述；如果x为任意对象，并调用System.out.println(x)，println方法就会直接调用x.toString()，并打印输出得到的字符串。<br>Object类定义了toString方法，用来打印输出对象所属的类名和散列码。数组继承了Object类的toString方法，若要输出数组内容，需要调用静态方法Arrays.toString.</p>
-<h2 id="泛型数组列表"><a href="#泛型数组列表" class="headerlink" title="泛型数组列表"></a>泛型数组列表</h2><p>ArrayList是一个采用类型参数的泛型类，类型参数不允许是基本类型。</p>
-<ul>
-<li><strong>add：</strong>使用add方法可以将元素添加到数组列表中，如果调用add且数组已经满了，数组列表就将自动创建一个更大的数组，并将所有的对象从较小的数组中拷贝到较大的数组中；</li>
-<li><strong>ensureCapacity：</strong>如果已经清楚或能够估计出数组可能存储的元素数量，就可以在填充数组之前调用，也可以把初始容量传递给ArrayList构造器；</li>
-<li><strong>size：</strong>返回数组列表中包含的实际元素数目；</li>
-<li><strong>trimToSize：</strong>当确定数组列表大小不再发生变化时，调用函数，将存储区域的大小调整为当前元素数量所需的存储空间数目，垃圾回收器将回收多余的存储空间；<br>C++的vector向量是值拷贝，即赋值操作会构建一个新向量；Java的ArrayList的赋值语句，将两个向量引用同一个数组列表。</li>
-</ul>
-<h3 id="访问数组列表元素"><a href="#访问数组列表元素" class="headerlink" title="访问数组列表元素"></a>访问数组列表元素</h3><p>使用get和set方法实现访问或改变数组元素的操作，只有i小于或等于数组列表的大小时，才能调用set函数，如下代码错误：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ArrayList&lt;<span class="keyword">int</span>&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">100</span>);	<span class="comment">//capacity 100, size 0</span></div><div class="line">list.set(<span class="number">0</span>, x);	<span class="comment">//no element 0 yet</span></div></pre></td></tr></table></figure></p>
-<h2 id="对象包装器与自动装箱"><a href="#对象包装器与自动装箱" class="headerlink" title="对象包装器与自动装箱"></a>对象包装器与自动装箱</h2><p>包装器（wrapper）用于将基本类型如int转换为对象Integer。对象包装器类是不可变的，即一旦构造了包装器，就不允许更改包装在其中的值，且对象包装器类是final， 因此不能定义它们的子类。<br>装箱和拆箱是编译其认可的，而不是虚拟机，编译器在生成类的字节码时，插入必要的方法调用，虚拟机知识执行字节码。</p>
-<h2 id="参数数量可变的方法"><a href="#参数数量可变的方法" class="headerlink" title="参数数量可变的方法"></a>参数数量可变的方法</h2><p>…表示这个方法可以接受任意数量的对象，Object…参数类型相当于Objec[]。</p>
-<h2 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h2><p>在比较两个枚举类型的值时，永远不需要调用equals，而直接使用“==”。</p>
-<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>能够分析类能力的程序称为反射，反射机制可以用来：</p>
-<ul>
-<li>在运行时分析类；</li>
-<li>在运行时查看对象；</li>
-<li>实现通用的数组操作代码；</li>
-<li>利用Method对象，这个对象类似C++中的函数指针；</li>
-</ul>
-<h3 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h3><p>在程序运行期间，Java运行时系统始终为所有对象维护一个运行时的类型标志，这个信息跟踪每个对象所属的类，虚拟机利用运行时类型信息选择相应的方法执行。保存这些信息的类称为Class。</p>
-<h3 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h3><p>将可能抛出已检查异常的一个或多个方法调用代码放在try块中，然后在catch子句中提供处理器代码。</p>
-<h3 id="在运行时使用反射分析对象"><a href="#在运行时使用反射分析对象" class="headerlink" title="在运行时使用反射分析对象"></a>在运行时使用反射分析对象</h3>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/27/004-Java-继承/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-003-Java-对象与类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/25/003-Java-对象与类/">003 Java 对象与类</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/25/003-Java-对象与类/" class="archive-article-date">
-  	<time datetime="2017-10-25T10:47:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Java类之间的关系"><a href="#Java类之间的关系" class="headerlink" title="Java类之间的关系"></a>Java类之间的关系</h2><p><img src="../../assets/Note_img/1.png" alt="UML符号"></p>
-<ol>
-<li>依赖（“use-a”）<br> 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。</li>
-<li>聚合（“has-a”）<br> 一个类的对象包含另一个类的对象；</li>
-<li>继承（“is-a”）</li>
-</ol>
-<h2 id="对象与对象变量"><a href="#对象与对象变量" class="headerlink" title="对象与对象变量"></a>对象与对象变量</h2><p>在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。</p>
-<h2 id="访问器和更改器"><a href="#访问器和更改器" class="headerlink" title="访问器和更改器"></a>访问器和更改器</h2><p>只访问对象而不修改对象的方法称为访问器方法。在Java中，访问器方法与更改器方法在语法上没有明显区别；在C++中，带有const后缀的方法是访问器方法，默认为更改器方法。</p>
-<h2 id="final实例域"><a href="#final实例域" class="headerlink" title="final实例域"></a>final实例域</h2><p>可以将实例域定义为final，构建对象时必须初始化这样的域。final关键字只是表示存储在变量中的对象引用不会再指示其他的对象，但是该对象可以修改。</p>
-<ul>
-<li>final变量：final变量是只读的；</li>
-<li>final方法：该方法不能被子类的方法重写，在编译时静态绑定，不需要在运行时动态绑定；</li>
-<li>final类：不能被继承的类；</li>
-</ul>
-<h2 id="静态域与静态方法"><a href="#静态域与静态方法" class="headerlink" title="静态域与静态方法"></a>静态域与静态方法</h2><ul>
-<li>静态域：每个类只有一个静态域，但每个对象对所有实例域有自己的一份拷贝；</li>
-<li>静态常量：使用static final定义；</li>
-<li>静态方法：不能向对象实施操作的方法，故静态方法不能访问类的实例域，但是可以访问自身类中的静态域；建议使用类名调用静态方法。</li>
-</ul>
-<h2 id="main方法"><a href="#main方法" class="headerlink" title="main方法"></a>main方法</h2><p>每一个类可以有一个main方法，用于对类进行单元测试。执行类中的main方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java className</div></pre></td></tr></table></figure></p>
-<h2 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h2><p>Java对对象采用的是按值传递，故对两种类型的方法参数修改时，根据类型不同有所差异：</p>
-<ul>
-<li>基本数据类型：方法不能修改基本数据类型的参数；</li>
-<li>对象引用：由于方法得到的是对象引用的拷贝，对象引用及其他的拷贝同时引用同一个对象，因此可以修改对象引用的参数；但是方法不能让对象参数引用一个新的对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleValue</span><span class="params">(<span class="keyword">double</span> x)</span>	<span class="comment">//不可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x = x*<span class="number">3</span>;	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleSalary</span><span class="params">(Employee x)</span>	<span class="comment">//可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x.raiseSalary(<span class="number">200</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Employee x, Employee y)</span><span class="comment">//不可用</span></span></div><div class="line"><span class="function"> </span>&#123;</div><div class="line"> 	Employee temp = x;</div><div class="line"> 	x = y;</div><div class="line"> 	y = temp;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><p>Java允许使用包将类组织起来，使用包确保类名的唯一性。从编译器的角度来看，嵌套的包之间没有任何关系，如java.util包与java.util.jar包无关。每一个都拥有独立的类集合。</p>
-<ul>
-<li>一个类可以使用所属包中的所有类，以及其他包中的共有类。</li>
-<li>使用import static静态导入，可以在使用类的静态方法和静态域时不加类名前缀：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.*;</div><div class="line">out.println(<span class="string">"Hello World"</span>);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="将类放入包中"><a href="#将类放入包中" class="headerlink" title="将类放入包中"></a>将类放入包中</h3><p>若要将类放入包中，则必须将包的名字放在源文件开头，包中定义类的代码之前，并将包中的文件放到与完整的包匹配的子目录中。若没有在源文件中放置package语句，这个源文件中的类就被放置在一个默认包中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> classdir;</div></pre></td></tr></table></figure></p>
-<h3 id="包作用域"><a href="#包作用域" class="headerlink" title="包作用域"></a>包作用域</h3><p>如果没有指定public或private，这个部分（类、方法或变量）可以被同一个包中的所有方法访问。</p>
-<h2 id="类路径"><a href="#类路径" class="headerlink" title="类路径"></a>类路径</h2><p>类文件可以存储在JAR(Java归档)文件中，一个JAR文件中，可以包含多个压缩形式的类文件和子目录，JAR文件使用ZIP格式组织文件和子目录。<br>为了使类能够被多个程序共享，需要设置：</p>
-<ul>
-<li>将类放在一个目录下，该目录是包树状结构的基目录；</li>
-<li>将JAR文件放在一个目录下；</li>
-<li>设置类路径，类路径包括基目录、当前目录(.)、JAR文件。<br>例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/home/user/classdir:.:/home/user/archieves/archieve.jar <span class="comment">//UNIX环境</span></div><div class="line">c:\classdir;.;c:\archieves\archieve.jar <span class="comment">//Windows环境</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>javac编辑器总是在当前目录中查找文件，但Java虚拟机仅在类路径中有“.”目录时才查看当前目录<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">javac classdir\MyProg.java</div><div class="line">java classdir.MyProg</div></pre></td></tr></table></figure></p>
-<p>建议采用-classpath选项指定类路径：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -classpath c:\classdir;.;c:\archieves\archieve.jar MyProg</div></pre></td></tr></table></figure></p>
-<h2 id="文档注释"><a href="#文档注释" class="headerlink" title="文档注释"></a>文档注释</h2><p>JDK包含javadoc，可以由源文件生成一个HTML文件。</p>
-<h3 id="注释的插入"><a href="#注释的插入" class="headerlink" title="注释的插入"></a>注释的插入</h3><p>javadoc实用程序从以下特性中抽取信息：</p>
-<ul>
-<li>包；</li>
-<li>共有类与接口；</li>
-<li>共有的和受保护的构造器及方法；</li>
-<li><p>共有的和受保护的域；<br>注释以/**开始，以*/结束，每个/**…*/文档注释在标记之后紧跟着自由格式文本，标记由@开头；自由格式文本的第一句应为一个概要性的句子，javadoc实用程序自动将这些句子抽出来形成概要页。</p>
-</li>
-<li><p><strong>类注释：</strong>类注释必须放在import语句之后，类定义之前；</p>
-</li>
-<li><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</li>
-<li><ul>
-<li>@param变量描述：将对当前方法的“param”（参数）部分添加一个条目；</li>
-</ul>
-</li>
-<li><ul>
-<li>@return描述：将对当前方法添加“return”（返回）部分；</li>
-</ul>
-</li>
-<li><ul>
-<li>@throws类描述：将添加一个注释，用于表示这个方法有可能抛出异常；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Raise the salary of an employee.</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> byPercent the percentage by which to raise the salary (e.g. 10 means 10%)</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> the amount of the raise</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">raiseSalary</span><span class="params">(<span class="keyword">double</span> byPercent)</span></span>&#123;</div><div class="line">	<span class="keyword">double</span> raise = salary * byPercent / <span class="number">100</span>;</div><div class="line">	salary += raise;</div><div class="line">	<span class="keyword">return</span> raise;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>域注释：</strong>只需对公有域（通常指静态常量）建立文档；</p>
-</li>
-<li><strong>通用注释：</strong></li>
-<li><ul>
-<li>@author姓名；</li>
-</ul>
-</li>
-<li><ul>
-<li>@version文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@since文本：这里的text可以是对引入特性的版本描述；</li>
-</ul>
-</li>
-<li><ul>
-<li>@deprecated文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@see引用；</li>
-</ul>
-</li>
-</ul>
-<h2 id="类设计技巧"><a href="#类设计技巧" class="headerlink" title="类设计技巧"></a>类设计技巧</h2><ol>
-<li>一定要保证数据私有；</li>
-<li>一定要对数据初始化；</li>
-<li>不要在类中使用过多的基本类型；</li>
-<li>不是所有的域都需要独立的域访问器和域更改器；</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/25/003-Java-对象与类/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-003-Java与C++" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/003-Java与C++/">003 Java与C++</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/003-Java与C++/" class="archive-article-date">
-  	<time datetime="2017-10-24T10:46:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="类的概念"><a href="#类的概念" class="headerlink" title="类的概念"></a>类的概念</h2><ul>
-<li>Java中的所有函数都属于某个类的方法，故main方法必须有一个外壳类，且必须是静态的。类似C++中的静态成员函数，这些函数定义在类的内部，并且不对对象进行操作。</li>
-<li>C++中不需要将所有函数封装在类中。</li>
-</ul>
-<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><ul>
-<li>Java中的整型范围与运行Java代码的机器无关，解决了软件从一个平台移植到另一个平台，或者同一平台的不同操作系统之间进行移植带来的问题；</li>
-<li>Java没有无符号数；</li>
-<li>整型值和布尔值之间不能进行互相转换；</li>
-</ul>
-<h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><ul>
-<li>C和C++需要针对不同的处理器选择最为高效的整型，防止在不同处理器上使用同一程序产生整数溢出的问题。</li>
-<li>C++中包含有符号数和无符号数；</li>
-<li>C++中数值甚至指针可以替代布尔值；</li>
-</ul>
-<h2 id="变量与常量"><a href="#变量与常量" class="headerlink" title="变量与常量"></a>变量与常量</h2><h3 id="Java-1"><a href="#Java-1" class="headerlink" title="Java"></a>Java</h3><ul>
-<li>Java中，不区分变量的声明与定义；</li>
-<li>Java中，用final指示常量，const为Java保留的关键字，但目前不使用；</li>
-</ul>
-<h3 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h3><ul>
-<li><p>C++中区分变量的声明与定义：</p>
-<ul>
-<li>声明：告诉编译器“该变量或函数可以在文件中被找到”；</li>
-<li>定义：告诉编译器“在这里创建变量或函数，并分配内存空间”；<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i = <span class="number">0</span>;		<span class="comment">//定义</span></div><div class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i;	<span class="comment">//声明</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>C++中使用const指示常量；</p>
-</li>
-</ul>
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>Java字符串不可修改，而是利用substring与替换字符串进行拼接，相比于C++，Java字符串类似于char*指针，当采用另一个字符串替换时，Java代码的在C++下的大致过程如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span>* greeting = <span class="string">"Hello"</span>;</div><div class="line"><span class="keyword">char</span>* temp = <span class="built_in">malloc</span>(<span class="number">6</span>);</div><div class="line"><span class="built_in">strncpy</span>(temp, greeting, <span class="number">3</span>);</div><div class="line"><span class="built_in">strncpy</span>(temp+<span class="number">3</span>, <span class="string">"p!"</span>, <span class="number">3</span>);</div><div class="line">greeting = temp;</div></pre></td></tr></table></figure></p>
-<p>Java将原始字符串放置在堆中，Java将自动进行垃圾回收，避免内存遗漏。在Java中，==运算符检测两个字符串是否放在同一位置上。只有字符串常量是共享的，而+或substring等操作产生的结果并不是共享的。</p>
-<p>C++string对象也自动进行内存的分配和回收，内存管理器通过构造器、赋值操作和析构函数显式执行，然而C++字符串可以修改。在C++string中，==运算符比较两个字符串是否相等。</p>
-<h2 id="控制流程"><a href="#控制流程" class="headerlink" title="控制流程"></a>控制流程</h2><p>Java的控制流程和C与C++的控制流程结构一样。但是Java中不允许在嵌套的块中重定义一个变量，而C++允许这种重定义使内层定义的变量覆盖外层定义的变量。</p>
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>Java数组与C++数组在堆栈上很大不同，但是基本上与分配在堆（heap）上的数组指针一样。下面两种情况相同：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">100</span>];	<span class="comment">//Java</span></div><div class="line"><span class="keyword">int</span>*  a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">100</span>];	<span class="comment">//C++</span></div></pre></td></tr></table></figure></p>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>在Java中，对象变量可以设为null，表明这个对象变量目前没有引用任何对象；在C++中没有空引用，并且引用不能被赋值。<strong>可以将Java的对象变量看做C++的对象指针</strong>。<br>所有Java对象都存储在堆中，Java中没有C++的错误指针或内存溢出问题，若使用一个未初始化的指针，运行系统将产生运行时错误；同时垃圾收集器将处理内存管理问题。</p>
-<p>##类</p>
-<h3 id="类的定义方法"><a href="#类的定义方法" class="headerlink" title="类的定义方法"></a>类的定义方法</h3><p>在Java中，所有方法都必须在类的内部定义，但并不表示是内联方法，是否将某个方法设置为内联方法是Java虚拟机的任务，即时编译器会监视调用那些简洁、经常被调用、没有被重载以及可优化的方法。<br>C++中，通常在类的外面定义方法，在类的内部定义方法，则该方法自动成为内联方法。</p>
-<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>在Java中，可以在类的定义中，直接将一个值赋给任何域；在C++中，不能直接初始化类的实例域，所有域必须在构造器中设置，可利用初始化列表进行设置。<br>在Java中，如果构造器的第一个语句形如this(…)，这个构造器将调用同一类的另一个构造器；在C++中，一个构造器不能调用另一个构造器，必须将抽取出的公共初始化代码编写成一个独立的方法。</p>
-<h3 id="析构器"><a href="#析构器" class="headerlink" title="析构器"></a>析构器</h3><p>在C++中有显式的析构器方法，当对象不再使用时执行清理代码，回收分配给对象的存储空间；在Java中有自动的垃圾回收器，不需要人工回收内存，故Java不支持析构器，但可以为类添加finalize方法，在垃圾回收器清楚对象之前调用。</p>
-<h3 id="类的导入"><a href="#类的导入" class="headerlink" title="类的导入"></a>类的导入</h3><p>在C++中，由于编译器除了正在编译的文件以及在头文件中明确包含的文件，无法查看任何文件的内部，因此必须使用#include将外部特性的声明加载进来。Java编译器可以查看其他文件的内部，只要给出位置指示。<br>C++的namespace和using指令和Java的package与import语句类似。</p>
-<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>Java用关键字extends代替C++中的冒号，在Java中，所有的继承都是公有继承，而没有C++中的私有继承和保护继承。在Java中使用关键字super调用超类的方法，而在C++中采用超类名加上::操作符的形式。<br>在Java中，不需要将方法声明为虚拟方法，动态绑定是默认的处理方法。如果不希望让一个方法具有虚拟特征，可以将它标记为final。</p>
-<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>在Java中需要将instanceof运算符和类型转换组合起来使用；在C++中，可以在dynamic_cast操作中完成类型测试和转换。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/003-Java与C++/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-002-Java基础笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/002-Java基础笔记/">002 Java基础笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/002-Java基础笔记/" class="archive-article-date">
-  	<time datetime="2017-10-24T10:45:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="java基础"><a href="#java基础" class="headerlink" title="java基础"></a>java基础</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>在Java中，整型的范围与运行Java代码的机器无关：</p>
-<ul>
-<li><strong>int：</strong>4字节，带符号整型；</li>
-<li><strong>short：</strong>2字节，带符号整型；</li>
-<li><strong>long：</strong>8字节，带符号整型；</li>
-<li><strong>byte：</strong>1字节，带符号整型，-128~127；</li>
-<li><strong>float：</strong>4字节，带符号单精度浮点数；</li>
-<li><strong>double：</strong>8字节，带符号双精度浮点数；</li>
-<li><strong>char：</strong>强烈建议不使用char类型，除非确实需要处理UTF-16代码单元；</li>
-</ul>
-<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>关键字<strong>final</strong>指示常量；<strong>static final</strong>设置类常量，提供一个类中的多个方法使用；<br>如果将一个类标记为<strong>strictfp</strong>，这个类中的所有方法都要使用严格的浮点计算。</p>
-<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><p>如果想对浮点数进行四舍五入，需要使用<strong>Math.round()</strong>，round方法返回结果为long类型，可能还需要显示的强制类型转换以防止信息丢失。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> x = <span class="number">9.97</span>;</div><div class="line"><span class="keyword">int</span> nx = (<span class="keyword">int</span>)Math.round(x);</div></pre></td></tr></table></figure></p>
-<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><p><strong>&gt;&gt;&gt;</strong>运算符会用0填充高位，<strong>&gt;&gt;</strong>运算符用符号位填充高位；不存在<strong>&lt;&lt;&lt;</strong>运算符。</p>
-<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h4 id="1-子串"><a href="#1-子串" class="headerlink" title="1. 子串"></a>1. 子串</h4><p>String类的substring方法从较大的字符串中提取出子串：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//substring(pos, pos+len)</span></div><div class="line">String greeting = <span class="string">"Hello"</span>;</div><div class="line">String s = greeting.substring(<span class="number">0</span>, <span class="number">3</span>);</div></pre></td></tr></table></figure></p>
-<h4 id="2-拼接"><a href="#2-拼接" class="headerlink" title="2. 拼接"></a>2. 拼接</h4><p>Java允许使用+号连接两个字符串，当一个字符串与一个非字符串的值进行拼接时，后者被转换成字符串（任何一个Java对象都可以转换成字符串）。<br>如果需要把多个字符串放在一起，用一个定界符分隔，可以使用静态join方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String all = String.join(<span class="string">"/"</span>, <span class="string">"S"</span>, <span class="string">"M"</span>, <span class="string">"L"</span>, <span class="string">"XL"</span>);</div><div class="line"><span class="comment">//all表示为“S/M/L/XL”</span></div></pre></td></tr></table></figure></p>
-<h4 id="3-不可变字符串"><a href="#3-不可变字符串" class="headerlink" title="3. 不可变字符串"></a>3. 不可变字符串</h4><p>String类没有提供修改字符串的方法，当修改字符串时，首先提取需要的字符，再拼接替换的字符串：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">greeting = greeting.substring(<span class="number">0</span>, <span class="number">3</span>) +<span class="string">"p!"</span>;</div><div class="line"><span class="comment">//greeting表示为“Help!”</span></div></pre></td></tr></table></figure></p>
-<p>Java编译器让字符串共享，类似字符串变量指向公共存储池中相应的位置，如果复制一个字符串变量，原始字符串与复制的字符串共享相同的字符。</p>
-<h4 id="4-检测字符串是否相等"><a href="#4-检测字符串是否相等" class="headerlink" title="4. 检测字符串是否相等"></a>4. 检测字符串是否相等</h4><p>使用equals方法检测两个字符串是否相等：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s.equals(t);</div><div class="line"><span class="string">"Hello"</span>.equals(greeting);</div><div class="line"><span class="string">"Hello"</span>.equalsIgnoreCase(<span class="string">"hello"</span>);	<span class="comment">//不区分大小写检测字符串是否相等</span></div></pre></td></tr></table></figure></p>
-<p><strong>不要使用==运算符检测两个字符串是否相等，这个运算符只能够确定两个字符串是否放在同一个位置上。</strong></p>
-<h4 id="5-构建字符串"><a href="#5-构建字符串" class="headerlink" title="5. 构建字符串"></a>5. 构建字符串</h4><p>将较短的字符串构建字符串，若使用字符串连接的方式达到此目的效率较低，可以使用StringBuilder类实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line"><span class="comment">//每次需要添加一部分时，就调用append方法</span></div><div class="line">builder.append(ch);</div><div class="line">builder.append(str);</div><div class="line"><span class="comment">//需要构建字符串时就调用toString方法，获得String对象</span></div><div class="line">String compelteString = builder.toString();</div></pre></td></tr></table></figure></p>
-<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>通过控制台进行输入，需要构造一个Scanner对象，并与“标准输入流”System.in关联。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Scanner in = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">String name = in.nextLin();</div></pre></td></tr></table></figure></p>
-<h3 id="大数值"><a href="#大数值" class="headerlink" title="大数值"></a>大数值</h3><p>使用java.math包中的类BigInteger和BigDecimal来处理包含任意长度数字序列的数值：BigInteger类实现了任意精度的整数运算，BigDecimal实现了任意精度的浮点数运算。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//将普通数值转换为大数值</span></div><div class="line">BigInteger a = BigInteger.valueOf(<span class="number">100</span>);</div><div class="line">BigInteger c = a.add(b);</div><div class="line">BigInteger d = c.multiply(b.add(BigInteger.valueOf(<span class="number">2</span>)));</div></pre></td></tr></table></figure></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>创建一个数字数组时，所有元素都初始化为0,；boolean数组的元素会初始化为false；对象数组的元素则初始化为null，表示这些元素（还）未存放任何对象。在Java中，允许数组长度为0。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一个包含10个字符串的数组，所有字符串都为null</span></div><div class="line">String[] names = <span class="keyword">new</span> String[<span class="number">10</span>];</div><div class="line"><span class="comment">//使数组包含空串</span></div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)</div><div class="line">	names[i] = <span class="string">""</span>;</div></pre></td></tr></table></figure></p>
-<h4 id="1-数组拷贝"><a href="#1-数组拷贝" class="headerlink" title="1. 数组拷贝"></a>1. 数组拷贝</h4><p>Java允许将一个数组变量拷贝给另一个数组变量，这时两个变量将引用同一个数组。如果希望将一个数组的所有值拷贝到另一个新的数组中去，就要使用Arrays类的copyOf方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[] nums1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</div><div class="line"><span class="keyword">int</span>[] nums2 = Arrays.copyOf(nums1, nums1.length);</div></pre></td></tr></table></figure></p>
-<h4 id="2-命令行参数"><a href="#2-命令行参数" class="headerlink" title="2. 命令行参数"></a>2. 命令行参数</h4><p>在Java应用程序的main方法中，程序名并没有存储在args数组中。</p>
-<h4 id="3-数组排序"><a href="#3-数组排序" class="headerlink" title="3. 数组排序"></a>3. 数组排序</h4><p>可以是使用Arrays类中的sort方法。</p>
-<h4 id="4-不规则数组"><a href="#4-不规则数组" class="headerlink" title="4. 不规则数组"></a>4. 不规则数组</h4><p>Java实际没有多维数组，只有一维数组，类似于C++中包含指针的数组，因此可以构造不规则数组：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[][] v = <span class="keyword">new</span> <span class="keyword">int</span>[MAX+<span class="number">1</span>][];</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;=Max; i++)</div><div class="line">	v[i] = <span class="keyword">new</span> <span class="keyword">int</span>[i+<span class="number">1</span>];</div></pre></td></tr></table></figure></p>
-<h2 id="java安装"><a href="#java安装" class="headerlink" title="java安装"></a>java安装</h2><ul>
-<li>javac程序是一个Java编译器，将.java文件编译为.class文件；</li>
-<li>java程序启动Java虚拟机，虚拟机执行编译器放在class文件中的字节；</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/002-Java基础笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1344,7 +1267,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 Polaris
+    		&copy; 2018 Polaris
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1423,11 +1346,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">OpenGL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1435,11 +1362,11 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">

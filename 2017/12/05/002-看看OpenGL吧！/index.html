@@ -6,22 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>003 Java 对象与类 | Polaris&#39;s blog</title>
+  <title>002 看看OpenGL吧！ | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
-<meta name="keywords" content="读书笔记,Java">
+  <meta name="description" content="背景知识OpenGL的可编程管线处理流程如下：- 顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；- 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数">
+<meta name="keywords" content="OpenGL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="003 Java 对象与类">
-<meta property="og:url" content="http://yoursite.com/2017/10/25/003-Java-对象与类/index.html">
+<meta property="og:title" content="002 看看OpenGL吧！">
+<meta property="og:url" content="http://yoursite.com/2017/12/05/002-看看OpenGL吧！/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
+<meta property="og:description" content="背景知识OpenGL的可编程管线处理流程如下：- 顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；- 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2017/10/assets/Note_img/1.png">
-<meta property="og:updated_time" content="2017-10-27T12:23:41.458Z">
+<meta property="og:image" content="http://yoursite.com/2017/12/assets/2.png">
+<meta property="og:updated_time" content="2017-12-21T01:10:59.359Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="003 Java 对象与类">
-<meta name="twitter:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
-<meta name="twitter:image" content="http://yoursite.com/2017/10/assets/Note_img/1.png">
+<meta name="twitter:title" content="002 看看OpenGL吧！">
+<meta name="twitter:description" content="背景知识OpenGL的可编程管线处理流程如下：- 顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；- 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/assets/2.png">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -143,123 +143,72 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-003-Java-对象与类" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-002-看看OpenGL吧！" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      003 Java 对象与类
+      002 看看OpenGL吧！
     </h1>
   
 
         
-        <a href="/2017/10/25/003-Java-对象与类/" class="archive-article-date">
-  	<time datetime="2017-10-25T10:47:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
+        <a href="/2017/12/05/002-看看OpenGL吧！/" class="archive-article-date">
+  	<time datetime="2017-12-05T14:01:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Java类之间的关系"><a href="#Java类之间的关系" class="headerlink" title="Java类之间的关系"></a>Java类之间的关系</h2><p><img src="../../assets/Note_img/1.png" alt="UML符号"></p>
-<ol>
-<li>依赖（“use-a”）<br> 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。</li>
-<li>聚合（“has-a”）<br> 一个类的对象包含另一个类的对象；</li>
-<li>继承（“is-a”）</li>
-</ol>
-<h2 id="对象与对象变量"><a href="#对象与对象变量" class="headerlink" title="对象与对象变量"></a>对象与对象变量</h2><p>在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。</p>
-<h2 id="访问器和更改器"><a href="#访问器和更改器" class="headerlink" title="访问器和更改器"></a>访问器和更改器</h2><p>只访问对象而不修改对象的方法称为访问器方法。在Java中，访问器方法与更改器方法在语法上没有明显区别；在C++中，带有const后缀的方法是访问器方法，默认为更改器方法。</p>
-<h2 id="final实例域"><a href="#final实例域" class="headerlink" title="final实例域"></a>final实例域</h2><p>可以将实例域定义为final，构建对象时必须初始化这样的域。final关键字只是表示存储在变量中的对象引用不会再指示其他的对象，但是该对象可以修改。</p>
+        <h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><p>OpenGL的可编程管线处理流程如下：<br><img src="../../assets/2.png" alt="OpenGL可编程管线处理流程"><br><strong>- 顶点输入：</strong>在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；<br><strong>- 顶点着色器：</strong>从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数据；<br><strong>- 图元装配阶段：</strong>将顶点着色器输出的所有顶点作为输入，将所有点装配成指定的图元形状（图元，用于提示OpenGL输入数据所表示的渲染类型，如GL_POINTS、GL_TRIANGLES、GL_LINE_STRIP）；<br><strong>- 几何着色器：</strong>将图元形式的一系列顶点的几何作为输入，通过产生新顶点构造出新的或其他的图元来生成其他的形状；<br><strong>- 光栅化阶段：</strong>将图元映射为最终屏幕上相应的元素，生成供片段着色器使用的片段（一个片段是OpenGL渲染一个像素所需的所有数据）；在片段着色器处理之前会进行裁剪；<br><strong>- 片段着色器：</strong>通常包含3D场景数据（如光照、阴影、光的颜色等），这些数据用于计算最终像素的颜色；<br><strong>- Alpha测试和混合阶段：</strong>检测片段的对应深度值，判断这个像素在其他物体的前面还是后面，决定是否应该丢弃；同时该阶段价检查alpha值并对物体进行混合；</p>
+<h3 id="源码详解"><a href="#源码详解" class="headerlink" title="源码详解"></a>源码详解</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint ShaderProgram = glCreateProgram();</div></pre></td></tr></table></figure>
+<pre><code>创建着色器程序，将所有的着色器连接到该对象上；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint ShaderObj = glCreateShader(ShaderType);</div></pre></td></tr></table></figure>
+<pre><code>创建着色器对象，shaderType选择GL_VERTEX_SHADER表示顶点着色器，GL_FRAGEMENT_SHADER表示片段着色器；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> GLchar* p[<span class="number">1</span>];</div><div class="line">p[<span class="number">0</span>] = pShaderText;</div><div class="line">GLint Lengths[<span class="number">1</span>];</div><div class="line">Lengths[<span class="number">0</span>] = <span class="built_in">strlen</span>(pShaderText);</div><div class="line">glShaderSource(ShaderObj, <span class="number">1</span>, p,  Length);</div><div class="line">glCompileShader(ShaderObj);</div></pre></td></tr></table></figure>
+<pre><code>编译着色器对象前必须定义它的代码源；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GLint success;</div><div class="line">glGenShaderiv(ShaderObj, GL_COMPILE_STATUS, &amp;success);</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	GLchar InfoLog[<span class="number">1024</span>];</div><div class="line">	glGetShaderInfoLog(ShaderObj, <span class="keyword">sizeof</span>(InfoLog), <span class="literal">NULL</span>, InfoLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>检查着色器相关的错误；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glAttachShader(ShaderProgram, ShaderObj);</div></pre></td></tr></table></figure>
+<pre><code>将编译好的shader对象绑定到程序对象上；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glLinkProgram(ShaderProgram);</div></pre></td></tr></table></figure>
+<pre><code>编译好所有的shader对象并将它们绑定到程序中，之后完成连接。在实现程序连接之后可以通过调用glDetachShader和glDeleteShader解绑并删除着色器，若着色器绑定在程序上，只调用删除函数只会标记该着色器等待删除，只有调用解绑之后才会将其置零并删除；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &amp;success);;</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	glGetProgramInfoLog(ShaderProgram, <span class="keyword">sizeof</span>(ErrorLog), <span class="literal">NULL</span>, errorLog);</div><div class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error linking shader program: '%s\n'"</span>, ErrorLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>检查和程序相关的错误；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glValidateProgram(ShaderProgram);</div></pre></td></tr></table></figure>
+<pre><code>检查当前的管线状态程序是否可以被执行；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glUseProgram(ShaderProgram);</div></pre></td></tr></table></figure>
+<pre><code>使用回调函数将连接好的着色器程序设置到管线声明中，该着色器程序将在所有的绘制回调函数中一直生效知道你用另一个程序替换掉它或者使用glUseProgram指令将其置为NULL明确禁用它。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#version 330</span></div></pre></td></tr></table></figure>
+<pre><code>告诉编译器的目标GLSL编译器版本是3.3；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout (location = <span class="number">0</span>) in vec3 Position;</div></pre></td></tr></table></figure>
+<pre><code>在顶点着色器中，使用location指定输入变量，使得可以在CPU上配置顶点属性；使用layout将变量与顶点数据链接，这里位置变量的属性位置为0；
+让编译器知道缓冲区中顶点的哪个属性和shader中声明的哪个属性进行映射匹配有两种办法：
+1. 可以明确设置它（为0），这样就在应用中使用一个写死的编码值（通过调用glVertexAttributePointer调用第一个参数）；
+2. 简单在shader中声明“in vec3 Position”，之后使用glGetAttribLocation检索应用中这个是属性的实时位置；在复杂应用中最好让编译器定义属性的索引标志并实时检索它们，从而可以更加容易从多个来源整合shader着色器；
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
+<pre><code>可以通过连接多个shader来创建着色器，但是每个着色器阶段（顶点着色器，几何着色器，片段着色器）有且只有一个main函数作为着色器的入口。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gl_Position = vec4(<span class="number">0.5</span> * Position.x, <span class="number">0.5</span> * Position.y, Position.z, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
+<pre><code>这里对输入顶点的位置做固定编码转换，‘gl_Postion’是一个内置的变量，用来保存顶点位置，光栅器会查找这个变量并用在一系列变换之后将它作为屏幕空间的位置。此处需要设置W值为1.0。将物体从三维投影到二维的过程需要经过两个独立的阶段：首先，将所有顶点乘以投影变换矩阵；然后，在顶点到达光栅器之前GPU会自动对位置属性进行‘透视分割’，即使用W值分割gl_Position的所有其他分量元素。
+</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">out vec4 FragColor;</div><div class="line">FragColor = vec4(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
+<pre><code>片段着色器定义每个片段（像素）的颜色，输出的颜色通过上面代码中声明的变量完成，在这些变量上设置的值将会被光栅器接受最后写入帧缓存中；
+</code></pre><h3 id="一致变量"><a href="#一致变量" class="headerlink" title="一致变量"></a>一致变量</h3><p>uniform是一种从CPU中的应用向GPU中的着色器发送数据的方式，一致变量与普通属性的区别：</p>
 <ul>
-<li>final变量：final变量是只读的；</li>
-<li>final方法：该方法不能被子类的方法重写，在编译时静态绑定，不需要在运行时动态绑定；</li>
-<li>final类：不能被继承的类；</li>
-</ul>
-<h2 id="静态域与静态方法"><a href="#静态域与静态方法" class="headerlink" title="静态域与静态方法"></a>静态域与静态方法</h2><ul>
-<li>静态域：每个类只有一个静态域，但每个对象对所有实例域有自己的一份拷贝；</li>
-<li>静态常量：使用static final定义；</li>
-<li>静态方法：不能向对象实施操作的方法，故静态方法不能访问类的实例域，但是可以访问自身类中的静态域；建议使用类名调用静态方法。</li>
-</ul>
-<h2 id="main方法"><a href="#main方法" class="headerlink" title="main方法"></a>main方法</h2><p>每一个类可以有一个main方法，用于对类进行单元测试。执行类中的main方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java className</div></pre></td></tr></table></figure></p>
-<h2 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h2><p>Java对对象采用的是按值传递，故对两种类型的方法参数修改时，根据类型不同有所差异：</p>
-<ul>
-<li>基本数据类型：方法不能修改基本数据类型的参数；</li>
-<li>对象引用：由于方法得到的是对象引用的拷贝，对象引用及其他的拷贝同时引用同一个对象，因此可以修改对象引用的参数；但是方法不能让对象参数引用一个新的对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleValue</span><span class="params">(<span class="keyword">double</span> x)</span>	<span class="comment">//不可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x = x*<span class="number">3</span>;	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tripleSalary</span><span class="params">(Employee x)</span>	<span class="comment">//可用</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	x.raiseSalary(<span class="number">200</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Employee x, Employee y)</span><span class="comment">//不可用</span></span></div><div class="line"><span class="function"> </span>&#123;</div><div class="line"> 	Employee temp = x;</div><div class="line"> 	x = y;</div><div class="line"> 	y = temp;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<li>普通变量：包含的数据是顶点具体化的，因此在每个着色器引入时，它们将从顶点缓冲区加载一个新的值；</li>
+<li><p>一致变量：uniform是全局的，在整个绘制回调的过程中保持不变，主要用于保存光照参数（光的位置和方向）、变换矩阵、材质对象的handle等数据；<br>GLUT只有在最大最小化窗口或者从另一个窗口后面重新出现等事件发生时才会重新调用渲染回调函数，若应用启动后没有在窗口布局中做任何变化则渲染回调只会执行一次。若想要多次重复改变一个变量的值，需要通过再注册一个闲置的回调函数，该函数在GLUT没有收到任何窗口事件的时候被调用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutIdleFunc(RenderScenceCB);</div></pre></td></tr></table></figure>
+<p>  将渲染回调函数注册为全局闲置回调，若使用一个专用的闲置回调则需要在它后面添加一个glutPostRedisplay()，该函数标记当前的窗口需要被重新绘制，当下一个GLUT的主循环开始时就调用渲染回调函数进行窗口绘制。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gScaledLocation = glGetUniformLocation(ShaderProgram, <span class="string">"gScale"</span>);</div><div class="line">assert(gScaleLocation != <span class="number">0xFFFFFFFF</span>);</div></pre></td></tr></table></figure>
+<p>  我们无法直接获取着色器的内容，因而也无法改变它的变量值，当编译着色器对象时，GLSL编译器会给每一个一致变量分配一个索引，在着色器内部表示中，是通过变量的索引值来获取编译器内部的变量的，该索引可通过glGetUniformLocation函数设置程序对象的句柄参数和变量名参数来获取，若有错误则返回-1.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">float</span> Scale = <span class="number">0.0f</span>;</div><div class="line">Scale += <span class="number">0.001f</span>;</div><div class="line">glUniform1f(gScaleLocation, sinf(Scale));</div></pre></td></tr></table></figure>
+<p>  glUniform{1234}{if}，该实例函数可以将浮点数或整型数赋给不同维度的向量作为参数；<br><code>`cpp
+uniform float gScale;
+gl_Postion = vec4(gScale*Postion.x, gScale*Postion.y, Position.z, 1);</code></p>
 </li>
 </ul>
-<h2 id="包"><a href="#包" class="headerlink" title="包"></a>包</h2><p>Java允许使用包将类组织起来，使用包确保类名的唯一性。从编译器的角度来看，嵌套的包之间没有任何关系，如java.util包与java.util.jar包无关。每一个都拥有独立的类集合。</p>
-<ul>
-<li>一个类可以使用所属包中的所有类，以及其他包中的共有类。</li>
-<li>使用import static静态导入，可以在使用类的静态方法和静态域时不加类名前缀：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.*;</div><div class="line">out.println(<span class="string">"Hello World"</span>);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="将类放入包中"><a href="#将类放入包中" class="headerlink" title="将类放入包中"></a>将类放入包中</h3><p>若要将类放入包中，则必须将包的名字放在源文件开头，包中定义类的代码之前，并将包中的文件放到与完整的包匹配的子目录中。若没有在源文件中放置package语句，这个源文件中的类就被放置在一个默认包中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> classdir;</div></pre></td></tr></table></figure></p>
-<h3 id="包作用域"><a href="#包作用域" class="headerlink" title="包作用域"></a>包作用域</h3><p>如果没有指定public或private，这个部分（类、方法或变量）可以被同一个包中的所有方法访问。</p>
-<h2 id="类路径"><a href="#类路径" class="headerlink" title="类路径"></a>类路径</h2><p>类文件可以存储在JAR(Java归档)文件中，一个JAR文件中，可以包含多个压缩形式的类文件和子目录，JAR文件使用ZIP格式组织文件和子目录。<br>为了使类能够被多个程序共享，需要设置：</p>
-<ul>
-<li>将类放在一个目录下，该目录是包树状结构的基目录；</li>
-<li>将JAR文件放在一个目录下；</li>
-<li>设置类路径，类路径包括基目录、当前目录(.)、JAR文件。<br>例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/home/user/classdir:.:/home/user/archieves/archieve.jar <span class="comment">//UNIX环境</span></div><div class="line">c:\classdir;.;c:\archieves\archieve.jar <span class="comment">//Windows环境</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>javac编辑器总是在当前目录中查找文件，但Java虚拟机仅在类路径中有“.”目录时才查看当前目录<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">javac classdir\MyProg.java</div><div class="line">java classdir.MyProg</div></pre></td></tr></table></figure></p>
-<p>建议采用-classpath选项指定类路径：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -classpath c:\classdir;.;c:\archieves\archieve.jar MyProg</div></pre></td></tr></table></figure></p>
-<h2 id="文档注释"><a href="#文档注释" class="headerlink" title="文档注释"></a>文档注释</h2><p>JDK包含javadoc，可以由源文件生成一个HTML文件。</p>
-<h3 id="注释的插入"><a href="#注释的插入" class="headerlink" title="注释的插入"></a>注释的插入</h3><p>javadoc实用程序从以下特性中抽取信息：</p>
-<ul>
-<li>包；</li>
-<li>共有类与接口；</li>
-<li>共有的和受保护的构造器及方法；</li>
-<li><p>共有的和受保护的域；<br>注释以/**开始，以*/结束，每个/**…*/文档注释在标记之后紧跟着自由格式文本，标记由@开头；自由格式文本的第一句应为一个概要性的句子，javadoc实用程序自动将这些句子抽出来形成概要页。</p>
-</li>
-<li><p><strong>类注释：</strong>类注释必须放在import语句之后，类定义之前；</p>
-</li>
-<li><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</li>
-<li><ul>
-<li>@param变量描述：将对当前方法的“param”（参数）部分添加一个条目；</li>
-</ul>
-</li>
-<li><ul>
-<li>@return描述：将对当前方法添加“return”（返回）部分；</li>
-</ul>
-</li>
-<li><ul>
-<li>@throws类描述：将添加一个注释，用于表示这个方法有可能抛出异常；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Raise the salary of an employee.</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> byPercent the percentage by which to raise the salary (e.g. 10 means 10%)</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> the amount of the raise</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">raiseSalary</span><span class="params">(<span class="keyword">double</span> byPercent)</span></span>&#123;</div><div class="line">	<span class="keyword">double</span> raise = salary * byPercent / <span class="number">100</span>;</div><div class="line">	salary += raise;</div><div class="line">	<span class="keyword">return</span> raise;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>域注释：</strong>只需对公有域（通常指静态常量）建立文档；</p>
-</li>
-<li><strong>通用注释：</strong></li>
-<li><ul>
-<li>@author姓名；</li>
-</ul>
-</li>
-<li><ul>
-<li>@version文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@since文本：这里的text可以是对引入特性的版本描述；</li>
-</ul>
-</li>
-<li><ul>
-<li>@deprecated文本；</li>
-</ul>
-</li>
-<li><ul>
-<li>@see引用；</li>
-</ul>
-</li>
-</ul>
-<h2 id="类设计技巧"><a href="#类设计技巧" class="headerlink" title="类设计技巧"></a>类设计技巧</h2><ol>
-<li>一定要保证数据私有；</li>
-<li>一定要对数据初始化；</li>
-<li>不要在类中使用过多的基本类型；</li>
-<li>不是所有的域都需要独立的域访问器和域更改器；</li>
-</ol>
 
       
 
@@ -294,11 +243,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">OpenGL</a>
         		</li>
       		
 		</ul>
@@ -354,7 +299,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/10/25/003-Java-对象与类/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/12/05/002-看看OpenGL吧！/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -368,18 +313,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/10/27/004-Java-继承/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/12/08/002-区域扫描线z-buffer算法及实现记录/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          004 Java 继承
+          002 区域扫描线z-buffer算法及实现记录
         
       </div>
     </a>
   
   
-    <a href="/2017/10/24/003-Java与C++/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">003 Java与C++</div>
+    <a href="/2017/12/05/001-看看OpenGL吧！/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">001 看看OpenGL吧！</div>
       <i class="icon-circle-right"></i>
     </a>
   
