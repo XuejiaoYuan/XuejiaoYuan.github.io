@@ -17,7 +17,7 @@
 <meta property="og:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2017/10/assets/Note_img/1.png">
-<meta property="og:updated_time" content="2017-10-27T12:23:41.458Z">
+<meta property="og:updated_time" content="2018-01-26T08:05:44.149Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="003 Java 对象与类">
 <meta name="twitter:description" content="Java类之间的关系  依赖（“use-a”） 一个类的方法操纵另一个类的对象，应尽可能减少相互依赖的类。 聚合（“has-a”） 一个类的对象包含另一个类的对象； 继承（“is-a”）  对象与对象变量在Java中，任何对象变量的值都是对存储在另一个地方的一个对象的引用，new操作符的返回值也是一个引用。可以显式地将对象变量设置为null，表明这个对象目前没有引用任何对象。 访问器和更改器只访问">
@@ -216,40 +216,21 @@
 </li>
 <li><p><strong>类注释：</strong>类注释必须放在import语句之后，类定义之前；</p>
 </li>
-<li><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</li>
-<li><ul>
+<li><p><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</p>
+<ul>
 <li>@param变量描述：将对当前方法的“param”（参数）部分添加一个条目；</li>
-</ul>
-</li>
-<li><ul>
 <li>@return描述：将对当前方法添加“return”（返回）部分；</li>
-</ul>
-</li>
-<li><ul>
 <li>@throws类描述：将添加一个注释，用于表示这个方法有可能抛出异常；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Raise the salary of an employee.</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> byPercent the percentage by which to raise the salary (e.g. 10 means 10%)</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> the amount of the raise</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">raiseSalary</span><span class="params">(<span class="keyword">double</span> byPercent)</span></span>&#123;</div><div class="line">	<span class="keyword">double</span> raise = salary * byPercent / <span class="number">100</span>;</div><div class="line">	salary += raise;</div><div class="line">	<span class="keyword">return</span> raise;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p><strong>域注释：</strong>只需对公有域（通常指静态常量）建立文档；</p>
 </li>
-<li><strong>通用注释：</strong></li>
-<li><ul>
+<li><strong>通用注释：</strong><ul>
 <li>@author姓名；</li>
-</ul>
-</li>
-<li><ul>
 <li>@version文本；</li>
-</ul>
-</li>
-<li><ul>
 <li>@since文本：这里的text可以是对引入特性的版本描述；</li>
-</ul>
-</li>
-<li><ul>
 <li>@deprecated文本；</li>
-</ul>
-</li>
-<li><ul>
 <li>@see引用；</li>
 </ul>
 </li>
@@ -501,14 +482,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
@@ -517,7 +490,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
               </li>
              
               <li class="article-tag-list-item">

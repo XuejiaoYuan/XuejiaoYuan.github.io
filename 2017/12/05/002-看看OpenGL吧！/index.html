@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>002 看看OpenGL吧！ | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景知识OpenGL的可编程管线处理流程如下：- 顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；- 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数">
+  <meta name="description" content="背景知识OpenGL的可编程管线处理流程如下：  顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理； 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数据">
 <meta name="keywords" content="OpenGL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="002 看看OpenGL吧！">
 <meta property="og:url" content="http://yoursite.com/2017/12/05/002-看看OpenGL吧！/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="背景知识OpenGL的可编程管线处理流程如下：- 顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；- 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数">
+<meta property="og:description" content="背景知识OpenGL的可编程管线处理流程如下：  顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理； 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数据">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2017/12/assets/2.png">
-<meta property="og:updated_time" content="2017-12-21T01:10:59.359Z">
+<meta property="og:image" content="http://yoursite.com/2017/12/assets/Note_img/2.png">
+<meta property="og:updated_time" content="2018-01-26T08:00:13.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="002 看看OpenGL吧！">
-<meta name="twitter:description" content="背景知识OpenGL的可编程管线处理流程如下：- 顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；- 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数">
-<meta name="twitter:image" content="http://yoursite.com/2017/12/assets/2.png">
+<meta name="twitter:description" content="背景知识OpenGL的可编程管线处理流程如下：  顶点输入：在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理； 顶点着色器：从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数据">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/assets/Note_img/2.png">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -163,52 +163,45 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><p>OpenGL的可编程管线处理流程如下：<br><img src="../../assets/2.png" alt="OpenGL可编程管线处理流程"><br><strong>- 顶点输入：</strong>在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；<br><strong>- 顶点着色器：</strong>从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数据；<br><strong>- 图元装配阶段：</strong>将顶点着色器输出的所有顶点作为输入，将所有点装配成指定的图元形状（图元，用于提示OpenGL输入数据所表示的渲染类型，如GL_POINTS、GL_TRIANGLES、GL_LINE_STRIP）；<br><strong>- 几何着色器：</strong>将图元形式的一系列顶点的几何作为输入，通过产生新顶点构造出新的或其他的图元来生成其他的形状；<br><strong>- 光栅化阶段：</strong>将图元映射为最终屏幕上相应的元素，生成供片段着色器使用的片段（一个片段是OpenGL渲染一个像素所需的所有数据）；在片段着色器处理之前会进行裁剪；<br><strong>- 片段着色器：</strong>通常包含3D场景数据（如光照、阴影、光的颜色等），这些数据用于计算最终像素的颜色；<br><strong>- Alpha测试和混合阶段：</strong>检测片段的对应深度值，判断这个像素在其他物体的前面还是后面，决定是否应该丢弃；同时该阶段价检查alpha值并对物体进行混合；</p>
+        <h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h3><p>OpenGL的可编程管线处理流程如下：<br><img src="../../assets/Note_img/2.png" alt="OpenGL可编程管线处理流程"></p>
+<ul>
+<li><strong>顶点输入：</strong>在CPU上输入顶点数据，创建顶点缓冲对象VBO，将其绑定到对应目标上，该VBO可以管理GPU上的内存；通过调用函数可将输入顶点数据复制到GPU的内存中，并利用VBO对这些数据进行管理；</li>
+<li><strong>顶点着色器：</strong>从顶点数据中直接接受输入，对顶点坐标进行变换，使用location指定输入变量，并为它的输入提供额外的layout标志从而将输入连接到顶点数据；</li>
+<li><strong>图元装配阶段：</strong>将顶点着色器输出的所有顶点作为输入，将所有点装配成指定的图元形状（图元，用于提示OpenGL输入数据所表示的渲染类型，如GL_POINTS、GL_TRIANGLES、GL_LINE_STRIP）；</li>
+<li><strong>几何着色器：</strong>将图元形式的一系列顶点的几何作为输入，通过产生新顶点构造出新的或其他的图元来生成其他的形状；</li>
+<li><strong>光栅化阶段：</strong>将图元映射为最终屏幕上相应的元素，生成供片段着色器使用的片段（一个片段是OpenGL渲染一个像素所需的所有数据）；在片段着色器处理之前会进行裁剪；</li>
+<li><strong>片段着色器：</strong>通常包含3D场景数据（如光照、阴影、光的颜色等），这些数据用于计算最终像素的颜色；</li>
+<li><strong>Alpha测试和混合阶段：</strong>检测片段的对应深度值，判断这个像素在其他物体的前面还是后面，决定是否应该丢弃；同时该阶段价检查alpha值并对物体进行混合；</li>
+</ul>
 <h3 id="源码详解"><a href="#源码详解" class="headerlink" title="源码详解"></a>源码详解</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint ShaderProgram = glCreateProgram();</div></pre></td></tr></table></figure>
-<pre><code>创建着色器程序，将所有的着色器连接到该对象上；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint ShaderObj = glCreateShader(ShaderType);</div></pre></td></tr></table></figure>
-<pre><code>创建着色器对象，shaderType选择GL_VERTEX_SHADER表示顶点着色器，GL_FRAGEMENT_SHADER表示片段着色器；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> GLchar* p[<span class="number">1</span>];</div><div class="line">p[<span class="number">0</span>] = pShaderText;</div><div class="line">GLint Lengths[<span class="number">1</span>];</div><div class="line">Lengths[<span class="number">0</span>] = <span class="built_in">strlen</span>(pShaderText);</div><div class="line">glShaderSource(ShaderObj, <span class="number">1</span>, p,  Length);</div><div class="line">glCompileShader(ShaderObj);</div></pre></td></tr></table></figure>
-<pre><code>编译着色器对象前必须定义它的代码源；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GLint success;</div><div class="line">glGenShaderiv(ShaderObj, GL_COMPILE_STATUS, &amp;success);</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	GLchar InfoLog[<span class="number">1024</span>];</div><div class="line">	glGetShaderInfoLog(ShaderObj, <span class="keyword">sizeof</span>(InfoLog), <span class="literal">NULL</span>, InfoLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<pre><code>检查着色器相关的错误；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glAttachShader(ShaderProgram, ShaderObj);</div></pre></td></tr></table></figure>
-<pre><code>将编译好的shader对象绑定到程序对象上；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glLinkProgram(ShaderProgram);</div></pre></td></tr></table></figure>
-<pre><code>编译好所有的shader对象并将它们绑定到程序中，之后完成连接。在实现程序连接之后可以通过调用glDetachShader和glDeleteShader解绑并删除着色器，若着色器绑定在程序上，只调用删除函数只会标记该着色器等待删除，只有调用解绑之后才会将其置零并删除；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &amp;success);;</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	glGetProgramInfoLog(ShaderProgram, <span class="keyword">sizeof</span>(ErrorLog), <span class="literal">NULL</span>, errorLog);</div><div class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error linking shader program: '%s\n'"</span>, ErrorLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<pre><code>检查和程序相关的错误；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glValidateProgram(ShaderProgram);</div></pre></td></tr></table></figure>
-<pre><code>检查当前的管线状态程序是否可以被执行；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glUseProgram(ShaderProgram);</div></pre></td></tr></table></figure>
-<pre><code>使用回调函数将连接好的着色器程序设置到管线声明中，该着色器程序将在所有的绘制回调函数中一直生效知道你用另一个程序替换掉它或者使用glUseProgram指令将其置为NULL明确禁用它。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#version 330</span></div></pre></td></tr></table></figure>
-<pre><code>告诉编译器的目标GLSL编译器版本是3.3；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout (location = <span class="number">0</span>) in vec3 Position;</div></pre></td></tr></table></figure>
-<pre><code>在顶点着色器中，使用location指定输入变量，使得可以在CPU上配置顶点属性；使用layout将变量与顶点数据链接，这里位置变量的属性位置为0；
-让编译器知道缓冲区中顶点的哪个属性和shader中声明的哪个属性进行映射匹配有两种办法：
-1. 可以明确设置它（为0），这样就在应用中使用一个写死的编码值（通过调用glVertexAttributePointer调用第一个参数）；
-2. 简单在shader中声明“in vec3 Position”，之后使用glGetAttribLocation检索应用中这个是属性的实时位置；在复杂应用中最好让编译器定义属性的索引标志并实时检索它们，从而可以更加容易从多个来源整合shader着色器；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
-<pre><code>可以通过连接多个shader来创建着色器，但是每个着色器阶段（顶点着色器，几何着色器，片段着色器）有且只有一个main函数作为着色器的入口。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gl_Position = vec4(<span class="number">0.5</span> * Position.x, <span class="number">0.5</span> * Position.y, Position.z, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
-<pre><code>这里对输入顶点的位置做固定编码转换，‘gl_Postion’是一个内置的变量，用来保存顶点位置，光栅器会查找这个变量并用在一系列变换之后将它作为屏幕空间的位置。此处需要设置W值为1.0。将物体从三维投影到二维的过程需要经过两个独立的阶段：首先，将所有顶点乘以投影变换矩阵；然后，在顶点到达光栅器之前GPU会自动对位置属性进行‘透视分割’，即使用W值分割gl_Position的所有其他分量元素。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">out vec4 FragColor;</div><div class="line">FragColor = vec4(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</div></pre></td></tr></table></figure>
-<pre><code>片段着色器定义每个片段（像素）的颜色，输出的颜色通过上面代码中声明的变量完成，在这些变量上设置的值将会被光栅器接受最后写入帧缓存中；
-</code></pre><h3 id="一致变量"><a href="#一致变量" class="headerlink" title="一致变量"></a>一致变量</h3><p>uniform是一种从CPU中的应用向GPU中的着色器发送数据的方式，一致变量与普通属性的区别：</p>
+<p>创建着色器程序，将所有的着色器连接到该对象上；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint ShaderObj = glCreateShader(ShaderType);</div></pre></td></tr></table></figure></p>
+<p>创建着色器对象，shaderType选择GL_VERTEX_SHADER表示顶点着色器，GL_FRAGEMENT_SHADER表示片段着色器；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> GLchar* p[<span class="number">1</span>];</div><div class="line">p[<span class="number">0</span>] = pShaderText;</div><div class="line">GLint Lengths[<span class="number">1</span>];</div><div class="line">Lengths[<span class="number">0</span>] = <span class="built_in">strlen</span>(pShaderText);</div><div class="line">glShaderSource(ShaderObj, <span class="number">1</span>, p,  Length);</div><div class="line">glCompileShader(ShaderObj);</div></pre></td></tr></table></figure></p>
+<p>编译着色器对象前必须定义它的代码源；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GLint success;</div><div class="line">glGenShaderiv(ShaderObj, GL_COMPILE_STATUS, &amp;success);</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	GLchar InfoLog[<span class="number">1024</span>];</div><div class="line">	glGetShaderInfoLog(ShaderObj, <span class="keyword">sizeof</span>(InfoLog), <span class="literal">NULL</span>, InfoLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>检查着色器相关的错误；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glAttachShader(ShaderProgram, ShaderObj);</div></pre></td></tr></table></figure></p>
+<p>将编译好的shader对象绑定到程序对象上；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glLinkProgram(ShaderProgram);</div></pre></td></tr></table></figure></p>
+<p>编译好所有的shader对象并将它们绑定到程序中，之后完成连接。在实现程序连接之后可以通过调用glDetachShader和glDeleteShader解绑并删除着色器，若着色器绑定在程序上，只调用删除函数只会标记该着色器等待删除，只有调用解绑之后才会将其置零并删除；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &amp;success);;</div><div class="line"><span class="keyword">if</span>(!success)&#123;</div><div class="line">	glGetProgramInfoLog(ShaderProgram, <span class="keyword">sizeof</span>(ErrorLog), <span class="literal">NULL</span>, errorLog);</div><div class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error linking shader program: '%s\n'"</span>, ErrorLog);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>检查和程序相关的错误；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glValidateProgram(ShaderProgram);</div></pre></td></tr></table></figure></p>
+<p>检查当前的管线状态程序是否可以被执行；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glUseProgram(ShaderProgram);</div></pre></td></tr></table></figure></p>
+<p>使用回调函数将连接好的着色器程序设置到管线声明中，该着色器程序将在所有的绘制回调函数中一直生效知道你用另一个程序替换掉它或者使用glUseProgram指令将其置为NULL明确禁用它。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#version 330</span></div></pre></td></tr></table></figure></p>
+<p>告诉编译器的目标GLSL编译器版本是3.3；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout (location = <span class="number">0</span>) in vec3 Position;</div></pre></td></tr></table></figure></p>
+<p>在顶点着色器中，使用location指定输入变量，使得可以在CPU上配置顶点属性；使用layout将变量与顶点数据链接，这里位置变量的属性位置为0；<br>让编译器知道缓冲区中顶点的哪个属性和shader中声明的哪个属性进行映射匹配有两种办法：</p>
+<ol>
+<li>可以明确设置它（为0），这样就在应用中使用一个写死的编码值（通过调用glVertexAttributePointer调用第一个参数）；</li>
+<li>简单在shader中声明“in vec3 Position”，之后使用glGetAttribLocation检索应用中这个是属性的实时位置；在复杂应用中最好让编译器定义属性的索引标志并实时检索它们，从而可以更加容易从多个来源整合shader着色器；<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>可以通过连接多个shader来创建着色器，但是每个着色器阶段（顶点着色器，几何着色器，片段着色器）有且只有一个main函数作为着色器的入口。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gl_Position = vec4(<span class="number">0.5</span> * Position.x, <span class="number">0.5</span> * Position.y, Position.z, <span class="number">1.0</span>);</div></pre></td></tr></table></figure></p>
+<p>这里对输入顶点的位置做固定编码转换，‘gl_Postion’是一个内置的变量，用来保存顶点位置，光栅器会查找这个变量并用在一系列变换之后将它作为屏幕空间的位置。此处需要设置W值为1.0。将物体从三维投影到二维的过程需要经过两个独立的阶段：首先，将所有顶点乘以投影变换矩阵；然后，在顶点到达光栅器之前GPU会自动对位置属性进行‘透视分割’，即使用W值分割gl_Position的所有其他分量元素。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">out vec4 FragColor;</div><div class="line">FragColor = vec4(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</div></pre></td></tr></table></figure></p>
+<p>片段着色器定义每个片段（像素）的颜色，输出的颜色通过上面代码中声明的变量完成，在这些变量上设置的值将会被光栅器接受最后写入帧缓存中；</p>
+<h3 id="一致变量"><a href="#一致变量" class="headerlink" title="一致变量"></a>一致变量</h3><p>uniform是一种从CPU中的应用向GPU中的着色器发送数据的方式，一致变量与普通属性的区别：</p>
 <ul>
 <li>普通变量：包含的数据是顶点具体化的，因此在每个着色器引入时，它们将从顶点缓冲区加载一个新的值；</li>
-<li><p>一致变量：uniform是全局的，在整个绘制回调的过程中保持不变，主要用于保存光照参数（光的位置和方向）、变换矩阵、材质对象的handle等数据；<br>GLUT只有在最大最小化窗口或者从另一个窗口后面重新出现等事件发生时才会重新调用渲染回调函数，若应用启动后没有在窗口布局中做任何变化则渲染回调只会执行一次。若想要多次重复改变一个变量的值，需要通过再注册一个闲置的回调函数，该函数在GLUT没有收到任何窗口事件的时候被调用。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutIdleFunc(RenderScenceCB);</div></pre></td></tr></table></figure>
-<p>  将渲染回调函数注册为全局闲置回调，若使用一个专用的闲置回调则需要在它后面添加一个glutPostRedisplay()，该函数标记当前的窗口需要被重新绘制，当下一个GLUT的主循环开始时就调用渲染回调函数进行窗口绘制。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gScaledLocation = glGetUniformLocation(ShaderProgram, <span class="string">"gScale"</span>);</div><div class="line">assert(gScaleLocation != <span class="number">0xFFFFFFFF</span>);</div></pre></td></tr></table></figure>
-<p>  我们无法直接获取着色器的内容，因而也无法改变它的变量值，当编译着色器对象时，GLSL编译器会给每一个一致变量分配一个索引，在着色器内部表示中，是通过变量的索引值来获取编译器内部的变量的，该索引可通过glGetUniformLocation函数设置程序对象的句柄参数和变量名参数来获取，若有错误则返回-1.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">float</span> Scale = <span class="number">0.0f</span>;</div><div class="line">Scale += <span class="number">0.001f</span>;</div><div class="line">glUniform1f(gScaleLocation, sinf(Scale));</div></pre></td></tr></table></figure>
-<p>  glUniform{1234}{if}，该实例函数可以将浮点数或整型数赋给不同维度的向量作为参数；<br><code>`cpp
-uniform float gScale;
-gl_Postion = vec4(gScale*Postion.x, gScale*Postion.y, Position.z, 1);</code></p>
+<li>一致变量：uniform是全局的，在整个绘制回调的过程中保持不变，主要用于保存光照参数（光的位置和方向）、变换矩阵、材质对象的handle等数据；<br>GLUT只有在最大最小化窗口或者从另一个窗口后面重新出现等事件发生时才会重新调用渲染回调函数，若应用启动后没有在窗口布局中做任何变化则渲染回调只会执行一次。若想要多次重复改变一个变量的值，需要通过再注册一个闲置的回调函数，该函数在GLUT没有收到任何窗口事件的时候被调用。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutIdleFunc(RenderScenceCB);</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<p>将渲染回调函数注册为全局闲置回调，若使用一个专用的闲置回调则需要在它后面添加一个glutPostRedisplay()，该函数标记当前的窗口需要被重新绘制，当下一个GLUT的主循环开始时就调用渲染回调函数进行窗口绘制。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gScaledLocation = glGetUniformLocation(ShaderProgram, <span class="string">"gScale"</span>);</div><div class="line">assert(gScaleLocation != <span class="number">0xFFFFFFFF</span>);</div></pre></td></tr></table></figure></p>
+<p>我们无法直接获取着色器的内容，因而也无法改变它的变量值，当编译着色器对象时，GLSL编译器会给每一个一致变量分配一个索引，在着色器内部表示中，是通过变量的索引值来获取编译器内部的变量的，该索引可通过glGetUniformLocation函数设置程序对象的句柄参数和变量名参数来获取，若有错误则返回-1.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">float</span> Scale = <span class="number">0.0f</span>;</div><div class="line">Scale += <span class="number">0.001f</span>;</div><div class="line">glUniform1f(gScaleLocation, sinf(Scale));</div></pre></td></tr></table></figure></p>
+<p>glUniform{1234}{if}，该实例函数可以将浮点数或整型数赋给不同维度的向量作为参数；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">uniform <span class="keyword">float</span> gScale;</div><div class="line">gl_Postion = vec4(gScale*Postion.x, gScale*Postion.y, Position.z, <span class="number">1</span>);</div></pre></td></tr></table></figure></p>
 
       
 
@@ -446,14 +439,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
@@ -462,7 +447,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
               </li>
              
               <li class="article-tag-list-item">

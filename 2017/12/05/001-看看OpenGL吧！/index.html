@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>001 看看OpenGL吧！ | Polaris&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="库的使用1234#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;GL\glew.h&amp;gt;#include &amp;lt;GL\freeglut.h&amp;gt;#pragma comment(lib, &quot;glew32.lib&quot;) glew.h需要放在其他OpenGL头文件之前。 创建窗口1glutInit(&amp;amp;argc, argv) 调用函数初始化GLUT。 1glutIni">
+  <meta name="description" content="库的使用1234#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;GL\glew.h&amp;gt;#include &amp;lt;GL\freeglut.h&amp;gt;#pragma comment(lib, &quot;glew32.lib&quot;) glew.h需要放在其他OpenGL头文件之前。 创建窗口1glutInit(&amp;amp;argc, argv) 调用函数初始化GLUT。1glutInit">
 <meta name="keywords" content="OpenGL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="001 看看OpenGL吧！">
 <meta property="og:url" content="http://yoursite.com/2017/12/05/001-看看OpenGL吧！/index.html">
 <meta property="og:site_name" content="Polaris&#39;s blog">
-<meta property="og:description" content="库的使用1234#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;GL\glew.h&amp;gt;#include &amp;lt;GL\freeglut.h&amp;gt;#pragma comment(lib, &quot;glew32.lib&quot;) glew.h需要放在其他OpenGL头文件之前。 创建窗口1glutInit(&amp;amp;argc, argv) 调用函数初始化GLUT。 1glutIni">
+<meta property="og:description" content="库的使用1234#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;GL\glew.h&amp;gt;#include &amp;lt;GL\freeglut.h&amp;gt;#pragma comment(lib, &quot;glew32.lib&quot;) glew.h需要放在其他OpenGL头文件之前。 创建窗口1glutInit(&amp;amp;argc, argv) 调用函数初始化GLUT。1glutInit">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-12-21T01:11:06.129Z">
+<meta property="og:updated_time" content="2018-01-26T08:01:49.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="001 看看OpenGL吧！">
-<meta name="twitter:description" content="库的使用1234#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;GL\glew.h&amp;gt;#include &amp;lt;GL\freeglut.h&amp;gt;#pragma comment(lib, &quot;glew32.lib&quot;) glew.h需要放在其他OpenGL头文件之前。 创建窗口1glutInit(&amp;amp;argc, argv) 调用函数初始化GLUT。 1glutIni">
+<meta name="twitter:description" content="库的使用1234#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;GL\glew.h&amp;gt;#include &amp;lt;GL\freeglut.h&amp;gt;#pragma comment(lib, &quot;glew32.lib&quot;) glew.h需要放在其他OpenGL头文件之前。 创建窗口1glutInit(&amp;amp;argc, argv) 调用函数初始化GLUT。1glutInit">
   
     <link rel="alternative" href="/atom.xml" title="Polaris&#39;s blog" type="application/atom+xml">
   
@@ -164,46 +164,35 @@
         <h3 id="库的使用"><a href="#库的使用" class="headerlink" title="库的使用"></a>库的使用</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL\glew.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL\freeglut.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"glew32.lib"</span>)</span></div></pre></td></tr></table></figure>
 <p>glew.h需要放在其他OpenGL头文件之前。</p>
 <h3 id="创建窗口"><a href="#创建窗口" class="headerlink" title="创建窗口"></a>创建窗口</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutInit(&amp;argc, argv)</div></pre></td></tr></table></figure>
-<pre><code>调用函数初始化GLUT。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA)</div></pre></td></tr></table></figure>
-<pre><code>配置GLUT的选项：GLUT_DOUBLE在渲染结束后开启双缓冲机制，即维护两个图像的缓冲数据，屏幕显示一幅图像时后台同时绘制另一份图像缓冲数据，交替显示；GLUT_RGBA颜色缓冲。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">glutInitWindowSize(w, h);</div><div class="line">glutInitWindowPosition(x, y);</div><div class="line">glutCreateWindow(WindowName);</div></pre></td></tr></table></figure>
-<pre><code>创建窗口。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutDisplayFunc(RenderScenceCB);</div></pre></td></tr></table></figure>
-<pre><code>在窗口系统中工作时，使用事件回调函数与运行的程序进行交互，这里使用主回调完成一帧图像的所有渲染工作，该回调函数会在GLUT内部不断循环调用。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glClearColor(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</div></pre></td></tr></table></figure>
-<pre><code>OpenGL是一个状态机，调用一个改变状态的函数后，具体的配置保持不变，直到下次再调用这个相同的函数时再次改变状态和配置。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutMainLoop();</div></pre></td></tr></table></figure>
-<pre><code>该函数调用传递指令给GLUT开始内部循环，在循环中该函数监听窗口系统中的事件并通过配置的回调函数传递出去；在本例中，GLUT将只会调用在glutDisplayFunc中注册的回调函数RenderScenceCB渲染图像。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glClear(GL_COLOR_BUFFER_BIT);</div><div class="line">glutSwapBuffers();</div></pre></td></tr></table></figure>
-<pre><code>glClear(GL_COLOR_BUFFER_BIT)清空颜色缓存，glutSwapBuffer函数告诉GLUT交换双缓冲机制中前后两个缓存的角色位置。
-</code></pre><h3 id="创建顶点"><a href="#创建顶点" class="headerlink" title="创建顶点"></a>创建顶点</h3><p><strong>顶点缓冲对象VBO</strong>，是在GPU中加载顶点最有效的方式。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>调用函数初始化GLUT。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA)</div></pre></td></tr></table></figure></p>
+<p>配置GLUT的选项：GLUT_DOUBLE在渲染结束后开启双缓冲机制，即维护两个图像的缓冲数据，屏幕显示一幅图像时后台同时绘制另一份图像缓冲数据，交替显示；GLUT_RGBA颜色缓冲。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">glutInitWindowSize(w, h);</div><div class="line">glutInitWindowPosition(x, y);</div><div class="line">glutCreateWindow(WindowName);</div></pre></td></tr></table></figure></p>
+<p>创建窗口。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutDisplayFunc(RenderScenceCB);</div></pre></td></tr></table></figure></p>
+<p>在窗口系统中工作时，使用事件回调函数与运行的程序进行交互，这里使用主回调完成一帧图像的所有渲染工作，该回调函数会在GLUT内部不断循环调用。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glClearColor(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</div></pre></td></tr></table></figure></p>
+<p>OpenGL是一个状态机，调用一个改变状态的函数后，具体的配置保持不变，直到下次再调用这个相同的函数时再次改变状态和配置。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glutMainLoop();</div></pre></td></tr></table></figure></p>
+<p>该函数调用传递指令给GLUT开始内部循环，在循环中该函数监听窗口系统中的事件并通过配置的回调函数传递出去；在本例中，GLUT将只会调用在glutDisplayFunc中注册的回调函数RenderScenceCB渲染图像。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">glClear(GL_COLOR_BUFFER_BIT);</div><div class="line">glutSwapBuffers();</div></pre></td></tr></table></figure></p>
+<p>glClear(GL_COLOR_BUFFER_BIT)清空颜色缓存，glutSwapBuffer函数告诉GLUT交换双缓冲机制中前后两个缓存的角色位置。</p>
+<h3 id="创建顶点"><a href="#创建顶点" class="headerlink" title="创建顶点"></a>创建顶点</h3><p><strong>顶点缓冲对象VBO</strong>，是在GPU中加载顶点最有效的方式。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GL/glew.h&gt;</span></span></div></pre></td></tr></table></figure></p>
 <p>GLEW库需要在放在其他OpenGL库的前面。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"math3d.h"</span></span></div></pre></td></tr></table></figure></p>
 <p>用于OpenGL的3d数学库。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GLenum res = glewInit();</div><div class="line"><span class="keyword">if</span>(res != GLEW_OK)</div><div class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error: '%s'\n"</span>, glewGetErrorString(res));</div></pre></td></tr></table></figure></p>
-<pre><code>初始化GLEW并检查是否有错。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Vector3f Vertices[<span class="number">1</span>];</div><div class="line">Vertices[<span class="number">0</span>] = Vector3f(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</div></pre></td></tr></table></figure>
-<pre><code>创建Vector3f结构的数组，并初始化XYZ坐标为0，使该点位于屏幕中央。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint VBO；</div></pre></td></tr></table></figure>
+<p>初始化GLEW并检查是否有错。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Vector3f Vertices[<span class="number">1</span>];</div><div class="line">Vertices[<span class="number">0</span>] = Vector3f(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</div></pre></td></tr></table></figure></p>
+<p>创建Vector3f结构的数组，并初始化XYZ坐标为0，使该点位于屏幕中央。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLuint VBO；</div></pre></td></tr></table></figure></p>
 <p>定义一个GLuint引用变量，来操作顶点缓冲器对象。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glGenBuffers(<span class="number">1</span>, &amp;VBO);</div></pre></td></tr></table></figure></p>
 <p>OpenGL定义了若干glGen*前缀的函数来产生不同类型的对象，它们通常有两个参数：第一个参数用来定义想创建的对象的数量，第二个参数表示GLuint变量数组的地址，用于存储系统分配的引用变量handles。之后对该函数的的电泳不会重复产生相同的handle对象，除非先使用glDeleteBuffers删除对象。不需要在buffer中定义具体要做的事情，之后会进一步进行具体工作设定。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBindBuffer(GL_ARRAY_BUFFER, VBO);</div></pre></td></tr></table></figure>
-<pre><code>在OpenGL中需要将handle与一个目标的名称进行绑定，然后在该目标上执行命令，然后在该目标上执行命令。这些指令只会与handle绑定的目标上生效直到另外有其他的对象跟这个handle绑定或者这个handle被清空。此处GL_ARRAY_BUFFER为handle，将VBO绑定与该handle绑定。目标名GL_ARRAY_BUFFER表示这个buffer将存储一个顶点的数组。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(Vertices), Vertices, GL_STATIC_DRAW);</div></pre></td></tr></table></figure>
-<pre><code>绑定对象之后，需要往里添加数据，该回调函数的参数为已绑定的目标名参数GL_ARRAY_BUFFER，数据的比特数参数，顶点数组的地址，表示数据模式的标志变量。由于现在不会改变这个buffer的内容，所以使用了GL_STATIC_DRAW标志，该标志变量只是用于提示OpenGL驱动程序可以通过它来进行启发式的优化（如：内存中哪个位置最合适存储这个buffer缓冲）。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glEnableVertexAttribArray(<span class="number">0</span>);</div></pre></td></tr></table></figure>
-<pre><code>在shader着色器中，为每个顶点属性（位置、法线等）添加索引，使得C++程序中的数据和着色器中的属性名称绑定。必须开启每一个顶点的属性，否则渲染管线无法获取这些数据。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBindBuffer(GL_ARRAY_BUFFER, VBO)</div></pre></td></tr></table></figure>
-<pre><code>再次绑定buffer准备开始调用回调函数；在有很多buffer缓冲存储的不同模型的程序中，必须用将要调用的buffer来不断更新管线的状态。
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, <span class="number">0</span>)</div></pre></td></tr></table></figure>
-<pre><code>该回调函数告诉管线如何解析buffer中的数据：第一个参数定义属性的索引；第二个参数指属性中元素的个数；第三个参数指每个元素的数据类型；第四个参数指是否希望属性在被管线使用之前被单位化；指缓冲中属性的两个实例之间的比特数距离（若有一个包含位置和法向量两个属性6个浮点数的数据结构的数组时，此值为24）；最后一个参数设置属性在数据结构中的内存偏移值；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDrawArrays(GL_POINTS, <span class="number">0</span>, <span class="number">1</span>)</div></pre></td></tr></table></figure>
-<pre><code>调用顺序绘制回调函数绘制几何图形，该指令将整合这个指令收到的绘制参数和之前为该店建立的状态数据来将结果渲染在屏幕上。第一个参数定义拓扑结构；第二个参数表示第一个要绘制的顶点的索引；最后一个参数是要绘制的顶点数；
-OpenGL提供了不同类型的绘制回调，通常可以分为顺序绘制和索引绘制：
-- 顺序绘制：GPU经过顶点缓冲区，连续处理顶点，并移除绘制回调中定义的拓扑结构来解析这些顶点；
-- 索引绘制：相比顺序绘制更复杂，有额外的索引缓冲区，其中存储着顶点缓冲区中顶点的索引标志，这样可以避免顺序绘制中重复存储顶点的问题；
-</code></pre><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDisableVertexAttribArray(<span class="number">0</span>)</div></pre></td></tr></table></figure>
-<pre><code>在顶点短时间内不使用时即时禁用顶点。
-</code></pre><h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3>
+<p>在OpenGL中需要将handle与一个目标的名称进行绑定，然后在该目标上执行命令，然后在该目标上执行命令。这些指令只会与handle绑定的目标上生效直到另外有其他的对象跟这个handle绑定或者这个handle被清空。此处GL_ARRAY_BUFFER为handle，将VBO绑定与该handle绑定。目标名GL_ARRAY_BUFFER表示这个buffer将存储一个顶点的数组。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(Vertices), Vertices, GL_STATIC_DRAW);</div></pre></td></tr></table></figure></p>
+<p>绑定对象之后，需要往里添加数据，该回调函数的参数为已绑定的目标名参数GL_ARRAY_BUFFER，数据的比特数参数，顶点数组的地址，表示数据模式的标志变量。由于现在不会改变这个buffer的内容，所以使用了GL_STATIC_DRAW标志，该标志变量只是用于提示OpenGL驱动程序可以通过它来进行启发式的优化（如：内存中哪个位置最合适存储这个buffer缓冲）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glEnableVertexAttribArray(<span class="number">0</span>);</div></pre></td></tr></table></figure>
+<p>在shader着色器中，为每个顶点属性（位置、法线等）添加索引，使得C++程序中的数据和着色器中的属性名称绑定。必须开启每一个顶点的属性，否则渲染管线无法获取这些数据。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glBindBuffer(GL_ARRAY_BUFFER, VBO)</div></pre></td></tr></table></figure></p>
+<p>再次绑定buffer准备开始调用回调函数；在有很多buffer缓冲存储的不同模型的程序中，必须用将要调用的buffer来不断更新管线的状态。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, <span class="number">0</span>)</div></pre></td></tr></table></figure></p>
+<p>该回调函数告诉管线如何解析buffer中的数据：第一个参数定义属性的索引；第二个参数指属性中元素的个数；第三个参数指每个元素的数据类型；第四个参数指是否希望属性在被管线使用之前被单位化；指缓冲中属性的两个实例之间的比特数距离（若有一个包含位置和法向量两个属性6个浮点数的数据结构的数组时，此值为24）；最后一个参数设置属性在数据结构中的内存偏移值；<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDrawArrays(GL_POINTS, <span class="number">0</span>, <span class="number">1</span>)</div></pre></td></tr></table></figure></p>
+<p>调用顺序绘制回调函数绘制几何图形，该指令将整合这个指令收到的绘制参数和之前为该店建立的状态数据来将结果渲染在屏幕上。第一个参数定义拓扑结构；第二个参数表示第一个要绘制的顶点的索引；最后一个参数是要绘制的顶点数；<br>OpenGL提供了不同类型的绘制回调，通常可以分为顺序绘制和索引绘制：</p>
+<ul>
+<li>顺序绘制：GPU经过顶点缓冲区，连续处理顶点，并移除绘制回调中定义的拓扑结构来解析这些顶点；</li>
+<li>索引绘制：相比顺序绘制更复杂，有额外的索引缓冲区，其中存储着顶点缓冲区中顶点的索引标志，这样可以避免顺序绘制中重复存储顶点的问题；<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">glDisableVertexAttribArray(<span class="number">0</span>)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在顶点短时间内不使用时即时禁用顶点。</p>
+
       
 
       
@@ -440,14 +429,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
@@ -456,7 +437,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
               </li>
              
               <li class="article-tag-list-item">

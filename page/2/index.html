@@ -447,25 +447,11 @@
 <h3 id="受保护访问"><a href="#受保护访问" class="headerlink" title="受保护访问"></a>受保护访问</h3><p>Java中的受保护部分对所有子类及同一个包中的所有其他类都可见，比C++的保护机制安全性差。</p>
 <h2 id="Object：所有类的超类"><a href="#Object：所有类的超类" class="headerlink" title="Object：所有类的超类"></a>Object：所有类的超类</h2><p>在Java中，只有基本类型不是对象。所有的数组类型，不管是对象数组还是基本类型的数组都扩展了Object类。</p>
 <h3 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h3><p>Object类中的equals方法用于检测一个对象是否等于另一个对象。在Object类中，这个方法将判断两个对象是否具有相同的引用。<br>在子类中定义equals方法时，首先调用超类的equals。如果检测失败，对象就不可能相等。如果超类中的域都相等，就需要比较子类中的实例域。</p>
-<h3 id="相等测试与继承"><a href="#相等测试与继承" class="headerlink" title="相等测试与继承"></a>相等测试与继承</h3><p>编写equals方法的建议：</p>
-<ol>
-<li>显式参数名为otherObject，需要将它转换为另一个变量other；</li>
-<li><p>检测this与otherObject是否引用同一个对象；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">this</span> == otherObject) <span class="keyword">return</span> ture;</div></pre></td></tr></table></figure>
-</li>
-<li><p>检测otherObject是否为null，如果为null，返回false；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(otherObject == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
-</li>
-<li><p>比较this与otherObject是否属于同一类，如果equals的语义在每个子类中有所改变，就使用getClass检测，如果所有子类都属于统一的语义，就使用instanceof检测；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(getClass() != otherObject.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
-</li>
-<li><p>将otherObject转换为相应的类类型变量：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ClassName other = (ClassName) otherObjectl;</div></pre></td></tr></table></figure>
-</li>
-<li><p>对所有需要比较的于进行比较，使用==比较基本类型域，使用equals比较对象域，如果所有的域都匹配，就返回true，否则返回false。如果在子类中重新定义equals，就要在其中包含调用super.equals(other)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> field == other.field1</div><div class="line">	&amp;&amp; Object.equals(field2, other.field2)</div><div class="line">	&amp;&amp; ...;</div></pre></td></tr></table></figure>
-</li>
-</ol>
+<h3 id="相等测试与继承"><a href="#相等测试与继承" class="headerlink" title="相等测试与继承"></a>相等测试与继承</h3><p>编写equals方法的建议：<br>1.显式参数名为otherObject，需要将它转换为另一个变量other；<br>2.检测this与otherObject是否引用同一个对象；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">this</span> == otherObject) <span class="keyword">return</span> ture;</div></pre></td></tr></table></figure></p>
+<p>3.检测otherObject是否为null，如果为null，返回false；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(otherObject == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure></p>
+<p>4.比较this与otherObject是否属于同一类，如果equals的语义在每个子类中有所改变，就使用getClass检测，如果所有子类都属于统一的语义，就使用instanceof检测；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(getClass() != otherObject.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure></p>
+<p>5.将otherObject转换为相应的类类型变量：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ClassName other = (ClassName) otherObjectl;</div></pre></td></tr></table></figure></p>
+<p>6.对所有需要比较的于进行比较，使用==比较基本类型域，使用equals比较对象域，如果所有的域都匹配，就返回true，否则返回false。如果在子类中重新定义equals，就要在其中包含调用super.equals(other)。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> field == other.field1</div><div class="line">	&amp;&amp; Object.equals(field2, other.field2)</div><div class="line">	&amp;&amp; ...;</div></pre></td></tr></table></figure></p>
 <h3 id="hashCode方法"><a href="#hashCode方法" class="headerlink" title="hashCode方法"></a>hashCode方法</h3><p>散列表是由对象导出的一个整型值。由于hashCode方法定义在Object类中，因此每个对象都有一个默认的散列码，其值为对象的存储地址。<br>如果重新定义equals方法，就必须重新定义hashCode方法，以便用户可以将对象插入到散列表中，equals与hashCode的定义必须一致。需要组合多个散列值时，可以调用Object.hash并提供多个参数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> Objects.hashCode(name, salary, hireDay);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>若用相同的参数构造不同对象，则对象的散列码相同，若后续对对象进行修改，则对象散列码随之发生改变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Manager carl = <span class="keyword">new</span> Manager(<span class="string">"Carl"</span>, <span class="number">80000</span>, <span class="number">1987</span>, <span class="number">12</span>, <span class="number">15</span>);</div><div class="line">Manager boss = <span class="keyword">new</span> Manager(<span class="string">"Carl"</span>, <span class="number">80000</span>, <span class="number">1987</span>, <span class="number">12</span>, <span class="number">15</span>);</div><div class="line">boss.setBonus(<span class="number">5000</span>);</div><div class="line">System.out.println(<span class="string">"carl.hashCode(): "</span> + carl.hashCode());</div><div class="line">System.out.println(<span class="string">"boss.hashCode(): "</span> + boss.hashCode());</div><div class="line"><span class="comment">//输出结果</span></div><div class="line"><span class="comment">//carl.hashCode(): 1436354726</span></div><div class="line"><span class="comment">//boss.hashCode(): -1584852826</span></div><div class="line"><span class="comment">//若将第三行注释掉，则有</span></div><div class="line"><span class="comment">//carl.hashCode(): 1436354726</span></div><div class="line"><span class="comment">///boss.hashCode(): 1436354726</span></div></pre></td></tr></table></figure></p>
 <h3 id="toString方法"><a href="#toString方法" class="headerlink" title="toString方法"></a>toString方法</h3><p>用于返回表示对象值的字符串。建议通过调用getClass().getName()获得类名的字符串。<br>随处可见toString方法的主要原因是：只要对象与一个字符串通过操作符“+x”相连，Java编译就会自动调用toString方法，以便获得这个对象的字符串描述；如果x为任意对象，并调用System.out.println(x)，println方法就会直接调用x.toString()，并打印输出得到的字符串。<br>Object类定义了toString方法，用来打印输出对象所属的类名和散列码。数组继承了Object类的toString方法，若要输出数组内容，需要调用静态方法Arrays.toString.</p>
@@ -489,7 +475,7 @@
 </ul>
 <h3 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h3><p>在程序运行期间，Java运行时系统始终为所有对象维护一个运行时的类型标志，这个信息跟踪每个对象所属的类，虚拟机利用运行时类型信息选择相应的方法执行。保存这些信息的类称为Class。</p>
 <h3 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h3><p>将可能抛出已检查异常的一个或多个方法调用代码放在try块中，然后在catch子句中提供处理器代码。</p>
-<h3 id="在运行时使用反射分析对象"><a href="#在运行时使用反射分析对象" class="headerlink" title="在运行时使用反射分析对象"></a>在运行时使用反射分析对象</h3>
+
       
 
       
@@ -619,40 +605,21 @@
 </li>
 <li><p><strong>类注释：</strong>类注释必须放在import语句之后，类定义之前；</p>
 </li>
-<li><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</li>
-<li><ul>
+<li><p><strong>方法注释：</strong>每个方法注释必须放在所描述的方法之前：</p>
+<ul>
 <li>@param变量描述：将对当前方法的“param”（参数）部分添加一个条目；</li>
-</ul>
-</li>
-<li><ul>
 <li>@return描述：将对当前方法添加“return”（返回）部分；</li>
-</ul>
-</li>
-<li><ul>
 <li>@throws类描述：将添加一个注释，用于表示这个方法有可能抛出异常；<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Raise the salary of an employee.</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> byPercent the percentage by which to raise the salary (e.g. 10 means 10%)</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span> the amount of the raise</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">raiseSalary</span><span class="params">(<span class="keyword">double</span> byPercent)</span></span>&#123;</div><div class="line">	<span class="keyword">double</span> raise = salary * byPercent / <span class="number">100</span>;</div><div class="line">	salary += raise;</div><div class="line">	<span class="keyword">return</span> raise;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p><strong>域注释：</strong>只需对公有域（通常指静态常量）建立文档；</p>
 </li>
-<li><strong>通用注释：</strong></li>
-<li><ul>
+<li><strong>通用注释：</strong><ul>
 <li>@author姓名；</li>
-</ul>
-</li>
-<li><ul>
 <li>@version文本；</li>
-</ul>
-</li>
-<li><ul>
 <li>@since文本：这里的text可以是对引入特性的版本描述；</li>
-</ul>
-</li>
-<li><ul>
 <li>@deprecated文本；</li>
-</ul>
-</li>
-<li><ul>
 <li>@see引用；</li>
 </ul>
 </li>
@@ -1270,14 +1237,6 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
@@ -1286,7 +1245,15 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">算法笔记</a>
               </li>
              
               <li class="article-tag-list-item">
